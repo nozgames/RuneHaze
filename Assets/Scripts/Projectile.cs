@@ -13,8 +13,10 @@ namespace RuneHaze
         [SerializeField] private float _speed = 10.0f;
         
         public LayerMask HitMask { get; set; }
+        
+        public Entity Owner { get; set; } 
 
-        public UnityEngine.Events.UnityEvent<Entity> OnHit = new();
+        public UnityEngine.Events.UnityEvent<Entity,Entity> OnHit = new();
 
         private void Update()
         {
@@ -28,7 +30,7 @@ namespace RuneHaze
         {
             var entity = other.collider.GetComponent<Entity>();
             if (null != entity)
-                OnHit.Invoke(entity);
+                OnHit.Invoke(Owner, entity);
 
             Destroy(gameObject);
         }

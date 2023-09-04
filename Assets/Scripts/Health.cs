@@ -12,8 +12,8 @@ namespace RuneHaze
     {
         [SerializeField] private int _max = 100;
 
-        public UnityEngine.Events.UnityEvent<int> OnDamage = new();
-        public UnityEngine.Events.UnityEvent OnDeath = new();
+        public UnityEngine.Events.UnityEvent<Entity,int> TargetDamaged = new();
+        public UnityEngine.Events.UnityEvent<Entity> TargetDied = new();
         
         private int _current;
         
@@ -25,16 +25,16 @@ namespace RuneHaze
             _current = _max;
         }
 
-        public void Damage(int amount)
+        public void Damage(Entity from, int amount)
         {
             amount = Mathf.Min(amount, _current);
-            OnDamage.Invoke(amount);
+            TargetDamaged.Invoke(from, amount);
             
             _current -= amount;
             if (_current <= 0)
             {
                 _current = 0;
-                OnDeath.Invoke();
+                TargetDied.Invoke(from);
             }
         }
     }

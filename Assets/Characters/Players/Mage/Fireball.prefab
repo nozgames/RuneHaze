@@ -54,7 +54,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 616834079436978662}
         m_TargetAssemblyTypeName: RuneHaze.Damage, com.noz.runehaze
-        m_MethodName: DoDamage
+        m_MethodName: Do
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -12,13 +12,13 @@ namespace RuneHaze
     {
         [SerializeField] private int _amount = 1;
         
-        public void DoDamage(Entity entity)
+        public void Do(Entity from, Entity to)
         {
-            var health = entity.Health;
+            var health = to.Health;
             if (null == health)
                 return;
 
-            health.Damage(_amount);
+            health.Damage(from, _amount);
         }
     }
 }

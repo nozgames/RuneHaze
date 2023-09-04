@@ -4,6 +4,7 @@
 
 */
 
+using Unity.VisualScripting.IonicZip;
 using UnityEngine;
 
 namespace RuneHaze
@@ -37,6 +38,13 @@ namespace RuneHaze
             LookAt = lookDir;
             
             base.Update();
+        }
+
+        public override void OnDeath(Entity source)
+        {
+            SwarmSystem.Instance.Remove(this);            
+            
+            base.OnDeath(source);
         }
     }
 }

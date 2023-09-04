@@ -66,9 +66,9 @@ namespace RuneHaze
                 _projectilePrefab,
                 transform.position + Vector3.up * 0.5f,
                 Quaternion.LookRotation((closestEnemy.transform.position - position).normalized));
+            projectile.Owner = this;
             projectile.HitMask = _projectileMask;
         }
-        
     }
 }
 

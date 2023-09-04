@@ -66,7 +66,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7036213049465896255, guid: 87e2103f0a6134448997919d658914ea,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6761634433925172334}
   m_SourcePrefab: {fileID: 100100000, guid: 87e2103f0a6134448997919d658914ea, type: 3}
 --- !u!4 &3339717340929579694 stripped
 Transform:
@@ -74,6 +78,33 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3013952993359609157}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5221378660678582394 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7036213049465896255, guid: 87e2103f0a6134448997919d658914ea,
+    type: 3}
+  m_PrefabInstance: {fileID: 3013952993359609157}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &6761634433925172334
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5221378660678582394}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 312d828c67dda474ca1c748b489d9904, type: 3}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &8539563319286679602
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -137,6 +168,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6852073702392495218, guid: 637580de43e50a4419bc7e059cd69490,
+        type: 3}
+      propertyPath: _animator
+      value: 
+      objectReference: {fileID: 6761634433925172334}
     - target: {fileID: 6970278923820607193, guid: 637580de43e50a4419bc7e059cd69490,
         type: 3}
       propertyPath: _projectilePrefab

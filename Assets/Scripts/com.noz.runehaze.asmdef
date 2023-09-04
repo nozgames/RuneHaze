@@ -3,7 +3,8 @@
     "rootNamespace": "RuneHaze",
     "references": [
         "GUID:75469ad4d38634e559750d17036d5f7c",
-        "GUID:62df718ac03a170469ca41fa4505deb0"
+        "GUID:62df718ac03a170469ca41fa4505deb0",
+        "GUID:4cb77e1bc58722e459f474a18c6622d6"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace RuneHaze
 {
-    public class Enemy : Avatar
+    public class Enemy : Character
     {
         [SerializeField] private float _attackRange = 1.0f;
         

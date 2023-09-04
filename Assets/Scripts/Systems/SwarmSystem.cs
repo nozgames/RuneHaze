@@ -12,21 +12,21 @@ namespace RuneHaze
     [CreateAssetMenu(menuName = "RuneHaze/Modules/SwarmSystem")]
     public class SwarmSystem : Module<SwarmSystem>
     {
-        public List<Avatar> _avatars;
+        public List<Character> _avatars;
         
         public override void Load()
         {
             _avatars = new();
         }
 
-        public void Add(Avatar avatar)
+        public void Add(Character character)
         {
-            _avatars.Add(avatar);
+            _avatars.Add(character);
         }
 
-        public void Remove(Avatar avatar)
+        public void Remove(Character character)
         {
-            _avatars.Remove(avatar);
+            _avatars.Remove(character);
         }
 
         public void Update()

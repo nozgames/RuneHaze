@@ -4,6 +4,7 @@
 
 */
 
+using NoZ.Tweening;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -18,6 +19,7 @@ namespace RuneHaze
         [SerializeField] private PanelSettings _panelSettings;
         [SerializeField] private GameObject _playerTest;
         [SerializeField] private GameObject _enemyTest;
+        [SerializeField] private Arena _arena;
         
         public static Game Instance { get; private set; }
 
@@ -44,18 +46,25 @@ namespace RuneHaze
             var doc = gameObject.AddComponent<UIDocument>();
             doc.panelSettings = _panelSettings;
             Root = doc.rootVisualElement.parent;
-
+            Root.AddToClassList("root");
+            
             _main = UIView.Instantiate<UI.UIMain>();
             Root.Add(_main);
         }
 
         private void Update()
         {
+            if (ArenaSystem.Instance.Current == null)
+                return;
+            
             SwarmSystem.Instance.Update();
+            WaveSystem.Instance.Update();
         }
 
         private void OnApplicationQuit()
         {
+            Stop();
+            
             for (var i = _modules.Length - 1; i >= 0; i--)
                 _modules[i].UnloadInstance();
         }
@@ -66,10 +75,38 @@ namespace RuneHaze
             _play = UIView.Instantiate<UIPlay>();
             Root.Add(_play);
             
+            ArenaSystem.Instance.LoadArena(_arena);
+
             Player = Instantiate(_playerTest).GetComponent<Player>();
+
+            WaveSystem.Instance.WaveComplete += OnWaveComplete;
+            WaveSystem.Instance.StartWave(0);
+
+//            for (int i=0; i<6; i++)
+//                Instantiate(_enemyTest);
+        }
+
+        private void Stop()
+        {
+            if (ArenaSystem.Instance.Current == null)
+                return;
+
+            WaveSystem.Instance.StopWave();
             
-            for (int i=0; i<6; i++)
-                Instantiate(_enemyTest);
+            Destroy(Player.gameObject);
+            Player = null;
+            
+            ArenaSystem.Instance.UnloadArena();
+
+            _play.Dispose();
+            _play = null;
+            
+            _main.SetDisplay(true);
+        }
+
+        private void OnWaveComplete()
+        {
+            Stop();
         }
     }
 }

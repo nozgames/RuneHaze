@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace RuneHaze
 {
-    public class Player : Avatar
+    public class Player : Character
     {
         [SerializeField] private Projectile _projectilePrefab = null;
         [SerializeField] private float _projectileFireRate = 1.0f;

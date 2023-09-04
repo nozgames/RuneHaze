@@ -9,7 +9,7 @@ using NoZ.Animations;
 
 namespace RuneHaze
 {
-    public class Avatar : Entity
+    public class Character : Entity
     {
         [SerializeField] private float _speed = 10.0f;
         [SerializeField] private float _radius = 1.0f;

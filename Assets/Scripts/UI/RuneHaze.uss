@@ -1,3 +1,20 @@
+:root {
+    --font-definition-normal: url("project://database/Assets/Fonts/Bidan-Pll7 SDF.asset");
+    --font-definition-fixed: url("project://database/Assets/Fonts/CONSOLA.ttf");
+
+    --font-size-tiny: 20px;
+    --font-size-small: 30px;
+    --font-size-normal: 40px;
+    --font-size-large: 50px;
+    --font-size-title: 70px;
+}
+
+.root
+{
+    -unity-font-definition: var(--font-definition-normal);
+    font-size: var(--font-size-large);
+}
+
 .overlay {
     position: absolute;
     top: 0;

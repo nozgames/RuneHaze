@@ -6,7 +6,8 @@
     xsi:noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd"
 >
 
-  <rh:UIPlay class="play">
+  <rh:UIPlay class="play overlay">
+    <Label name="_waveTimeRemaining" text="100"/>
   </rh:UIPlay>
 
 </UXML>

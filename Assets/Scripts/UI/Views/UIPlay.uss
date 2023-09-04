@@ -1,2 +1,6 @@
-.play {
+.play #_waveTimeRemaining {
+    margin: 32px auto;
+    color: white;
+    width: auto;
+    height: 44px;
 }

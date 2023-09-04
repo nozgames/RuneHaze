@@ -1,0 +1,24 @@
+/*
+
+    Copyright (c) 2023 NoZ Games, LLC. All rights reserved.
+
+*/
+
+using UnityEngine;
+
+namespace RuneHaze
+{
+    public static class MathExtensions
+    {
+        public static Quaternion SmoothDamp(this Quaternion current, Quaternion target, ref Vector3 currentVelocity, float smoothTime)
+        {
+            var c = current.eulerAngles;
+            var t = target.eulerAngles;
+            return Quaternion.Euler(
+                Mathf.SmoothDampAngle(c.x, t.x, ref currentVelocity.x, smoothTime),
+                Mathf.SmoothDampAngle(c.y, t.y, ref currentVelocity.y, smoothTime),
+                Mathf.SmoothDampAngle(c.z, t.z, ref currentVelocity.z, smoothTime)
+            );
+        }
+    }
+}

@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64af53d5607289447bcb96e2439b14ee, type: 3}
+  m_Name: Input
+  m_EditorClassIdentifier: 
+  _playerMove:
+    m_Name: Player Move
+    m_Type: 2
+    m_ExpectedControlType: Vector2
+    m_Id: 54f33eed-c193-407b-ac42-5e4cd129409d
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 1c647765-c250-4209-ac82-378d44f087ab
+      m_Path: <Gamepad>/leftStick
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player Move
+      m_Flags: 0
+    - m_Name: 2D Vector
+      m_Id: a3460e71-b509-431c-b401-9557558a3408
+      m_Path: 2DVector
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player Move
+      m_Flags: 4
+    - m_Name: up
+      m_Id: 50933c1c-e69e-4a21-a345-bde217848723
+      m_Path: <Keyboard>/w
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player Move
+      m_Flags: 8
+    - m_Name: down
+      m_Id: a1b73452-e88b-4d9c-ba40-af2041ee9348
+      m_Path: <Keyboard>/s
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player Move
+      m_Flags: 8
+    - m_Name: left
+      m_Id: dfbfbb16-3edc-4464-b924-f586cd396470
+      m_Path: <Keyboard>/a
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player Move
+      m_Flags: 8
+    - m_Name: right
+      m_Id: d90bec1b-1f4b-40be-aee3-baca4dc7594a
+      m_Path: <Keyboard>/d
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player Move
+      m_Flags: 8
+    m_Flags: 0

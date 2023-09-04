@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6852073702392495218}
   - component: {fileID: 6721834943793274287}
   - component: {fileID: 6710408580352196556}
+  - component: {fileID: 7066542473892680058}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -51,6 +52,7 @@ MonoBehaviour:
   _radius: 1
   _rotationDampen: 0.05
   _animationController: {fileID: 6852073702392495218}
+  _health: {fileID: 7066542473892680058}
   _idleAnimation: {fileID: 11400000, guid: f57f89f8b53ec434b877a991f07c9e68, type: 2}
   _runAnimation: {fileID: 11400000, guid: 53594bca17b54564c86a42881679b3fb, type: 2}
   _projectilePrefab: {fileID: 0}
@@ -122,3 +124,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &7066542473892680058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3032268773931307367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de32866f15e160c4c8d7c80f415e29b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _max: 10

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3449678284699264486}
   - component: {fileID: 6852073702392495218}
   - component: {fileID: 6237319856483725080}
+  - component: {fileID: 2777436666599831056}
   - component: {fileID: 673175614131189497}
   - component: {fileID: -8189853634098974016}
   m_Layer: 7
@@ -64,9 +65,53 @@ MonoBehaviour:
   _radius: 0.25
   _rotationDampen: 0.05
   _animationController: {fileID: 6852073702392495218}
+  _health: {fileID: 2777436666599831056}
   _idleAnimation: {fileID: 11400000, guid: f57f89f8b53ec434b877a991f07c9e68, type: 2}
   _runAnimation: {fileID: 11400000, guid: 53594bca17b54564c86a42881679b3fb, type: 2}
   _attackRange: 1
+--- !u!114 &2777436666599831056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3032268773931307367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de32866f15e160c4c8d7c80f415e29b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _max: 2
+  OnDamage:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6237319856483725080}
+        m_TargetAssemblyTypeName: RuneHaze.Avatar, com.noz.runehaze
+        m_MethodName: OnDamage
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6237319856483725080}
+        m_TargetAssemblyTypeName: RuneHaze.Avatar, com.noz.runehaze
+        m_MethodName: OnDeath
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!136 &673175614131189497
 CapsuleCollider:
   m_ObjectHideFlags: 0

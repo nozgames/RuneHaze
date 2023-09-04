@@ -1,0 +1,10 @@
+.main {
+    background-color: black;
+}
+
+.main #_playButton {
+    margin: auto;
+    --unity-image: url("project://database/Assets/Sprites/Icons/IconPlay.png");
+    width: 128px;
+    height: 128px;
+}

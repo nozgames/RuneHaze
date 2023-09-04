@@ -1,0 +1,18 @@
+{
+    "name": "com.noz.RuneHaze.Editor",
+    "rootNamespace": "RuneHaze",
+    "references": [
+        "GUID:a9d70c59b635bb64fb0f42dcf7ffd1fc"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -14,6 +14,8 @@ namespace RuneHaze
         
         public LayerMask HitMask { get; set; }
 
+        public UnityEngine.Events.UnityEvent<Entity> OnHit = new();
+
         private void Update()
         {
             transform.position += transform.forward * (_speed * Time.deltaTime);
@@ -24,11 +26,9 @@ namespace RuneHaze
         
         private void OnCollisionEnter(Collision other)
         {
-            var enemy = other.collider.GetComponent<Avatar>();
-            if (null != enemy)
-            {
-                Debug.Log("Hit!");
-            }
+            var entity = other.collider.GetComponent<Entity>();
+            if (null != entity)
+                OnHit.Invoke(entity);
 
             Destroy(gameObject);
         }

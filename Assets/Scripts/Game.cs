@@ -4,20 +4,29 @@
 
 */
 
-using System;
 using UnityEngine;
+using UnityEngine.UIElements;
+
+using RuneHaze.UI;
 
 namespace RuneHaze
 {
     public class Game : MonoBehaviour
     {
         [SerializeField] private Module[] _modules;
+        [SerializeField] private VisualTreeFactory _uiFactory;
+        [SerializeField] private PanelSettings _panelSettings;
         [SerializeField] private GameObject _playerTest;
         [SerializeField] private GameObject _enemyTest;
         
         public static Game Instance { get; private set; }
 
+        private UIMain _main;
+        private UIPlay _play;
+        
         public Player Player { get; private set; }
+        
+        public VisualElement Root { get; private set; }
         
         private void Awake()
         {
@@ -29,7 +38,15 @@ namespace RuneHaze
             foreach (var module in _modules)
                 module.LoadInstance();
 
-            Play();
+            VisualTreeFactory.Instance = _uiFactory;
+
+            // Create a document for the root ui
+            var doc = gameObject.AddComponent<UIDocument>();
+            doc.panelSettings = _panelSettings;
+            Root = doc.rootVisualElement.parent;
+
+            _main = UIView.Instantiate<UI.UIMain>();
+            Root.Add(_main);
         }
 
         private void Update()
@@ -43,8 +60,12 @@ namespace RuneHaze
                 _modules[i].UnloadInstance();
         }
 
-        private void Play()
+        public void Play()
         {
+            _main.SetDisplay(false);
+            _play = UIView.Instantiate<UIPlay>();
+            Root.Add(_play);
+            
             Player = Instantiate(_playerTest).GetComponent<Player>();
             
             for (int i=0; i<6; i++)

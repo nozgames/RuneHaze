@@ -4,13 +4,12 @@
 
 */
 
-using System;
-using NoZ.Animations;
 using UnityEngine;
+using NoZ.Animations;
 
 namespace RuneHaze
 {
-    public class Avatar : MonoBehaviour
+    public class Avatar : Entity
     {
         [SerializeField] private float _speed = 10.0f;
         [SerializeField] private float _radius = 1.0f;
@@ -33,18 +32,12 @@ namespace RuneHaze
         public float Radius => _radius;
         public float Speed => _speed;
 
-        protected virtual void Start()
+        protected override void Start()
         {
+            base.Start();
+            
             _rotation = transform.rotation;
             PlayAnimation(_idleAnimation);
-        }
-
-        protected virtual void OnEnable()
-        {
-        }
-
-        protected virtual void OnDisable()
-        {
         }
         
         protected virtual void Update()
@@ -71,6 +64,15 @@ namespace RuneHaze
         public void PlayAnimation(AnimationShader animation)
         {
             _animationController.Play(animation);
+        }
+
+        public void OnDamage(int amount)
+        {
+        }
+
+        public void OnDeath()
+        {
+            Destroy(gameObject);
         }
     }
 }

@@ -132,6 +132,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1875886966373548099}
   m_PrefabAsset: {fileID: 0}
+--- !u!137 &3368000706396595888 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3798214047891171059, guid: a7e12b6808338a94dabd3969dcae5e7a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1875886966373548099}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8912020292610227580 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7036213049465896255, guid: a7e12b6808338a94dabd3969dcae5e7a,
@@ -167,6 +173,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2777436666599831056, guid: 3c3c0881051840144bb9d1dcc60cd082,
+        type: 3}
+      propertyPath: _max
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3032268773931307367, guid: 3c3c0881051840144bb9d1dcc60cd082,
         type: 3}
       propertyPath: m_Name
@@ -227,6 +238,22 @@ PrefabInstance:
       propertyPath: _speed
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 6237319856483725080, guid: 3c3c0881051840144bb9d1dcc60cd082,
+        type: 3}
+      propertyPath: _hitAnimation
+      value: 
+      objectReference: {fileID: 11400000, guid: eff948ae6e9245545a5a52c7f88f692d,
+        type: 2}
+    - target: {fileID: 6237319856483725080, guid: 3c3c0881051840144bb9d1dcc60cd082,
+        type: 3}
+      propertyPath: _renderers.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6237319856483725080, guid: 3c3c0881051840144bb9d1dcc60cd082,
+        type: 3}
+      propertyPath: _renderers.Array.data[0]
+      value: 
+      objectReference: {fileID: 3368000706396595888}
     - target: {fileID: 6852073702392495218, guid: 3c3c0881051840144bb9d1dcc60cd082,
         type: 3}
       propertyPath: _animator

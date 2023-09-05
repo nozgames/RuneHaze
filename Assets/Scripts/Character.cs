@@ -21,6 +21,11 @@ namespace RuneHaze
         [SerializeField] private AnimationShader _idleAnimation;
         [SerializeField] private AnimationShader _runAnimation;
         [SerializeField] private AnimationShader _deathAnimation;
+        [SerializeField] private AnimationShader _hitAnimation;
+        
+        [Header("Renderers")]
+        [SerializeField] private Renderer[] _renderers;
+        
         
         private Quaternion _rotation = Quaternion.identity;
         private Vector3 _rotationSmooth;
@@ -68,16 +73,38 @@ namespace RuneHaze
             transform.rotation = transform.rotation.SmoothDamp(_rotation, ref _rotationSmooth, _rotationDampen);
         }
         
-        public void PlayAnimation(AnimationShader animation)
+        public void PlayAnimation(AnimationShader animation, BlendedAnimationController.AnimationCompleteDelegate onComplete = null)
         {
             if (null == animation)
                 return;
             
-            _animationController.Play(animation);
+            _animationController.Play(animation, onComplete: onComplete);
         }
 
         public void OnDamage(Entity source, int amount)
         {
+            if (_hitAnimation != null)
+                PlayAnimation(_hitAnimation, onComplete: () =>
+                {
+                    if (IsMoving)
+                        _animationController.Play(_runAnimation);
+                    else
+                        _animationController.Play(_idleAnimation);                
+                });
+            
+            if (_renderers != null)
+            {
+                var tween = Tween.Group(gameObject);
+                foreach (var renderer in _renderers)
+                {
+                    var material = renderer.material;
+                    var flashId = Shader.PropertyToID("_Flash");
+                    tween.Element(material.TweenFloat(flashId, 1, 0).EaseOutExponential().Duration(0.2f));
+                }
+
+                tween.Play();
+            }
+
         }
 
         public virtual void OnDeath(Entity source)

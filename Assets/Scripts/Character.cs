@@ -16,6 +16,7 @@ namespace RuneHaze
         [SerializeField] private float _radius = 1.0f;
         [SerializeField] private float _rotationDampen = 0.05f;
         [SerializeField] private BlendedAnimationController _animationController = null;
+        [SerializeField] private Animator _animator = null;
         
         [Header("Animations")]
         [SerializeField] private AnimationShader _idleAnimation;
@@ -29,6 +30,8 @@ namespace RuneHaze
         
         private Quaternion _rotation = Quaternion.identity;
         private Vector3 _rotationSmooth;
+        
+        public Animator Animator => _animator;
         
         public Vector3 MovementDirection { get; protected set; }
         
@@ -55,17 +58,19 @@ namespace RuneHaze
                 return;
             
             var movement = MovementDirection;
-            transform.position += movement * _speed * Time.deltaTime;
+            transform.position = ArenaSystem.Instance.ConstrainPosition(transform.position + movement * _speed * Time.deltaTime, Radius);
             
             var moving = MovementDirection.sqrMagnitude > 0.01f;
             if (IsMoving != moving)
             {
                 IsMoving = moving;
-                if (IsMoving)
-                    _animationController.Play(_runAnimation);
-                else
-                    _animationController.Play(_idleAnimation);
+                // if (IsMoving)
+                //     _animationController.Play(_runAnimation);
+                // else
+                //     _animationController.Play(_idleAnimation);
             }
+
+            _animator.SetFloat("Speed", IsMoving ? _speed : 0.0f);
 
             if (LookAt.sqrMagnitude > 0.1f)
                 _rotation = Quaternion.LookRotation(LookAt, Vector3.up);
@@ -78,7 +83,7 @@ namespace RuneHaze
             if (null == animation)
                 return;
             
-            _animationController.Play(animation, onComplete: onComplete);
+            //_animationController.Play(animation, onComplete: onComplete);
         }
 
         public void OnDamage(Entity source, int amount)
@@ -86,10 +91,10 @@ namespace RuneHaze
             if (_hitAnimation != null)
                 PlayAnimation(_hitAnimation, onComplete: () =>
                 {
-                    if (IsMoving)
-                        _animationController.Play(_runAnimation);
-                    else
-                        _animationController.Play(_idleAnimation);                
+                    // if (IsMoving)
+                    //     _animationController.Play(_runAnimation);
+                    // else
+                    //     _animationController.Play(_idleAnimation);                
                 });
             
             if (_renderers != null)

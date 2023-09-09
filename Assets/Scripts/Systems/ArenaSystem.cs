@@ -27,15 +27,27 @@ namespace RuneHaze
             var z = Random.Range(-Bounds.min.z * 0.5f + enemy.Radius, Bounds.max.z * 0.5f + enemy.Radius);
             return new Vector3(x, 0, z);
         }
+
+        public Vector3 ConstrainPosition(Vector3 position, float radius)
+        {
+            var minX = Bounds.min.x + radius;
+            var maxX = Bounds.max.x - radius;
+            var minZ = Bounds.min.z + radius;
+            var maxZ = Bounds.max.z - radius;
+            
+            position.x = Mathf.Clamp(position.x, minX, maxX);
+            position.z = Mathf.Clamp(position.z, minZ, maxZ);
+
+            return position;
+        }
         
         public void LoadArena(Arena arena)
         {
             Current = arena;
 
             Bounds = new Bounds(Vector3.zero + Vector3.up * 5, new Vector3(arena.Size.x, 10, arena.Size.y));
-            CameraSystem.Instance.Bounds = Bounds;
+            CameraSystem.Instance.Bounds = new Bounds(Vector3.zero + Vector3.up * 5, new Vector3(arena.CameraSize.x, 10, arena.CameraSize.y));;
             _arenaInstance = arena.Instantiate();
-
         }
 
         public void UnloadArena()

@@ -67,7 +67,7 @@ namespace RuneHaze
                 var enemy = WaveSystem.Instance.Current.GetRandomEnemy();
                 var position = ArenaSystem.Instance.GetRandomSpawnPosition(enemy);
                 var playerLook = (Game.Instance.Player.transform.position - position).normalized; 
-                ArenaSystem.Instance.InstantiateEntity(enemy, position, Quaternion.LookRotation(playerLook));
+//                ArenaSystem.Instance.InstantiateEntity(enemy, position, Quaternion.LookRotation(playerLook));
             }
         }
     }

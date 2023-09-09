@@ -63,12 +63,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _health: {fileID: 2777436666599831056}
   _speed: 4
-  _radius: 0.25
+  _radius: 0.3
   _rotationDampen: 0.05
   _animationController: {fileID: 6852073702392495218}
   _idleAnimation: {fileID: 11400000, guid: f57f89f8b53ec434b877a991f07c9e68, type: 2}
   _runAnimation: {fileID: 11400000, guid: 53594bca17b54564c86a42881679b3fb, type: 2}
   _deathAnimation: {fileID: 11400000, guid: f53c2bdf632942740a7e414f09f698a6, type: 2}
+  _hitAnimation: {fileID: 0}
+  _renderers: []
   _attackRange: 1
 --- !u!114 &2777436666599831056
 MonoBehaviour:

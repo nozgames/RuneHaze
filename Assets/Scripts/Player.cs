@@ -58,6 +58,10 @@ namespace RuneHaze
                 }
             }
 
+            Animator.SetTrigger("Attack");
+
+            _projectileFireTimer = 0.0f;
+            
             if (closestEnemy == null)
                 return;
             

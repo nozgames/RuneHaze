@@ -5,34 +5,37 @@
 */
 
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace RuneHaze
 {
     [CreateAssetMenu(menuName = "RuneHaze/Modules/ArenaSystem")]
     public class ArenaSystem : Module<ArenaSystem>
     {
-        [SerializeField] private Vector2 _arenaSize = new(10, 10);
+        public Bounds Bounds { get; private set; }
         
         private GameObject _arenaInstance;
         
         public Arena Current { get; private set; }
-        
+
         public bool IsOutOfBounds(Vector3 position) =>
-            position.x < -_arenaSize.x * 0.5f || position.x > _arenaSize.x * 0.5f ||
-            position.z < -_arenaSize.y * 0.5f || position.z > _arenaSize.y * 0.5f;
+            !Bounds.Contains(position);
 
         public Vector3 GetRandomSpawnPosition(Enemy enemy)
         {
-            var x = Random.Range(-_arenaSize.x * 0.5f + enemy.Radius, _arenaSize.x * 0.5f + enemy.Radius); 
-            var z = Random.Range(-_arenaSize.y * 0.5f + enemy.Radius, _arenaSize.y * 0.5f + enemy.Radius);
+            var x = Random.Range(-Bounds.min.x * 0.5f + enemy.Radius, Bounds.max.x * 0.5f + enemy.Radius); 
+            var z = Random.Range(-Bounds.min.z * 0.5f + enemy.Radius, Bounds.max.z * 0.5f + enemy.Radius);
             return new Vector3(x, 0, z);
         }
         
         public void LoadArena(Arena arena)
         {
             Current = arena;
-            
+
+            Bounds = new Bounds(Vector3.zero + Vector3.up * 5, new Vector3(arena.Size.x, 10, arena.Size.y));
+            CameraSystem.Instance.Bounds = Bounds;
             _arenaInstance = arena.Instantiate();
+
         }
 
         public void UnloadArena()

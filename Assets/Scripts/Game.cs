@@ -20,6 +20,7 @@ namespace RuneHaze
         [SerializeField] private GameObject _playerTest;
         [SerializeField] private GameObject _enemyTest;
         [SerializeField] private Arena _arena;
+        [SerializeField] private Camera _camera;
         
         public static Game Instance { get; private set; }
 
@@ -40,6 +41,8 @@ namespace RuneHaze
             foreach (var module in _modules)
                 module.LoadInstance();
 
+            CameraSystem.Instance.Camera = _camera;
+            
             VisualTreeFactory.Instance = _uiFactory;
 
             // Create a document for the root ui

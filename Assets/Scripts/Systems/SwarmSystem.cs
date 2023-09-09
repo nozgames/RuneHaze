@@ -40,16 +40,17 @@ namespace RuneHaze
                 {
                     var otherAvatar = _avatars[otherIndex];
                     var positionDelta = avatar.transform.position - otherAvatar.transform.position;
-                    var distanceSqr = positionDelta.sqrMagnitude;
+                    var distance = positionDelta.magnitude;
                     var acceptableDistance = avatar.Radius + otherAvatar.Radius;
-                    var acceptableDistanceSqr = acceptableDistance * acceptableDistance;
-                    if (distanceSqr < acceptableDistanceSqr)
+                    
+                    if (distance < acceptableDistance)
                     {
+                        var strength = 1.0f - (distance / acceptableDistance);
                         var moveDir = positionDelta.normalized;
                         if (moveDir.sqrMagnitude < 0.1f)
                             moveDir = Vector3.right; // new Vector3(Random.value - 0.5f, 0, Random.value - 0.5f).normalized;
 
-                        move += moveDir * avatar.Speed * Time.deltaTime; 
+                        move += moveDir * avatar.Speed * Time.deltaTime * strength; 
                     }
                 }
 

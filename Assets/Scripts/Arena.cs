@@ -12,10 +12,13 @@ namespace RuneHaze
     public class Arena : ScriptableObject
     {
         [SerializeField] private GameObject _prefab;
+        [SerializeField] private Vector2 _size;
         [SerializeField] private Wave[] _waves;
         
         public int WaveCount => _waves.Length;
 
+        public Vector2 Size => _size;
+        
         public Wave GetWave(int waveIndex) => _waves[waveIndex];
         
         public GameObject Instantiate()

@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Grasslands
   m_EditorClassIdentifier: 
   _prefab: {fileID: 4442001965440068010, guid: 97027bfbb787ebb40994d91bf07e8dea, type: 3}
+  _size: {x: 10.5, y: 10}
   _waves:
   - {fileID: 11400000, guid: 1bcd1bf906955a1409b2279c37dc93a3, type: 2}

@@ -12,6 +12,12 @@ namespace RuneHaze
     public class Enemy : Character
     {
         [SerializeField] private float _attackRange = 1.0f;
+
+        protected override void Start()
+        {
+            base.Start();
+            transform.localScale = Vector3.one * Random.Range(0.9f, 1.1f);
+        }
         
         protected override void OnEnable()
         {

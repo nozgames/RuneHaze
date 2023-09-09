@@ -69,6 +69,11 @@ namespace RuneHaze
             projectile.Owner = this;
             projectile.HitMask = _projectileMask;
         }
+
+        protected void LateUpdate()
+        {
+            CameraSystem.Instance.Focus(transform);
+        }
     }
 }
 

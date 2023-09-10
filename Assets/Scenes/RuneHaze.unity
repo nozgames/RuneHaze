@@ -165,10 +165,13 @@ MonoBehaviour:
   _panelSettings: {fileID: 11400000, guid: 125a407e8e69aa743894fbe260ccfad3, type: 2}
   _playerTest: {fileID: 6671616631307147605, guid: 99cf81cd63ba73440a06ebef98b5ebcd,
     type: 3}
-  _enemyTest: {fileID: 8100230857397373107, guid: 82e81f13943744d4bb87ec056311796f,
-    type: 3}
   _arena: {fileID: 11400000, guid: 7d4b0cd135bb1764bb6f69fec4ee0be1, type: 2}
   _camera: {fileID: 330585545}
+  _postProcessProfile: {fileID: 11400000, guid: a6560a915ef98420e9faacc1c7438823,
+    type: 2}
+  _healthColor: {r: 1, g: 0, b: 0, a: 1}
+  _healthRange: {x: 0.6, y: 0}
+  _healthIntensity: {x: 0, y: 0.6}
 --- !u!4 &3199457
 Transform:
   m_ObjectHideFlags: 0

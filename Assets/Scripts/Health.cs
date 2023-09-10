@@ -20,6 +20,8 @@ namespace RuneHaze
         public int Max => _max;
         
         public int Current { get; private set; }
+        
+        public float Percent => (float)Current / _max;
 
         private void Awake()
         {

@@ -4,7 +4,6 @@
 
 */
 
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using NoZ.Animations;
@@ -20,12 +19,6 @@ namespace RuneHaze
         [SerializeField] private BlendedAnimationController _animationController = null;
         [SerializeField] private Animator _animator = null;
         
-        [Header("Animations")]
-        [SerializeField] private AnimationShader _idleAnimation;
-        [SerializeField] private AnimationShader _runAnimation;
-        [SerializeField] private AnimationShader _deathAnimation;
-        [SerializeField] private AnimationShader _hitAnimation;
-        
         [Header("Renderers")]
         [SerializeField] private Renderer[] _renderers;
         
@@ -38,6 +31,7 @@ namespace RuneHaze
         #region Events
         public event System.Action<Character> PreUpdateEvent;
         public event System.Action<Character> PostUpdateEvent;
+        public event System.Action<Character> UpdateStatsEvent;
         #endregion
         
         
@@ -81,7 +75,8 @@ namespace RuneHaze
                 AddRune(runeFactory);
             
             _rotation = transform.rotation;
-            PlayAnimation(_idleAnimation);
+
+            UpdateStats();
         }
         
         public CharacterStatValue GetStatValue(CharacterStat stat)
@@ -92,6 +87,17 @@ namespace RuneHaze
             
             return null;
         }
+
+        private void UpdateStats()
+        {
+            foreach (var stat in _statValues)
+                stat.Reset();
+            
+            UpdateStatsEvent?.Invoke(this);
+            
+            foreach (var stat in _statValues)
+                stat.UpdateValue();
+        }
         
         public void AddRune(RuneFactory runeFactory)
         {
@@ -101,11 +107,15 @@ namespace RuneHaze
         public void AddModifier(CharacterModifier modifier)
         {
             _modifiers.Add(modifier);
+
+            UpdateStats();
         }
 
         public void RemoveModifier(CharacterModifier modifier)
         {
             _modifiers.Remove(modifier);
+            
+            UpdateStats();
         }
         
         protected virtual void Update()
@@ -122,10 +132,6 @@ namespace RuneHaze
             if (IsMoving != moving)
             {
                 IsMoving = moving;
-                // if (IsMoving)
-                //     _animationController.Play(_runAnimation);
-                // else
-                //     _animationController.Play(_idleAnimation);
             }
 
             _animator.SetFloat("Speed", IsMoving ? _speed : 0.0f);
@@ -138,25 +144,16 @@ namespace RuneHaze
             PostUpdateEvent?.Invoke(this);
         }
         
-        public void PlayAnimation(AnimationShader animation, BlendedAnimationController.AnimationCompleteDelegate onComplete = null)
+        public void PlayAnimation(string animationName)
         {
-            if (null == animation)
+            if (string.IsNullOrEmpty(animationName))
                 return;
-            
-            //_animationController.Play(animation, onComplete: onComplete);
+
+            _animator.SetTrigger(animationName);
         }
 
         public void OnDamage(Entity source, int amount)
         {
-            if (_hitAnimation != null)
-                PlayAnimation(_hitAnimation, onComplete: () =>
-                {
-                    // if (IsMoving)
-                    //     _animationController.Play(_runAnimation);
-                    // else
-                    //     _animationController.Play(_idleAnimation);                
-                });
-            
             if (_renderers != null)
             {
                 var tween = Tween.Group(gameObject);
@@ -180,7 +177,7 @@ namespace RuneHaze
             
             var direction = (transform.position - source.transform.position).normalized;
 
-            PlayAnimation(_deathAnimation);
+//            PlayAnimation(_deathAnimation);
 
             Tween.Group(gameObject)
                 .Element(transform.TweenLocalScale(0.0f).EaseInCubic().Duration(0.30f))

@@ -22,14 +22,14 @@ namespace RuneHaze
             _arcCos = Mathf.Cos(_angle * Mathf.Deg2Rad * 0.5f);
         }
         
-        public override void Do(Character attacker, Character target, float baseDamage)
+        public override void Do(Character attacker, Character target, float range, float baseDamage)
         {
             Assert.IsNotNull(attacker);
             Assert.IsNotNull(target);
             
             var attackerPosition = attacker.transform.position;
             var targetDir = (target.transform.position - attackerPosition).normalized;
-            var count = Physics.OverlapSphereNonAlloc(attackerPosition, 5.0f, _colliders, 1 << target.gameObject.layer);
+            var count = Physics.OverlapSphereNonAlloc(attackerPosition, range, _colliders, 1 << target.gameObject.layer);
             for (var i = 0; i < count; i++)
             {
                 var colliderCharacter = _colliders[i].GetComponentInParent<Character>();

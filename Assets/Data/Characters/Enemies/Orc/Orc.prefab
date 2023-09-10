@@ -182,6 +182,11 @@ PrefabInstance:
       propertyPath: _renderers.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6237319856483725080, guid: 3c3c0881051840144bb9d1dcc60cd082,
+        type: 3}
+      propertyPath: _renderers.Array.data[0]
+      value: 
+      objectReference: {fileID: 5788042448542638217}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -276,6 +281,12 @@ PrefabInstance:
 --- !u!4 &2934351163021582068 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -3720432163476186994, guid: c1a35d1388d7244468d65b96e8c18bb1,
+    type: 3}
+  m_PrefabInstance: {fileID: 7270699297685341818}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &5788042448542638217 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3798214047891171059, guid: c1a35d1388d7244468d65b96e8c18bb1,
     type: 3}
   m_PrefabInstance: {fileID: 7270699297685341818}
   m_PrefabAsset: {fileID: 0}

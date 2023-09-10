@@ -12,14 +12,13 @@ namespace RuneHaze
     [CreateAssetMenu(menuName = "RuneHaze/Modules/AttackSystem")]
     public class AttackSystem : Module<AttackSystem>
     {
-        [SerializeField] private CharacterStat _damageStat;
-        
         public int CalculateDamage(Character attacker, Character target, float baseDamage)
         {
-            Assert.IsNotNull(_damageStat);
+            Assert.IsNotNull(StatSystem.Instance);
+            Assert.IsNotNull(StatSystem.Instance.DamageStat);
             Assert.IsNotNull(attacker);
             
-            var damage = attacker.GetStatValue(_damageStat).Value * baseDamage;
+            var damage = attacker.GetStatValue(StatSystem.Instance.DamageStat).Value * baseDamage;
             return Mathf.Max((int)damage, 1);
         }
     }

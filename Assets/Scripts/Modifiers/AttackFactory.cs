@@ -12,7 +12,6 @@ namespace RuneHaze
     public class AttackFactory : CharacterModifierFactory
     {
         [SerializeField] private float _cooldown;
-        [SerializeField] private float _range;
         [SerializeField] private string _animation;
         [SerializeField] private AttackHandler _prefab;
         [SerializeField] private bool _requireTarget = true;
@@ -25,7 +24,7 @@ namespace RuneHaze
         }
         
         public bool CheckRange(Character character, Character target) =>
-            Vector3.Distance(character.transform.position, target.transform.position) < _range;
+            Vector3.Distance(character.transform.position, target.transform.position) < character.GetStatValue(StatSystem.Instance.RangeStat).Value;
         
         public bool CheckCooldown(float timeSinceLastAttack) =>
             timeSinceLastAttack > _cooldown;
@@ -34,9 +33,13 @@ namespace RuneHaze
         {
             // TODO animation
             
+            character.PlayAnimation(_animation);
+
+            var range = character.GetStatValue(StatSystem.Instance.RangeStat).Value;
+            
             // TODO pooling
             var handler = Instantiate(_prefab, character.transform.position, Quaternion.LookRotation(character.transform.forward));
-            handler.Do(character, target, baseDamage);
+            handler.Do(character, target, range, baseDamage);
             return handler;
         }
     }

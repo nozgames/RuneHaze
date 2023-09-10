@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1c0fafd8c519c046923a00346c6f8f8, type: 3}
-  m_Name: Range
+  m_Script: {fileID: 11500000, guid: e4013fa6646a40648ac3e94f1e1223f8, type: 3}
+  m_Name: StatSystem
   m_EditorClassIdentifier: 
-  _min: 0.1
-  _max: 100
-  _percent: 0
+  _damage: {fileID: 11400000, guid: 36922422db6706648a70cb1ba9e2d54d, type: 2}
+  _range: {fileID: 11400000, guid: 4c001c19d75889343a39fda5a1211c25, type: 2}

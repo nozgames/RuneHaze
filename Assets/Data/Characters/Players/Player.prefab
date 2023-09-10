@@ -53,10 +53,6 @@ MonoBehaviour:
   _rotationDampen: 0.05
   _animationController: {fileID: 0}
   _animator: {fileID: 0}
-  _idleAnimation: {fileID: 0}
-  _runAnimation: {fileID: 0}
-  _deathAnimation: {fileID: 0}
-  _hitAnimation: {fileID: 0}
   _renderers: []
   _stats:
   - {fileID: 11400000, guid: baf09e72ea368164bba93fa55bf5cd6f, type: 2}
@@ -65,12 +61,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 64515532d5090c8439990dd47aba9e4b, type: 2}
   - {fileID: 11400000, guid: 36922422db6706648a70cb1ba9e2d54d, type: 2}
   _defaultRunes: []
-  _projectilePrefab: {fileID: 0}
-  _projectileFireRate: 1
-  _projectileRadius: 5
-  _projectileMask:
+  _targetMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
 --- !u!136 &6721834943793274287
 CapsuleCollider:
   m_ObjectHideFlags: 0

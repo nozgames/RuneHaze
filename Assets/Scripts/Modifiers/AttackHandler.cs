@@ -17,7 +17,7 @@ namespace RuneHaze
         [Tooltip("Modifiers to apply to the target when the attack hits")]
         [SerializeField] private CharacterModifierApplicator[] _targetModifiers;
         
-        public abstract void Do(Character attacker, Character target, float baseDamage);
+        public abstract void Do(Character attacker, Character target, float range, float baseDamage);
         
         protected void ApplyModifiers(Character attacker, Character target)
         {

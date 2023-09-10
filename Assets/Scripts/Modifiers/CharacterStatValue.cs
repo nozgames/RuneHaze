@@ -4,13 +4,23 @@
 
 */
 
+using UnityEngine;
+
 namespace RuneHaze
 {
     public class CharacterStatValue
     {
+        private float _min;
+        
         public CharacterStat Stat { get; private set; }
 
         public float BaseValue { get; }
+
+        public float Min
+        {
+            get => _min;
+            set => _min = Mathf.Max(_min, value);
+        }
         
         public float Value { get; private set; }
         
@@ -30,11 +40,12 @@ namespace RuneHaze
         {
             Multiply = 1.0f;
             Add = 0.0f;
+            Min = BaseValue;
         }
 
         public void UpdateValue()
         {
-            Value = (BaseValue + Add) * Multiply;
+            Value = (Min + Add) * Multiply;
         }
     }
 }

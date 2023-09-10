@@ -22,7 +22,7 @@ namespace RuneHaze
             Factory = factory;
             Character.PostUpdateEvent += OnPostUpdate;
         }
-
+        
         public override void Dispose()
         {
             Character.PostUpdateEvent -= OnPostUpdate;

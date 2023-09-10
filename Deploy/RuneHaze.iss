@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "RuneHaze"
-#define MyAppVersion "0.1.0"
+#define MyAppVersion "0.1.1"
 #define MyAppPublisher "NoZ Games, LLC"
 #define MyAppURL "http://www.nozgames.com/runehaze"
 #define MyAppExeName "RuneHaze.exe"
@@ -29,6 +29,7 @@ OutputBaseFilename=RuneHaze_{#MyAppVersion}
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
+SetupIconFile=RuneHaze128.ico
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"

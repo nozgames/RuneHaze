@@ -44,6 +44,8 @@ namespace RuneHaze
 
                 enemyDirection = enemyDirection.normalized;
             }
+            
+            Target = closestEnemy;
 
             base.Update();
             

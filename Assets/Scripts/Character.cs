@@ -4,6 +4,8 @@
 
 */
 
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using NoZ.Animations;
 using NoZ.Tweening;
@@ -27,11 +29,27 @@ namespace RuneHaze
         [Header("Renderers")]
         [SerializeField] private Renderer[] _renderers;
         
+        [Space]
+        [SerializeField] private CharacterStat[] _stats = null;
+
+        [Space]
+        [SerializeField] private RuneFactory[] _defaultRunes = null;
         
+        #region Events
+        public event System.Action<Character> PreUpdateEvent;
+        public event System.Action<Character> PostUpdateEvent;
+        #endregion
+        
+        
+        private List<Rune> _runes = new();
+        private List<CharacterModifier> _modifiers = new();
         private Quaternion _rotation = Quaternion.identity;
         private Vector3 _rotationSmooth;
+        private CharacterStatValue[] _statValues = null;
         
         public Animator Animator => _animator;
+        
+        public Character Target { get; protected set; }
         
         public Vector3 MovementDirection { get; protected set; }
         
@@ -44,18 +62,58 @@ namespace RuneHaze
         public float Radius => _radius;
         public float Speed => _speed;
 
+        public IEnumerable<Rune> Runes => _runes;
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            _statValues = new CharacterStatValue[_stats.Length];
+            for (var i = 0; i < _stats.Length; i++)
+                _statValues[i] = new CharacterStatValue(_stats[i]);
+        }
+
         protected override void Start()
         {
             base.Start();
+
+            foreach (var runeFactory in _defaultRunes)
+                AddRune(runeFactory);
             
             _rotation = transform.rotation;
             PlayAnimation(_idleAnimation);
+        }
+        
+        public CharacterStatValue GetStatValue(CharacterStat stat)
+        {
+            for (var i = 0; i < _stats.Length; i++)
+                if (_stats[i] == stat)
+                    return _statValues[i];
+            
+            return null;
+        }
+        
+        public void AddRune(RuneFactory runeFactory)
+        {
+            _runes.Add(runeFactory.Create(this));
+        }
+
+        public void AddModifier(CharacterModifier modifier)
+        {
+            _modifiers.Add(modifier);
+        }
+
+        public void RemoveModifier(CharacterModifier modifier)
+        {
+            _modifiers.Remove(modifier);
         }
         
         protected virtual void Update()
         {
             if (IsDead)
                 return;
+
+            PreUpdateEvent?.Invoke(this);
             
             var movement = MovementDirection;
             transform.position = ArenaSystem.Instance.ConstrainPosition(transform.position + movement * _speed * Time.deltaTime, Radius);
@@ -76,6 +134,8 @@ namespace RuneHaze
                 _rotation = Quaternion.LookRotation(LookAt, Vector3.up);
 
             transform.rotation = transform.rotation.SmoothDamp(_rotation, ref _rotationSmooth, _rotationDampen);
+            
+            PostUpdateEvent?.Invoke(this);
         }
         
         public void PlayAnimation(AnimationShader animation, BlendedAnimationController.AnimationCompleteDelegate onComplete = null)

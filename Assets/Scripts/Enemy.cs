@@ -38,6 +38,9 @@ namespace RuneHaze
         protected override void Update()
         {
             var player = Game.Instance.Player;
+
+            Target = player;
+            
             var delta = (player.transform.position - transform.position);
             var lookDir = delta.normalized;
             MovementDirection = delta.sqrMagnitude > _attackRange * _attackRange 

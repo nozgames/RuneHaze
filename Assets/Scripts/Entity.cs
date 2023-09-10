@@ -14,6 +14,10 @@ namespace RuneHaze
         [SerializeField] private Health _health = null;
 
         public Health Health => _health;
+
+        protected virtual void Awake()
+        {
+        }
         
         protected virtual void Start()
         {

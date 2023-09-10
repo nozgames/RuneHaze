@@ -163,7 +163,7 @@ MonoBehaviour:
   _uiFactory: {fileID: -2017830929143987780, guid: 387898909e673ad43973c2015bf515f0,
     type: 3}
   _panelSettings: {fileID: 11400000, guid: 125a407e8e69aa743894fbe260ccfad3, type: 2}
-  _playerTest: {fileID: 6671616631307147605, guid: 04506e4bc66ed7248b44bb652d262c34,
+  _playerTest: {fileID: 6671616631307147605, guid: 99cf81cd63ba73440a06ebef98b5ebcd,
     type: 3}
   _enemyTest: {fileID: 8100230857397373107, guid: 82e81f13943744d4bb87ec056311796f,
     type: 3}

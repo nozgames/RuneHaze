@@ -103,8 +103,8 @@ namespace RuneHaze
                 foreach (var renderer in _renderers)
                 {
                     var material = renderer.material;
-                    var flashId = Shader.PropertyToID("_Flash");
-                    tween.Element(material.TweenFloat(flashId, 1, 0).EaseOutExponential().Duration(0.2f));
+                    //var flashId = Shader.PropertyToID("_Flash");
+                    tween.Element(material.TweenFloat("_Flash", 1, 0).EaseOutExponential().Duration(0.2f));
                 }
 
                 tween.Play();

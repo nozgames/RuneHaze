@@ -9,43 +9,45 @@ using UnityEngine;
 
 namespace RuneHaze
 {
-    [CreateAssetMenu(menuName = "RuneHaze/Modules/SwarmSystem")]
-    public class SwarmSystem : Module<SwarmSystem>
+    [CreateAssetMenu(menuName = "RuneHaze/Modules/EnemySystem")]
+    public class EnemySystem : Module<EnemySystem>
     {
-        public List<Character> _avatars;
+        private List<Enemy> _enemies;
+        
+        public IEnumerable<Enemy> Enemies => _enemies;
         
         public override void Load()
         {
-            _avatars = new();
+            _enemies = new();
         }
 
-        public void Add(Character character)
+        public void Add(Enemy character)
         {
-            _avatars.Add(character);
+            _enemies.Add(character);
         }
 
-        public void Remove(Character character)
+        public void Remove(Enemy character)
         {
-            _avatars.Remove(character);
+            _enemies.Remove(character);
         }
 
         public void Update()
         {
-            var avatarCount = _avatars.Count;
+            var avatarCount = _enemies.Count;
             for (var avatarIndex = 1; avatarIndex < avatarCount; avatarIndex++)
             {
-                var avatar = _avatars[avatarIndex];
+                var avatar = _enemies[avatarIndex];
                 var move = Vector3.zero;
                 for (var otherIndex = 0; otherIndex < avatarIndex; otherIndex++)
                 {
-                    var otherAvatar = _avatars[otherIndex];
+                    var otherAvatar = _enemies[otherIndex];
                     var positionDelta = avatar.transform.position - otherAvatar.transform.position;
                     var distance = positionDelta.magnitude;
                     var acceptableDistance = avatar.Radius + otherAvatar.Radius;
                     
                     if (distance < acceptableDistance)
                     {
-                        var strength = 1.0f - (distance / acceptableDistance);
+                        var strength = Mathf.Max(1.0f - (distance / acceptableDistance), 0.2f);
                         var moveDir = positionDelta.normalized;
                         if (moveDir.sqrMagnitude < 0.1f)
                             moveDir = Vector3.right; // new Vector3(Random.value - 0.5f, 0, Random.value - 0.5f).normalized;

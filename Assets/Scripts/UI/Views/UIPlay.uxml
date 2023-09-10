@@ -7,7 +7,18 @@
 >
 
   <rh:UIPlay class="play overlay">
-    <Label name="_waveTimeRemaining" text="100"/>
+    <VisualElement name="_playerStats">
+      <VisualElement name="_playerHealthBar">
+        <VisualElement name="_playerHealthBarFill"/>
+        <VisualElement name="_playerHealthBarChange"/>
+        <Label name="_playerHealthLabel" text="10 / 10"/>
+      </VisualElement>
+    </VisualElement>
+    
+    <VisualElement name="_waveStats">
+      <Label name="_waveLabel" text="Wave 1"/>
+      <Label name="_waveTimeRemaining" text="100"/>
+    </VisualElement>
   </rh:UIPlay>
 
 </UXML>

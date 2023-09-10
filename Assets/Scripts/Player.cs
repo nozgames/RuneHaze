@@ -28,12 +28,53 @@ namespace RuneHaze
         protected override void Update()
         {
             LookAt = MovementDirection = new Vector3(_inputModule.PlayerMove.x, 0, _inputModule.PlayerMove.y);
-            base.Update();
 
+            var closestEnemy = GetClosestEnemy();
+            var attack = false;
+            if (closestEnemy != null)
+            {
+                var enemyDirection = closestEnemy.transform.position - transform.position;
+                enemyDirection.y = 0;
+
+                if (enemyDirection.sqrMagnitude < 4.0f)
+                {
+                    attack = true;
+                    LookAt = enemyDirection;
+                }
+
+                enemyDirection = enemyDirection.normalized;
+            }
+
+            base.Update();
+            
             _projectileFireTimer += Time.deltaTime;
-            if (_projectileFireTimer < _projectileFireRate)
+            if (!attack || _projectileFireTimer < _projectileFireRate)
                 return;
             
+            Animator.SetTrigger("Attack");
+            _projectileFireTimer = 0.0f;
+            //
+            // if (closestEnemy == null)
+            //     return;
+            
+            
+            //
+            // _projectileFireTimer = 0.0f;
+            // var projectile = Instantiate(
+            //     _projectilePrefab,
+            //     transform.position + Vector3.up * 0.5f,
+            //     Quaternion.LookRotation((closestEnemy.transform.position - position).normalized));
+            // projectile.Owner = this;
+            // projectile.HitMask = _projectileMask;
+        }
+
+        protected void LateUpdate()
+        {
+            CameraSystem.Instance.Focus(transform);
+        }
+
+        private Enemy GetClosestEnemy()
+        {
             var position = transform.position;
             var enemyCount = Physics.OverlapCapsuleNonAlloc(
                 position,
@@ -57,26 +98,8 @@ namespace RuneHaze
                     closestEnemy = enemy;
                 }
             }
-
-            Animator.SetTrigger("Attack");
-
-            _projectileFireTimer = 0.0f;
             
-            if (closestEnemy == null)
-                return;
-            
-            _projectileFireTimer = 0.0f;
-            var projectile = Instantiate(
-                _projectilePrefab,
-                transform.position + Vector3.up * 0.5f,
-                Quaternion.LookRotation((closestEnemy.transform.position - position).normalized));
-            projectile.Owner = this;
-            projectile.HitMask = _projectileMask;
-        }
-
-        protected void LateUpdate()
-        {
-            CameraSystem.Instance.Focus(transform);
+            return closestEnemy;
         }
     }
 }

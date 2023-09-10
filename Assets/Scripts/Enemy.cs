@@ -4,7 +4,6 @@
 
 */
 
-using Unity.VisualScripting.IonicZip;
 using UnityEngine;
 
 namespace RuneHaze
@@ -12,7 +11,10 @@ namespace RuneHaze
     public class Enemy : Character
     {
         [SerializeField] private float _attackRange = 1.0f;
+        [SerializeField] private float _attackCooldown = 1.0f;
 
+        private float _attackTimer = 0.0f;
+        
         protected override void Start()
         {
             base.Start();
@@ -23,12 +25,12 @@ namespace RuneHaze
         {
             base.OnEnable();
             
-            SwarmSystem.Instance.Add(this);
+            EnemySystem.Instance.Add(this);
         }
 
         protected override void OnDisable()
         {
-            SwarmSystem.Instance.Remove(this);
+            EnemySystem.Instance.Remove(this);
             
             base.OnDisable();
         }
@@ -44,11 +46,23 @@ namespace RuneHaze
             LookAt = lookDir;
             
             base.Update();
+
+            _attackTimer += Time.deltaTime;
+            if (_attackTimer < _attackCooldown)
+                return;
+            
+            var distance = delta.sqrMagnitude;
+            if (distance < _attackRange * _attackRange)
+            {
+                _attackTimer = 0.0f;
+                player.Health.Damage(this, 1);
+                Animator.SetTrigger("Attack");
+            }
         }
 
         public override void OnDeath(Entity source)
         {
-            SwarmSystem.Instance.Remove(this);            
+            EnemySystem.Instance.Remove(this);            
             
             base.OnDeath(source);
         }

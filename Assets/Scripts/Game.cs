@@ -4,7 +4,6 @@
 
 */
 
-using NoZ.Tweening;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -18,7 +17,6 @@ namespace RuneHaze
         [SerializeField] private VisualTreeFactory _uiFactory;
         [SerializeField] private PanelSettings _panelSettings;
         [SerializeField] private GameObject _playerTest;
-        [SerializeField] private GameObject _enemyTest;
         [SerializeField] private Arena _arena;
         [SerializeField] private Camera _camera;
         
@@ -43,6 +41,8 @@ namespace RuneHaze
 
             CameraSystem.Instance.Camera = _camera;
             
+            WaveSystem.Instance.WaveComplete += OnWaveComplete;
+            
             VisualTreeFactory.Instance = _uiFactory;
 
             // Create a document for the root ui
@@ -60,7 +60,7 @@ namespace RuneHaze
             if (ArenaSystem.Instance.Current == null)
                 return;
             
-            SwarmSystem.Instance.Update();
+            EnemySystem.Instance.Update();
             WaveSystem.Instance.Update();
         }
 
@@ -74,19 +74,21 @@ namespace RuneHaze
 
         public void Play()
         {
-            _main.SetDisplay(false);
-            _play = UIView.Instantiate<UIPlay>();
-            Root.Add(_play);
-            
             ArenaSystem.Instance.LoadArena(_arena);
 
             Player = Instantiate(_playerTest).GetComponent<Player>();
+            Player.Health.Death.AddListener(OnPlayerDeath);
 
-            WaveSystem.Instance.WaveComplete += OnWaveComplete;
             WaveSystem.Instance.StartWave(0);
 
-//            for (int i=0; i<6; i++)
-//                Instantiate(_enemyTest);
+            _main.SetDisplay(false);
+            _play = UIView.Instantiate<UIPlay>();
+            Root.Add(_play);
+        }
+
+        private void OnPlayerDeath(Entity arg0)
+        {
+            Stop();
         }
 
         private void Stop()
@@ -109,7 +111,8 @@ namespace RuneHaze
 
         private void OnWaveComplete()
         {
-            Stop();
+            if (!WaveSystem.Instance.NextWave())
+                Stop();
         }
     }
 }

@@ -4,11 +4,12 @@
 
 */
 
+using System;
 using UnityEngine;
 
 namespace RuneHaze
 {
-    public class Entity : MonoBehaviour
+    public class Entity : MonoBehaviour, IDisposable
     {
         [SerializeField] private Health _health = null;
 
@@ -24,6 +25,11 @@ namespace RuneHaze
 
         protected virtual void OnDisable()
         {
-        }        
+        }
+
+        public virtual void Dispose()
+        {
+            Destroy(gameObject);
+        }
     }
 }

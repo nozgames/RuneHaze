@@ -4,6 +4,7 @@
 
 */
 
+using System.Linq;
 using UnityEngine;
 
 namespace RuneHaze
@@ -17,6 +18,8 @@ namespace RuneHaze
         public event System.Action WaveComplete;
         public event System.Action WaveFailed;
 
+        public event System.Action<int> WaveStarted;
+
         public Wave Current { get; private set; }
         
         private float _waveStartTime;
@@ -24,6 +27,7 @@ namespace RuneHaze
         private float _waveSpawnInterval;
         private float _remainingTimeUntilNextSpawn;
         private int _waveSpawnCount;
+        private int _waveIndex;
         
         public void StartWave(int waveIndex)
         {
@@ -31,6 +35,8 @@ namespace RuneHaze
             if (wave == null)
                 return;
 
+            _waveIndex = waveIndex;
+            
             Current = wave;
 
             _waveStartTime = Time.time;
@@ -39,6 +45,19 @@ namespace RuneHaze
             _waveSpawnCount = wave.GetRandomSpawnCount();
             _waveSpawnInterval = (wave.Duration - _waveStartDelay) / _waveSpawnCount;
             _remainingTimeUntilNextSpawn = _waveStartDelay;
+            
+            WaveStarted?.Invoke(waveIndex);
+        }
+
+        public bool NextWave()
+        {
+            if (_waveIndex + 1 < ArenaSystem.Instance.Current.WaveCount)
+            {
+                StartWave(_waveIndex + 1);
+                return true;
+            }
+
+            return false;
         }
 
         public void StopWave()
@@ -54,9 +73,14 @@ namespace RuneHaze
             {
                 _remainingTime = remainingTime;
                 WaveTimeChanged?.Invoke(_remainingTime);
-                
+
                 if (remainingTime <= 0)
+                {
+                    foreach (var enemy in EnemySystem.Instance.Enemies.ToArray())
+                        enemy.Dispose();
+                    
                     WaveComplete?.Invoke();
+                }
             }
             
             _remainingTimeUntilNextSpawn -= Time.deltaTime;
@@ -67,7 +91,7 @@ namespace RuneHaze
                 var enemy = WaveSystem.Instance.Current.GetRandomEnemy();
                 var position = ArenaSystem.Instance.GetRandomSpawnPosition(enemy);
                 var playerLook = (Game.Instance.Player.transform.position - position).normalized; 
-//                ArenaSystem.Instance.InstantiateEntity(enemy, position, Quaternion.LookRotation(playerLook));
+                ArenaSystem.Instance.InstantiateEntity(enemy, position, Quaternion.LookRotation(playerLook));
             }
         }
     }

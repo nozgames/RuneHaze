@@ -61,15 +61,6 @@ namespace RuneHaze
             Current = null;
         }
         
-        public void StartWave(int waveIndex)
-        {
-            var wave = Current.GetWave(waveIndex);
-            if (wave == null)
-                return;
-            
-            //wave.Start();
-        }
-        
         public Entity InstantiateEntity(Entity prefab, Vector3 position, Quaternion rotation)
         {
             var instance = Instantiate(prefab, position, rotation);

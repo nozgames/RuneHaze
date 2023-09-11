@@ -15,14 +15,10 @@ namespace RuneHaze
     public abstract class CharacterModifier : IDisposable
     {
         public Character Character { get; }
-        public float Amount { get; }
-        public float Duration { get; }
         
-        protected CharacterModifier(Character character, float amount, float duration)
+        protected CharacterModifier(Character character)
         {
             Character = character;
-            Amount = amount;
-            Duration = duration;
         }
 
         public virtual void Dispose()

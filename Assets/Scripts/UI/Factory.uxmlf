@@ -1,3 +1,5 @@
 
 @import url("/Assets/Scripts/UI/Views/UIMain.uxml");
 @import url("/Assets/Scripts/UI/Views/UIPlay.uxml");
+@import url("/Assets/Scripts/UI/Views/UIStats.uxml");
+@import url("/Assets/Scripts/UI/Views/UIStatCell.uxml");

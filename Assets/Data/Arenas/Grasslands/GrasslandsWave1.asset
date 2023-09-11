@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: GrasslandsWave1
   m_EditorClassIdentifier: 
   _duration: 20
-  _spawnCountMin: 10
-  _spawnCountMax: 10
+  _spawnCountMin: 20
+  _spawnCountMax: 30
   _enemies:
   - Name: Orc (1)
     Enemy: {fileID: 932927038116378316, guid: 82e81f13943744d4bb87ec056311796f, type: 3}

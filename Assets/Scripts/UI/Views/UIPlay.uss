@@ -64,3 +64,12 @@
     margin: auto;
     flex-grow: 1;
 }
+
+
+.play #_playerStatsContainer {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    bottom: 16px;
+    width: 400px;
+}

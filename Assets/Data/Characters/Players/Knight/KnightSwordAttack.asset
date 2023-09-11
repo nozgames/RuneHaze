@@ -12,8 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 351a8a20661bf33478bddc0d8963e0b4, type: 3}
   m_Name: KnightSwordAttack
   m_EditorClassIdentifier: 
+  _duration: -1
   _cooldown: 1
+  _shape: 2
+  _damage: 1
   _range: 1
-  _animation: 
-  _prefab: {fileID: 1190625434108520375, guid: 59ceb83081053fe49953ccc6913c310a, type: 3}
+  _angle: 60
+  _animation: Attack
   _requireTarget: 1
+  _selfModifiers: []
+  _targetModifiers: []

@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1c0fafd8c519c046923a00346c6f8f8, type: 3}
-  m_Name: AttackSpeed
+  m_Script: {fileID: 11500000, guid: c8030936fd8d5dc4cbe874cb80543e76, type: 3}
+  m_Name: KnightBaseAttackSpeed
   m_EditorClassIdentifier: 
-  _min: 1
-  _max: 100
-  _percent: 1
+  _duration: -1
+  _stat: {fileID: 11400000, guid: a31c1f8b654e6ac4f9e5a1a591a2e450, type: 2}
+  _multiply: 0
+  _add: 1

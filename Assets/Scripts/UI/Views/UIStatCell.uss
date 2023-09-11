@@ -1,0 +1,14 @@
+.stat-cell {
+    flex-direction: row;
+}
+
+.stat-cell #_statName {
+    font-size: 24px;
+    color: black;
+}
+
+.stat-cell #_statValue {
+    font-size: 24px;
+    color: black;
+    margin-left: auto;
+}

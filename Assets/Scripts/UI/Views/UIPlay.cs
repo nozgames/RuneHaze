@@ -21,7 +21,9 @@ namespace RuneHaze.UI
         [Bind] private Label _playerHealthLabel;
         [Bind] private VisualElement _playerHealthBarFill;
         [Bind] private VisualElement _playerHealthBarChange;
+        [Bind] private VisualElement _playerStatsContainer;
         
+        private UIStats _playerStats;
 
         protected override void Bind()
         {
@@ -30,6 +32,9 @@ namespace RuneHaze.UI
             Game.Instance.Player.Health.Changed.AddListener(OnPlayerHealthChanged);
             WaveSystem.Instance.WaveTimeChanged += OnWaveTimeChanged;
             WaveSystem.Instance.WaveStarted += OnWaveStarted;
+
+            _playerStats = UIStats.Instantiate(Game.Instance.Player);
+            _playerStatsContainer.Add(_playerStats);
         }
 
         private void OnPlayerHealthChanged(Entity attacker, int amount)

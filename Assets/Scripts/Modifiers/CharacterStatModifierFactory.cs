@@ -12,10 +12,12 @@ namespace RuneHaze
     public class CharacterStatModifierFactory : CharacterModifierFactory
     {
         [SerializeField] private CharacterStat _stat;
+        [SerializeField] private float _multiply = 0.0f;
+        [SerializeField] private float _add = 0.0f;
         
-        public override CharacterModifier Create(Character character, float amount, float duration)
+        public override CharacterModifier Create(Character character)
         {
-            return new CharacterStatModifier(character, _stat, amount, duration);
+            return new CharacterStatModifier(character, _stat, _multiply, _add);
         }
     }
 }

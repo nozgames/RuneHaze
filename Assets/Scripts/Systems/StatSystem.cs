@@ -13,9 +13,12 @@ namespace RuneHaze
     {
         [SerializeField] private CharacterStat _damage;
         [SerializeField] private CharacterStat _range;
-        
+        [SerializeField] private CharacterStat _attackSpeed;
+
         public CharacterStat DamageStat => _damage;
         
         public CharacterStat RangeStat => _range;
+        
+        public CharacterStat AttackSpeed => _attackSpeed;
     }
 }

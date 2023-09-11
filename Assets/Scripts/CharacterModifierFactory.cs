@@ -16,6 +16,8 @@ namespace RuneHaze
     /// </summary>
     public abstract class CharacterModifierFactory : ScriptableObject
     {
-        public abstract CharacterModifier Create(Character character, float amount, float duration);
+        [SerializeField] private float _duration = -1.0f;
+        
+        public abstract CharacterModifier Create(Character character);
     }
 }

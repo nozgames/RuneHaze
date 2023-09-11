@@ -26,12 +26,13 @@ namespace RuneHaze
         [SerializeField] private CharacterStat[] _stats = null;
 
         [Space]
-        [SerializeField] private RuneFactory[] _defaultRunes = null;
+        [SerializeField] private Rune[] _defaultRunes = null;
         
         #region Events
         public event System.Action<Character> PreUpdateEvent;
         public event System.Action<Character> PostUpdateEvent;
         public event System.Action<Character> UpdateStatsEvent;
+        public event System.Action<Character> PostUpdateStatsEvents;
         #endregion
         
         
@@ -55,6 +56,8 @@ namespace RuneHaze
 
         public float Radius => _radius;
         public float Speed => _speed;
+        
+        public IEnumerable<CharacterStat> Stats => _stats;
 
         public IEnumerable<Rune> Runes => _runes;
 
@@ -97,11 +100,16 @@ namespace RuneHaze
             
             foreach (var stat in _statValues)
                 stat.UpdateValue();
+
+            PostUpdateStatsEvents?.Invoke(this);
         }
         
-        public void AddRune(RuneFactory runeFactory)
+        public void AddRune(Rune rune)
         {
-            _runes.Add(runeFactory.Create(this));
+            _runes.Add(rune);
+
+            foreach (var modifier in rune.Modifiers)
+                AddModifier(modifier.Create(this));
         }
 
         public void AddModifier(CharacterModifier modifier)
@@ -184,6 +192,13 @@ namespace RuneHaze
                 .Element(transform.TweenPosition(transform.position + direction * 1.5f).EaseOutCubic().Duration(0.35f))
                 .DestroyOnStop()
                 .Play();
+        }
+
+        public float DistanceTo(Character character)
+        {
+            var delta = transform.position - character.transform.position;
+            delta.y = 0;
+            return delta.magnitude;
         }
     }
 }

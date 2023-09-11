@@ -19,6 +19,9 @@
       <Label name="_waveLabel" text="Wave 1"/>
       <Label name="_waveTimeRemaining" text="100"/>
     </VisualElement>
+    
+    <VisualElement name="_playerStatsContainer"/>
+    
   </rh:UIPlay>
 
 </UXML>

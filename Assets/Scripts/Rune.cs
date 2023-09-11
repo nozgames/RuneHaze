@@ -5,26 +5,17 @@
 */
 
 using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace RuneHaze
 {
-    /// <summary>
-    /// A run is a collection of character modifiers that are applied to the character while
-    /// the rune is in the in the character's possession. 
-    /// </summary>
-    public class Rune : IDisposable
+    [CreateAssetMenu(menuName = "RuneHaze/Character/Rune")]
+    public class Rune : ScriptableObject
     {
-        public Character Character { get; }
-        public CharacterModifier[] Modifiers { get; }
+        [SerializeField] private string _displayName;
+        [SerializeField] private CharacterModifierFactory[] _modifiers;
         
-        public Rune(Character character, CharacterModifier[] modifiers)
-        {
-            Character = character;
-            Modifiers = modifiers;
-        }
-        
-        public void Dispose()
-        {
-        }
+        public IEnumerable<CharacterModifierFactory> Modifiers => _modifiers ?? Array.Empty<CharacterModifierFactory>();
     }
 }

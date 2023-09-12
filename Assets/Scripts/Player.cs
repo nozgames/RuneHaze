@@ -33,10 +33,34 @@ namespace RuneHaze
 
         protected override void Update()
         {
-            LookAt = MovementDirection = new Vector3(_inputModule.PlayerMove.x, 0, _inputModule.PlayerMove.y);
+            _lastLookAt = LookAt;
 
+            MovementDirection = new Vector3(_inputModule.PlayerMove.x, 0, _inputModule.PlayerMove.y);
+            
+            if (_inputModule.IsUsingController)
+            {
+                LookAt = new Vector3(_inputModule.PlayerLook.x, 0, _inputModule.PlayerLook.y);
+            }
+            else
+            {
+                // Get the position of the mouse in world space.
+                var ray = CameraSystem.Instance.Camera.ScreenPointToRay(_inputModule.PlayerPointer);
+                var plane = new Plane(Vector3.up, Vector3.zero);
+                plane.Raycast(ray, out var distance);
+                var point = ray.GetPoint(distance);
+                point.y = 0;
+
+                var look = point - transform.position;
+                look.y = 0;
+                LookAt = look.normalized;
+            }
+
+            if (LookAt.sqrMagnitude < 0.01f)
+                LookAt = _lastLookAt; 
+            
             Target = GetClosestEnemy();
 
+#if false            
             var lookAtRealTarget = false;
             if (Target != null && Target.DistanceTo(this) < _range.Value)
             {
@@ -58,6 +82,7 @@ namespace RuneHaze
                     //LookAt = lookAt.normalized;
                     LookAt = _lastLookAt;
             }
+#endif
 
             base.Update();
         }
@@ -84,8 +109,10 @@ namespace RuneHaze
                 var enemy = _colliders[enemyIndex].GetComponent<Enemy>();
                 if (null == enemy)
                     continue;
-
-                var distanceSqr = (enemy.transform.position - position).sqrMagnitude;
+                
+                var delta = enemy.transform.position - position;
+                var dot = Vector3.Dot(delta.normalized, LookAt);
+                var distanceSqr = delta.sqrMagnitude * -dot;
                 if (distanceSqr < closestDistanceSqr)
                 {
                     closestDistanceSqr = distanceSqr;

@@ -32,13 +32,12 @@ namespace RuneHaze
             switch (attack.Shape)
             {
                 case AttackShape.Self:
-                    foreach (var arcTarget in GetTargetsInArc(self, target, attack.Range, attack.Angle))
-                        DoAttackInternal(self, arcTarget, attack);
+                    DoAttackInternal(self, self, attack);
                     break;
                 
                 case AttackShape.Target:
-                    foreach (var arcTarget in GetTargetsInArc(self, target, attack.Range, attack.Angle))
-                        DoAttackInternal(self, arcTarget, attack);
+                    if (target != null)
+                        DoAttackInternal(self, target, attack);
                     break;
                 
                 case AttackShape.Arc:
@@ -52,13 +51,9 @@ namespace RuneHaze
         {
             Assert.IsNotNull(attack);
 
-            UnityEngine.Debug.Log($"Attack: {self.name} => {target.name}");
-            
             var damage = Instance.CalculateDamage(self, target, attack.Damage);
             if (damage <= 0)
                 return;
-
-            UnityEngine.Debug.Log($"Attack: {self.name} => {target.name} ({damage} damage");
             
             target.Health.Damage(self, damage);
         }

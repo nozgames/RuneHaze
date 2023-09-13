@@ -28,18 +28,34 @@ namespace RuneHaze
         protected override void Start()
         {
             _inputModule = InputModule.Instance;
+            _inputModule.PlayerAttack += OnAttack;
             base.Start();
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+
+            _inputModule.PlayerAttack -= OnAttack;
+        }
+
+        private void OnAttack()
+        {
+            IsAttacking = true;
         }
 
         protected override void Update()
         {
             _lastLookAt = LookAt;
 
-            MovementDirection = new Vector3(_inputModule.PlayerMove.x, 0, _inputModule.PlayerMove.y);
+            if (GlobalCooldown > 0.0f)
+                MovementDirection = Vector3.zero;
+            else
+                MovementDirection = new Vector3(_inputModule.PlayerMove.x, 0, _inputModule.PlayerMove.y);
             
             if (_inputModule.IsUsingController)
             {
-                LookAt = new Vector3(_inputModule.PlayerLook.x, 0, _inputModule.PlayerLook.y);
+                //LookAt = new Vector3(_inputModule.PlayerLook.x, 0, _inputModule.PlayerLook.y);
             }
             else
             {
@@ -52,11 +68,16 @@ namespace RuneHaze
 
                 var look = point - transform.position;
                 look.y = 0;
-                LookAt = look.normalized;
+                //LookAt = look.normalized;
             }
 
+            // Look towards the movement direction if we are not moving 
+            // if (LookAt.sqrMagnitude < 0.01f)
+            //     LookAt = MovementDirection;
+
+            LookAt = MovementDirection;
             if (LookAt.sqrMagnitude < 0.01f)
-                LookAt = _lastLookAt; 
+                LookAt = MovementDirection;
             
             Target = GetClosestEnemy();
 
@@ -90,25 +111,27 @@ namespace RuneHaze
         protected void LateUpdate()
         {
             CameraSystem.Instance.Focus(transform);
+
+            IsAttacking = false;
         }
 
         private Enemy GetClosestEnemy()
         {
             var position = transform.position;
-            var enemyCount = Physics.OverlapCapsuleNonAlloc(
-                position,
-                position + Vector3.up * 2.0f,
-                _range.Value,
-                _colliders,
-                _targetMask);
+            // var enemyCount = Physics.OverlapCapsuleNonAlloc(
+            //     position,
+            //     position + Vector3.up * 2.0f,
+            //     100.0f,
+            //     _colliders,
+            //     _targetMask);
             
             var closestEnemy = default(Enemy);
             var closestDistanceSqr = float.MaxValue;
-            for (var enemyIndex=0; enemyIndex<enemyCount; ++enemyIndex)
+            foreach (var enemy in EnemySystem.Instance.Enemies)
             {
-                var enemy = _colliders[enemyIndex].GetComponent<Enemy>();
-                if (null == enemy)
-                    continue;
+                //var enemy = _colliders[enemyIndex].GetComponent<Enemy>();
+                // if (null == enemy)
+                //     continue;
                 
                 var delta = enemy.transform.position - position;
                 var dot = Vector3.Dot(delta.normalized, LookAt);

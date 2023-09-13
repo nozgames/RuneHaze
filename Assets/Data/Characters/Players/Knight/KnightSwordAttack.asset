@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _duration: -1
   _cooldown: 1
-  _shape: 2
+  _shape: 3
   _damage: 1
+  _globalCooldown: 0.2
   _range: 1
   _angle: 60
   _animation: Attack
-  _requireTarget: 1
+  _requireTarget: 0
   _selfModifiers: []
   _targetModifiers: []

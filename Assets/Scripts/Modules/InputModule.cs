@@ -16,10 +16,12 @@ namespace RuneHaze
         [SerializeField] private InputAction _playerMove = null;
         [SerializeField] private InputAction _playerLook = null;
         [SerializeField] private InputAction _playerMoveKeyboard = null;
+        [SerializeField] private InputAction _playerAttack = null;
 
         private bool _controller;
 
         public event System.Action<bool> ControllerChanged;
+        public event System.Action PlayerAttack;
         
         public bool IsUsingController
         {
@@ -70,6 +72,9 @@ namespace RuneHaze
                 if (!IsUsingController)
                     PlayerMove = Vector2.zero;
             };
+
+            _playerAttack.Enable();
+            _playerAttack.performed += (ctx) => PlayerAttack?.Invoke();
             
             _playerLook.Enable();
             _playerLook.performed += (ctx) => PlayerLook = ctx.ReadValue<Vector2>();

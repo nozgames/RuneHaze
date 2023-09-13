@@ -95,3 +95,28 @@ MonoBehaviour:
       m_Action: Player Move Keyboard
       m_Flags: 8
     m_Flags: 0
+  _playerAttack:
+    m_Name: Player Attack
+    m_Type: 1
+    m_ExpectedControlType: Button
+    m_Id: 0e0e8a8f-dcf7-442f-a8bf-6cbdd74725d1
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 0292570c-d65e-4fd0-8b74-cd6eb0c22e7b
+      m_Path: <Mouse>/leftButton
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player Attack
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 0b3d8bd6-1e50-4b0f-8c52-653a0f857a06
+      m_Path: <XInputController>/buttonSouth
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player Attack
+      m_Flags: 0
+    m_Flags: 0

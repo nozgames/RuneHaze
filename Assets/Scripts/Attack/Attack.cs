@@ -16,6 +16,7 @@ namespace RuneHaze
         [SerializeField] private float _cooldown;
         [SerializeField] private AttackShape _shape = AttackShape.Target;
         [SerializeField] private float _damage;
+        [SerializeField] private float _globalCooldown = 0.5f;
         [SerializeField] private float _range;
         [SerializeField] private float _angle;
         [SerializeField] private string _animation;
@@ -33,6 +34,8 @@ namespace RuneHaze
         public float Angle => _angle;
         
         public float Damage => _damage;
+        
+        public float GlobalCooldown => _globalCooldown;
         
         public AttackShape Shape => _shape;
         

@@ -28,44 +28,95 @@ MonoBehaviour:
       m_Groups: 
       m_Action: Player Move
       m_Flags: 0
+    m_Flags: 0
+  _playerLook:
+    m_Name: Player Look
+    m_Type: 2
+    m_ExpectedControlType: Vector2
+    m_Id: 4f0bb822-7896-4afa-8410-7def6f3d7f2c
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: de091ff1-4b16-4da7-a3b2-e0d46231007b
+      m_Path: <Gamepad>/rightStick
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player Look
+      m_Flags: 0
+    m_Flags: 0
+  _playerMoveKeyboard:
+    m_Name: Player Move Keyboard
+    m_Type: 0
+    m_ExpectedControlType: Vector2
+    m_Id: f5df9eb0-9b54-45e9-9a86-c21502865fe0
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
     - m_Name: 2D Vector
-      m_Id: a3460e71-b509-431c-b401-9557558a3408
+      m_Id: 70a8ea8c-f3e7-4781-b3ec-45377eed2f06
       m_Path: 2DVector
       m_Interactions: 
       m_Processors: 
       m_Groups: 
-      m_Action: Player Move
+      m_Action: Player Move Keyboard
       m_Flags: 4
     - m_Name: up
-      m_Id: 50933c1c-e69e-4a21-a345-bde217848723
+      m_Id: 4322093f-8b6f-4ebe-88a9-93e9342b32d6
       m_Path: <Keyboard>/w
       m_Interactions: 
       m_Processors: 
       m_Groups: 
-      m_Action: Player Move
+      m_Action: Player Move Keyboard
       m_Flags: 8
     - m_Name: down
-      m_Id: a1b73452-e88b-4d9c-ba40-af2041ee9348
+      m_Id: d1f4bb59-216e-4175-b1c4-1ae901337a71
       m_Path: <Keyboard>/s
       m_Interactions: 
       m_Processors: 
       m_Groups: 
-      m_Action: Player Move
+      m_Action: Player Move Keyboard
       m_Flags: 8
     - m_Name: left
-      m_Id: dfbfbb16-3edc-4464-b924-f586cd396470
+      m_Id: 0bd2f8fd-6cbc-4fd1-bb71-63fdc257ba07
       m_Path: <Keyboard>/a
       m_Interactions: 
       m_Processors: 
       m_Groups: 
-      m_Action: Player Move
+      m_Action: Player Move Keyboard
       m_Flags: 8
     - m_Name: right
-      m_Id: d90bec1b-1f4b-40be-aee3-baca4dc7594a
+      m_Id: b96ea27f-b096-48df-a1d0-643235a79d18
       m_Path: <Keyboard>/d
       m_Interactions: 
       m_Processors: 
       m_Groups: 
-      m_Action: Player Move
+      m_Action: Player Move Keyboard
       m_Flags: 8
+    m_Flags: 0
+  _playerAttack:
+    m_Name: Player Attack
+    m_Type: 1
+    m_ExpectedControlType: Button
+    m_Id: 0e0e8a8f-dcf7-442f-a8bf-6cbdd74725d1
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 0292570c-d65e-4fd0-8b74-cd6eb0c22e7b
+      m_Path: <Mouse>/leftButton
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player Attack
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 0b3d8bd6-1e50-4b0f-8c52-653a0f857a06
+      m_Path: <XInputController>/buttonSouth
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player Attack
+      m_Flags: 0
     m_Flags: 0

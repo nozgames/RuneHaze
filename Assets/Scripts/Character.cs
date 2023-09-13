@@ -41,6 +41,7 @@ namespace RuneHaze
         private Quaternion _rotation = Quaternion.identity;
         private Vector3 _rotationSmooth;
         private CharacterStatValue[] _statValues = null;
+        private float _globalCooldown;
         
         public Animator Animator => _animator;
         
@@ -54,8 +55,16 @@ namespace RuneHaze
         
         public bool IsDead { get; private set; }
 
+        public bool IsAttacking { get; protected set; } = true;
+        
         public float Radius => _radius;
         public float Speed => _speed;
+        
+        public float GlobalCooldown
+        {
+            get => _globalCooldown;
+            set => _globalCooldown = value;
+        }
         
         public IEnumerable<CharacterStat> Stats => _stats;
 
@@ -132,6 +141,8 @@ namespace RuneHaze
                 return;
 
             PreUpdateEvent?.Invoke(this);
+            
+            GlobalCooldown = Mathf.Max(0.0f, GlobalCooldown - Time.deltaTime);
             
             var movement = MovementDirection;
             transform.position = ArenaSystem.Instance.ConstrainPosition(transform.position + movement * _speed * Time.deltaTime, Radius);

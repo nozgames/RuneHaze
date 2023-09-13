@@ -14,7 +14,7 @@ namespace RuneHaze
     public class AttackModifier : CharacterModifier
     {
         private float _timeSinceLastAttack;
-        private CharacterStatValue _attackSpeed;
+        private readonly CharacterStatValue _attackSpeed;
         
         public Attack Attack { get; }
         
@@ -43,12 +43,18 @@ namespace RuneHaze
         {
             _timeSinceLastAttack += Time.deltaTime * _attackSpeed.Value;
             
-            if (Attack.DoesRequireTarget && character.Target == null ||
+            if (Attack.GlobalCooldown > 0.0f && character.GlobalCooldown > 0.0f)
+                return;
+            
+            if (!character.IsAttacking ||
+                Attack.DoesRequireTarget && character.Target == null ||
                 !Attack.CheckCooldown(_timeSinceLastAttack) ||
                 (Attack.DoesRequireTarget && !Attack.CheckRange(character, character.Target)))
                 return;
             
             AttackSystem.Instance.DoAttack(character, character.Target, Attack);
+            
+            character.GlobalCooldown = Attack.GlobalCooldown;
             
             _timeSinceLastAttack = 0.0f;
         }

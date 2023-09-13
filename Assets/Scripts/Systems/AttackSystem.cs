@@ -32,17 +32,16 @@ namespace RuneHaze
             switch (attack.Shape)
             {
                 case AttackShape.Self:
-                    foreach (var arcTarget in GetTargetsInArc(self, target, attack.Range, attack.Angle))
-                        DoAttackInternal(self, arcTarget, attack);
+                    DoAttackInternal(self, self, attack);
                     break;
                 
                 case AttackShape.Target:
-                    foreach (var arcTarget in GetTargetsInArc(self, target, attack.Range, attack.Angle))
-                        DoAttackInternal(self, arcTarget, attack);
+                    if (target != null)
+                        DoAttackInternal(self, target, attack);
                     break;
                 
                 case AttackShape.Arc:
-                    foreach (var arcTarget in GetTargetsInArc(self, target, attack.Range, attack.Angle))
+                    foreach (var arcTarget in GetTargetsInArc(self, self.transform.forward, attack.Range, attack.Angle, attack.TargetMask))
                         DoAttackInternal(self, arcTarget, attack);
                     break;
             }
@@ -52,22 +51,17 @@ namespace RuneHaze
         {
             Assert.IsNotNull(attack);
 
-            UnityEngine.Debug.Log($"Attack: {self.name} => {target.name}");
-            
             var damage = Instance.CalculateDamage(self, target, attack.Damage);
             if (damage <= 0)
                 return;
-
-            UnityEngine.Debug.Log($"Attack: {self.name} => {target.name} ({damage} damage");
             
             target.Health.Damage(self, damage);
         }
 
-        private static IEnumerable<Character> GetTargetsInArc(Character self, Character target, float range, float angle)
+        private static IEnumerable<Character> GetTargetsInArc(Character self, Vector3 targetDir, float range, float angle, int mask)
         {
             var attackerPosition = self.transform.position;
-            var targetDir = (target.transform.position - attackerPosition).normalized;
-            var count = Physics.OverlapSphereNonAlloc(attackerPosition, range, _colliders, 1 << target.gameObject.layer);
+            var count = Physics.OverlapSphereNonAlloc(attackerPosition, range, _colliders, mask);
             var arcCos = Mathf.Cos((90.0f - angle * 0.5f) * Mathf.Deg2Rad);
             for (var i = 0; i < count; i++)
             {

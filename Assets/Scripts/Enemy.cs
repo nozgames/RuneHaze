@@ -10,10 +10,15 @@ namespace RuneHaze
 {
     public class Enemy : Character
     {
-        [SerializeField] private float _attackRange = 1.0f;
-        [SerializeField] private float _attackCooldown = 1.0f;
+        private Vector3 _lastLookAt;
+        private CharacterStatValue _range;
 
-        private float _attackTimer = 0.0f;
+        protected override void Awake()
+        {
+            base.Awake();
+            
+            _range = GetStatValue(StatSystem.Instance.RangeStat);
+        }
         
         protected override void Start()
         {
@@ -43,24 +48,12 @@ namespace RuneHaze
             
             var delta = (player.transform.position - transform.position);
             var lookDir = delta.normalized;
-            MovementDirection = delta.sqrMagnitude > _attackRange * _attackRange 
+            MovementDirection = delta.sqrMagnitude > _range.Value * _range.Value 
                 ? lookDir
                 : Vector3.zero;
             LookAt = lookDir;
             
             base.Update();
-
-            _attackTimer += Time.deltaTime;
-            if (_attackTimer < _attackCooldown)
-                return;
-            
-            var distance = delta.sqrMagnitude;
-            if (distance < _attackRange * _attackRange)
-            {
-                _attackTimer = 0.0f;
-                player.Health.Damage(this, 1);
-                Animator.SetTrigger("Attack");
-            }
         }
 
         public override void OnDeath(Entity source)

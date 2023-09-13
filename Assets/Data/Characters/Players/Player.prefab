@@ -50,7 +50,7 @@ MonoBehaviour:
   _health: {fileID: 7066542473892680058}
   _speed: 5
   _radius: 0.3
-  _rotationDampen: 0.05
+  _rotationDampen: 0.065
   _animationController: {fileID: 0}
   _animator: {fileID: 0}
   _renderers: []

@@ -41,7 +41,7 @@ namespace RuneHaze
                     break;
                 
                 case AttackShape.Arc:
-                    foreach (var arcTarget in GetTargetsInArc(self, target, attack.Range, attack.Angle))
+                    foreach (var arcTarget in GetTargetsInArc(self, self.transform.forward, attack.Range, attack.Angle, attack.TargetMask))
                         DoAttackInternal(self, arcTarget, attack);
                     break;
             }
@@ -58,11 +58,10 @@ namespace RuneHaze
             target.Health.Damage(self, damage);
         }
 
-        private static IEnumerable<Character> GetTargetsInArc(Character self, Character target, float range, float angle)
+        private static IEnumerable<Character> GetTargetsInArc(Character self, Vector3 targetDir, float range, float angle, int mask)
         {
             var attackerPosition = self.transform.position;
-            var targetDir = (target.transform.position - attackerPosition).normalized;
-            var count = Physics.OverlapSphereNonAlloc(attackerPosition, range, _colliders, 1 << target.gameObject.layer);
+            var count = Physics.OverlapSphereNonAlloc(attackerPosition, range, _colliders, mask);
             var arcCos = Mathf.Cos((90.0f - angle * 0.5f) * Mathf.Deg2Rad);
             for (var i = 0; i < count; i++)
             {

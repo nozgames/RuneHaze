@@ -66,12 +66,15 @@ MonoBehaviour:
   _radius: 0.3
   _rotationDampen: 0.05
   _animationController: {fileID: 6852073702392495218}
-  _idleAnimation: {fileID: 11400000, guid: f57f89f8b53ec434b877a991f07c9e68, type: 2}
-  _runAnimation: {fileID: 11400000, guid: 53594bca17b54564c86a42881679b3fb, type: 2}
-  _deathAnimation: {fileID: 11400000, guid: f53c2bdf632942740a7e414f09f698a6, type: 2}
-  _hitAnimation: {fileID: 0}
+  _animator: {fileID: 0}
   _renderers: []
-  _attackRange: 1
+  _stats:
+  - {fileID: 11400000, guid: baf09e72ea368164bba93fa55bf5cd6f, type: 2}
+  - {fileID: 11400000, guid: 64515532d5090c8439990dd47aba9e4b, type: 2}
+  - {fileID: 11400000, guid: 4c001c19d75889343a39fda5a1211c25, type: 2}
+  - {fileID: 11400000, guid: 36922422db6706648a70cb1ba9e2d54d, type: 2}
+  - {fileID: 11400000, guid: a31c1f8b654e6ac4f9e5a1a591a2e450, type: 2}
+  _defaultRunes: []
 --- !u!114 &2777436666599831056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85,22 +88,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _max: 2
-  TargetDamaged:
+  Changed:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6237319856483725080}
-        m_TargetAssemblyTypeName: RuneHaze.Character, com.noz.runehaze
-        m_MethodName: OnDamage
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  TargetDied:
+      m_Calls: []
+  Death:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6237319856483725080}

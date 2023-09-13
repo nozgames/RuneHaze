@@ -20,10 +20,24 @@ namespace RuneHaze.UI
         {
             base.Bind();
 
-            _playButton.AddManipulator(new Clickable(OnPlayClicked));
+            _playButton.AddManipulator(new Clickable(Play));
+        }
+        
+        protected override void OnDisplayBegin()
+        {
+            base.OnDisplayBegin();
+            
+            InputModule.Instance.PlayerAttack += Play;
         }
 
-        private void OnPlayClicked(EventBase evt)
+        protected override void OnDisplayEnd()
+        {
+            base.OnDisplayBegin();
+            
+            InputModule.Instance.PlayerAttack -= Play;
+        }
+
+        private void Play()
         {
             Game.Instance.Play();
         }

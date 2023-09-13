@@ -21,7 +21,8 @@ namespace RuneHaze
         [SerializeField] private float _angle;
         [SerializeField] private string _animation;
         [SerializeField] private bool _requireTarget = true;
-
+        [SerializeField] private LayerMask _targetMask;
+        
         [SerializeField] private CharacterModifierFactory[] _selfModifiers;
         [SerializeField] private CharacterModifierFactory[] _targetModifiers;
         
@@ -36,6 +37,8 @@ namespace RuneHaze
         public float Damage => _damage;
         
         public float GlobalCooldown => _globalCooldown;
+
+        public LayerMask TargetMask => _targetMask;
         
         public AttackShape Shape => _shape;
         

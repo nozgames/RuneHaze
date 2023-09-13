@@ -36,5 +36,9 @@ namespace RuneHaze
 
             return (value - sourceMin) / (sourceMax - sourceMin) * (targetMax - targetMin) + targetMin;
         }
+        
+        public static Vector3 ToXZ(this Vector2 v) => new (v.x, 0, v.y);
+        
+        public static Vector3 ZeroY(this Vector3 v) => new (v.x, 0, v.z);
     }
 }

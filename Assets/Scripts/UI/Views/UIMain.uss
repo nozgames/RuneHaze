@@ -1,10 +1,55 @@
 .main {
-    background-color: black;
+    background-image: url("project://database/Assets/Sprites/Background.png"); 
+    color: white;
 }
 
-.main #_playButton {
-    margin: auto;
-    --unity-image: url("project://database/Assets/Sprites/Icons/IconPlay.png");
-    width: 128px;
-    height: 128px;
+.main #_top {
+    flex-grow: 1;
+    width: 100%;
 }
+
+.main #_buttons {
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 96px;
+}
+
+.main__button {
+    -unity-font-definition: var(--font-definition-bold);
+    color: #2F2F2F;
+    background-color: #F6ECC1;
+    border-radius: 8px;
+    height: 60px;
+    font-size: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 32px;
+    padding: 0 16px;
+}
+
+.main__button:hover {
+    background-color: #8F3041;
+    color: #F6ECC1;
+}
+
+.main__button Label {
+    margin: auto 16px;
+    height: 100%;
+    -unity-text-align: middle-left;
+}
+
+.main #_logo {
+    --unity-image: url("project://database/Assets/Sprites/RuneHaze.png");
+    margin: auto auto;
+    width: 1400px;
+}
+
+.main #_version {
+    position: absolute;
+    bottom: 32px;
+    right: 32px;
+    font-size: 50%;
+    color: black; 
+    opacity: 0.7;
+}
+

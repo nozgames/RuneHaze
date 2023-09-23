@@ -1,5 +1,6 @@
 :root {
-    --font-definition-normal: url("project://database/Assets/Fonts/Bidan-Pll7 SDF.asset");
+    --font-definition-normal: url("project://database/Assets/Fonts/Roboto-Bold SDF.asset");
+    --font-definition-bold: url("project://database/Assets/Fonts/Roboto-Bold SDF.asset");
     --font-definition-fixed: url("project://database/Assets/Fonts/CONSOLA.ttf");
 
     --font-size-tiny: 20px;

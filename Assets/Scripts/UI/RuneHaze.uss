@@ -1,18 +1,32 @@
 :root {
-    --font-definition-normal: url("project://database/Assets/Fonts/Roboto-Bold SDF.asset");
+    --font-definition-regular: url("project://database/Assets/Fonts/Roboto-Regular SDF.asset");
     --font-definition-bold: url("project://database/Assets/Fonts/Roboto-Bold SDF.asset");
-    --font-definition-fixed: url("project://database/Assets/Fonts/CONSOLA.ttf");
+    --font-definition-thin: url("project://database/Assets/Fonts/Roboto-Thin SDF.asset");
 
     --font-size-tiny: 20px;
     --font-size-small: 30px;
     --font-size-normal: 40px;
     --font-size-large: 50px;
     --font-size-title: 70px;
+    
+    --color-fishbase-whitefish: #FAFAFA;
+    --color-fishbase-bonito: #F3FAFC;
+    --color-fishbase-bonito-dark: #E5ECEE;
+    --color-fishbase-mackerel: #EDE3B9;
+    --color-fishbase-catfish: #2A2C2C;
+    --color-fishbase-eel: #252626;
+    --color-fishbase-blackfish: #151616;
+
+    --color-text-default: #CED3D6;
+    
+    --color-accents-primary: #F16769;
+    --color-accents-secondary: #57B55F;
+    --color-accents-border: #E4F2F0;
 }
 
 .root
 {
-    -unity-font-definition: var(--font-definition-normal);
+    -unity-font-definition: var(--font-definition-regular);
     font-size: var(--font-size-large);
 }
 
@@ -34,17 +48,17 @@
 
 .button-default {
     -unity-font-definition: var(--font-definition-bold);
-    color: #2F2F2F;
-    background-color: #F6ECC1;
-    border-radius: 8px;
-    height: 60px;
+    color: var(--color-fishbase-whitefish);
     font-size: 70%;
-    padding: 0 32px;
+    padding: 16px 32px;
+    border-radius: 24px;
+    border-color: var(--color-accents-border);
+    background-color: var(--color-fishbase-eel);
 }
 
 .button-default:hover {
-    background-color: #8F3041;
-    color: #F6ECC1;
+    background-color: var(--color-accents-primary);
+    color: var(--color-fishbase-whitefish);
 }
 
 .button-default Label {

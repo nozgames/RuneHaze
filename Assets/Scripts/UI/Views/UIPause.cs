@@ -16,13 +16,19 @@ namespace RuneHaze.UI
 
         [Bind] private VisualElement _resumeButton;
         [Bind] private VisualElement _mainMenuButton;
+        [Bind] private VisualElement _playerStatsContainer;
         
+        private UIStats _playerStats;
+
         protected override void Bind()
         {
             base.Bind();
             
             _resumeButton.AddManipulator(new Clickable(OnResume));
             _mainMenuButton.AddManipulator(new Clickable(OnMainMenu));
+         
+            _playerStats = UIStats.Instantiate(Game.Instance.Player);
+            _playerStatsContainer.Add(_playerStats);
             
             InputModule.Instance.MenuButton += OnResume;
         }

@@ -15,6 +15,13 @@
         <Label text="Main Menu"/>
       </VisualElement>
     </VisualElement>
+
+    <VisualElement name="_playerStatsContainer">
+      <VisualElement name="_header">
+        <Label name="_title" text="Stats"/>  
+      </VisualElement>
+    </VisualElement>
+    
   </rh:UIPause>
 
 </UXML>

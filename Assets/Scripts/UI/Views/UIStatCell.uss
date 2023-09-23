@@ -1,14 +1,31 @@
 .stat-cell {
+    font-size: 24px;
     flex-direction: row;
+    height: 40px;
+    -unity-font-definition: var(--font-definition-bold);
+    background-color: var(--color-fishbase-catfish);
 }
 
-.stat-cell #_statName {
-    font-size: 24px;
-    color: black;
+.stat-cell Label
+{
+    color: var(--color-text-default);
+    margin: auto 16px;
+}
+
+.stat-cell.negative Label
+{
+    color: var(--color-accents-primary);
+}
+
+.stat-cell.positive Label
+{
+    color: var(--color-accents-secondary);
 }
 
 .stat-cell #_statValue {
-    font-size: 24px;
-    color: black;
     margin-left: auto;
+}
+
+.stat-cell.row-odd {
+    background-color: rgba(0,0,0,0);
 }

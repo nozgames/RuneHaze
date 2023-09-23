@@ -1,5 +1,4 @@
 .pause {
-    background-color: rgba(0,0,0,0.5);
 }
 
 .pause #_buttons {
@@ -13,8 +12,8 @@
 
 .pause #_playerStatsContainer {
     position: absolute;
-    top: 16px;
-    right: 16px;
+    top: 32px;
+    right: 32px;
     width: 400px;
     border-radius: 24px;
     background-color: var(--color-fishbase-eel);

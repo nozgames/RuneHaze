@@ -4,17 +4,17 @@
 
 */
 
+using NoZ;
 using UnityEngine;
 using UnityEngine.UIElements;
-using UnityEngine.Rendering.Universal;
 
 using RuneHaze.UI;
 
 namespace RuneHaze
 {
-    public class Game : MonoBehaviour
+    public class Game : MonoBehaviour, IModuleLoaderProvider
     {
-        [SerializeField] private Module[] _modules;
+        [SerializeField] private ModuleLoader _moduleLoader;
         [SerializeField] private VisualTreeFactory _uiFactory;
         [SerializeField] private PanelSettings _panelSettings;
         [SerializeField] private GameObject _playerTest;
@@ -29,11 +29,15 @@ namespace RuneHaze
 
         private UIMain _main;
         private UIPlay _play;
+
+        public event System.Action<bool> Paused; 
         
         public Player Player { get; private set; }
         
         public VisualElement Root { get; private set; }
 
+        public ModuleLoader ModuleLoader => _moduleLoader;
+        
         private bool _paused;
 
         public bool IsPaused
@@ -43,6 +47,7 @@ namespace RuneHaze
             {
                 _paused = value;
                 Time.timeScale = _paused ? 0.0f : 1.0f;
+                Paused?.Invoke(_paused);
             }
         }
         
@@ -53,8 +58,7 @@ namespace RuneHaze
 
         private void Start()
         {
-            foreach (var module in _modules)
-                module.LoadInstance();
+            _moduleLoader.LoadModules();
 
             CameraSystem.Instance.Camera = _camera;
             
@@ -85,8 +89,7 @@ namespace RuneHaze
         {
             Stop();
             
-            for (var i = _modules.Length - 1; i >= 0; i--)
-                _modules[i].UnloadInstance();
+            _moduleLoader.UnloadModules();
         }
 
         public void Play()
@@ -132,6 +135,8 @@ namespace RuneHaze
             
             _play.Dispose();
             _play = null;
+
+            IsPaused = false;
             
             _main.SetDisplay(true);
         }

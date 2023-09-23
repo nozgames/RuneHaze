@@ -4,6 +4,7 @@
 
 */
 
+using NoZ;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -11,7 +12,7 @@ using UnityEngine.Rendering.Universal;
 namespace RuneHaze
 {
     [CreateAssetMenu(menuName = "RuneHaze/Modules/PostProc")]
-    public class PostProcModule : Module<PostProcModule>
+    public class PostProcModule : Module<PostProcModule>, IModule
     {
         public enum VignetteChannel
         {
@@ -48,7 +49,36 @@ namespace RuneHaze
             get => _dof.active;
             set => _dof.active = value;
         }
+        
+        public void Load()
+        {
+            if(!_postProcessProfile.TryGet(out _vignette))
+                throw new System.NullReferenceException(nameof(_vignette));
+            
+            if(!_postProcessProfile.TryGet(out _dof))
+                throw new System.NullReferenceException(nameof(_dof));
 
+            if(!_postProcessProfile.TryGet(out _colorAdjustments))
+                throw new System.NullReferenceException(nameof(_colorAdjustments));
+            
+            _vignetteOverrides = new[]
+            {
+                _vignetteHeath,
+                _vignetteMenu
+            };
+            
+            IsBlurEnabled = false;
+            _vignette.intensity.Override(0);
+            _colorAdjustments.active = false;
+        }
+        
+        public void Unload()
+        {
+            _vignette.intensity.Override(0);
+            IsBlurEnabled = false;
+            _colorAdjustments.active = false;
+        }
+        
         public void SetVignette(VignetteChannel channel, float intensity)
         {
             _vignetteOverrides[(int)channel].RuntimeIntensity = intensity;
@@ -72,38 +102,6 @@ namespace RuneHaze
             
             _vignette.intensity.Override(0);
         }
-
-        public override void Load()
-        {
-            base.Load();
-
-            if(!_postProcessProfile.TryGet(out _vignette))
-                throw new System.NullReferenceException(nameof(_vignette));
-            
-            if(!_postProcessProfile.TryGet(out _dof))
-                throw new System.NullReferenceException(nameof(_dof));
-
-            if(!_postProcessProfile.TryGet(out _colorAdjustments))
-                throw new System.NullReferenceException(nameof(_colorAdjustments));
-            
-            _vignetteOverrides = new[]
-            {
-                _vignetteHeath,
-                _vignetteMenu
-            };
-            
-            IsBlurEnabled = false;
-            _vignette.intensity.Override(0);
-            _colorAdjustments.active = false;
-        }
         
-        public override void Unload()
-        {
-            base.Unload();
-            
-            _vignette.intensity.Override(0);
-            IsBlurEnabled = false;
-            _colorAdjustments.active = false;
-        }
     }
 }

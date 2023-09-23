@@ -4,12 +4,13 @@
 
 */
 
+using NoZ;
 using UnityEngine;
 
 namespace RuneHaze
 {
     [CreateAssetMenu(menuName = "RuneHaze/Modules/StatSystem")]
-    public class StatSystem : Module<StatSystem>
+    public class StatSystem : Module<StatSystem>, IModule
     {
         [SerializeField] private CharacterStat _damage;
         [SerializeField] private CharacterStat _range;
@@ -20,5 +21,13 @@ namespace RuneHaze
         public CharacterStat RangeStat => _range;
         
         public CharacterStat AttackSpeed => _attackSpeed;
+        
+        public void Load()
+        {
+        }
+
+        public void Unload()
+        {
+        }
     }
 }

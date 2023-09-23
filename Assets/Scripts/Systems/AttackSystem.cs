@@ -7,13 +7,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using NoZ;
 
 namespace RuneHaze
 {
     [CreateAssetMenu(menuName = "RuneHaze/Modules/AttackSystem")]
-    public class AttackSystem : Module<AttackSystem>
+    public class AttackSystem : Module<AttackSystem>, IModule
     {
         private static readonly Collider [] _colliders = new Collider[128];
+        
+        public void Load()
+        {
+        }
+
+        public void Unload()
+        {
+        }
         
         public int CalculateDamage(Character attacker, Character target, float baseDamage)
         {

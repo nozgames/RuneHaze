@@ -4,13 +4,14 @@
 
 */
 
+using NoZ;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace RuneHaze
 {
     [CreateAssetMenu(menuName = "RuneHaze/Modules/Input")]
-    public class InputModule : Module<InputModule>
+    public class InputModule : Module<InputModule>, IModule
     {
         [Header("UX")]
         [SerializeField] private InputAction _pause = null;
@@ -27,27 +28,7 @@ namespace RuneHaze
         public event System.Action PlayerAttack;
         public event System.Action MenuButton;
 
-        
-        public bool IsUsingController
-        {
-            get => _controller;
-            private set
-            {
-                if (_controller == value)
-                    return;
-                
-                _controller = value;
-                ControllerChanged?.Invoke(_controller);
-            }
-        }
-        
-        public Vector2 PlayerMove { get; private set; }
-        
-        public Vector2 PlayerLook { get; private set; }
-        
-        public Vector2 PlayerPointer => Mouse.current.position.ReadValue();
-        
-        public override void Load()
+        public void Load()
         {
             _playerMove.Enable();
             _playerMove.performed += (ctx) =>
@@ -85,7 +66,30 @@ namespace RuneHaze
             
             _playerLook.Enable();
             _playerLook.performed += (ctx) => PlayerLook = ctx.ReadValue<Vector2>();
-            _playerLook.canceled += (ctx) => PlayerLook = Vector2.zero;
+            _playerLook.canceled += (ctx) => PlayerLook = Vector2.zero;            
         }
+
+        public void Unload()
+        {
+        }
+        
+        public bool IsUsingController
+        {
+            get => _controller;
+            private set
+            {
+                if (_controller == value)
+                    return;
+                
+                _controller = value;
+                ControllerChanged?.Invoke(_controller);
+            }
+        }
+        
+        public Vector2 PlayerMove { get; private set; }
+        
+        public Vector2 PlayerLook { get; private set; }
+        
+        public Vector2 PlayerPointer => Mouse.current.position.ReadValue();
     }
 }

@@ -1,4 +1,5 @@
 .play #_waveStats {
+    -unity-font-definition: var(--font-definition-bold);
     position: absolute;
     top: 16px;
     left: 0;
@@ -8,13 +9,12 @@
 .play #_waveLabel {
     color: white;
     height: 44px;
-    margin: 0 auto;
-    font-size: 32px;
-}
-
-.play #_waveTimeRemaining {
-    color: white;
-    height: 44px;
+    font-size: 22px;
+    -unity-font-definition: var(--font-definition-regular);
+    background-color: var(--color-fishbase-eel);
+    border-radius: 12px;
+    padding: 4px 20px;
+    -unity-text-align: middle-center;
     margin: 0 auto;
 }
 
@@ -63,4 +63,38 @@
     font-size: 30px;
     margin: auto;
     flex-grow: 1;
+}
+
+.play #_waveTime {
+    margin-top: -12px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 128px;
+    height: 128px;
+    transform-origin: center;
+    background-image: url("project://database/Assets/Sprites/Diamond.png");
+    -unity-background-image-tint-color: var(--color-fishbase-eel);
+    padding: 10px;
+}
+
+.play #_waveTimeFillMask {
+    background-image: url("project://database/Assets/Sprites/Diamond.png");
+    transform-origin: center;
+    width: 100%;
+    height: 100%;
+    -unity-background-image-tint-color: var(--color-fishbase-catfish);
+}
+
+.play #_waveTimeFill {
+    --unity-image: url("project://database/Assets/Sprites/Diamond.png");
+    --unity-image-tint-color: var(--color-accents-primary);
+    width: 100%;
+    height: 100%;
+    margin-top: auto;
+}
+
+.play #_waveTimeRemaining {
+    color: var(--color-fishbase-whitefish);
+    font-size: 38px;
+    -unity-text-align: middle-center;
 }

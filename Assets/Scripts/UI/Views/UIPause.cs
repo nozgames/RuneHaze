@@ -33,6 +33,24 @@ namespace RuneHaze.UI
             InputModule.Instance.MenuButton += OnResume;
         }
 
+        protected override void OnDisplayBegin()
+        {
+            base.OnDisplayBegin();
+            
+            PostProcModule.Instance.IsBlurEnabled = true;
+            PostProcModule.Instance.IsDesaturated = true;
+            PostProcModule.Instance.SetVignette(PostProcModule.VignetteChannel.Menu, 1.0f);
+        }
+
+        protected override void OnDisplayEnd()
+        {
+            base.OnDisplayEnd();
+            
+            PostProcModule.Instance.IsBlurEnabled = false;
+            PostProcModule.Instance.IsDesaturated = false;
+            PostProcModule.Instance.SetVignette(PostProcModule.VignetteChannel.Menu, 0.0f);
+        }
+        
         protected override void OnDispose()
         {
             base.OnDispose();

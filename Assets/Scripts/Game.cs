@@ -6,10 +6,9 @@
 
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.Rendering.Universal;
 
 using RuneHaze.UI;
-using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
 
 namespace RuneHaze
 {
@@ -23,8 +22,6 @@ namespace RuneHaze
         [SerializeField] private Camera _camera;
         
         [Header("Vignette")]
-        [SerializeField] private VolumeProfile _postProcessProfile;
-        [SerializeField] private Color _healthColor;
         [SerializeField] private Vector2 _healthRange;
         [SerializeField] private Vector2 _healthIntensity;
         
@@ -32,7 +29,6 @@ namespace RuneHaze
 
         private UIMain _main;
         private UIPlay _play;
-        private Vignette _vignette;
         
         public Player Player { get; private set; }
         
@@ -53,15 +49,10 @@ namespace RuneHaze
         private void Awake()
         {
             Instance = this;
-
-            if(!_postProcessProfile.TryGet(out _vignette))
-                throw new System.NullReferenceException(nameof(_vignette));
         }
 
         private void Start()
         {
-            _vignette.intensity.Override(0);        
-            
             foreach (var module in _modules)
                 module.LoadInstance();
 
@@ -105,8 +96,6 @@ namespace RuneHaze
             Player = Instantiate(_playerTest).GetComponent<Player>();
             Player.Health.Changed.AddListener(OnPlayerHealthChanged);
             Player.Health.Death.AddListener(OnPlayerDeath);
-
-            _vignette.intensity.Override(0);
             
             WaveSystem.Instance.StartWave(0);
 
@@ -117,8 +106,9 @@ namespace RuneHaze
 
         private void OnPlayerHealthChanged(Entity attacker, int amount)
         {
-            var intensity = Player.Health.Percent.Remap(_healthRange, _healthIntensity);
-            _vignette.intensity.Override(intensity);
+            PostProcModule.Instance.SetVignette(
+                PostProcModule.VignetteChannel.Health,
+                Player.Health.Percent.Remap(_healthRange, _healthIntensity));
         }
 
         private void OnPlayerDeath(Entity arg0)
@@ -138,6 +128,8 @@ namespace RuneHaze
             
             ArenaSystem.Instance.UnloadArena();
 
+            PostProcModule.Instance.SetVignette(PostProcModule.VignetteChannel.Health, 0.0f);
+            
             _play.Dispose();
             _play = null;
             

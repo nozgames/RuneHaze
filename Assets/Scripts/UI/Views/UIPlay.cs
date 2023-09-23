@@ -35,7 +35,20 @@ namespace RuneHaze.UI
 
             _playerStats = UIStats.Instantiate(Game.Instance.Player);
             _playerStatsContainer.Add(_playerStats);
+            
+            InputModule.Instance.MenuButton += OnMenuButton;
         }
+
+        protected override void OnDispose()
+        {
+            base.OnDispose();
+            
+            InputModule.Instance.MenuButton -= OnMenuButton;
+            
+            WaveSystem.Instance.WaveTimeChanged -= OnWaveTimeChanged;
+            WaveSystem.Instance.WaveStarted -= OnWaveStarted;
+        }
+
 
         private void OnPlayerHealthChanged(Entity attacker, int amount)
         {
@@ -55,14 +68,15 @@ namespace RuneHaze.UI
             _playerHealthBarChange.style.TweenOpacity(1.0f, 0.0f).EaseInExponential().Duration(0.4f).Play();
         }
 
-        protected override void OnDispose()
+        private void OnMenuButton()
         {
-            base.OnDispose();
+            if (Game.Instance.IsPaused)
+                return;
             
-            WaveSystem.Instance.WaveTimeChanged -= OnWaveTimeChanged;
-            WaveSystem.Instance.WaveStarted -= OnWaveStarted;
+            Game.Instance.IsPaused = true;
+            Game.Instance.Root.Add(Instantiate<UIPause>());
         }
-
+        
         private void OnWaveStarted(int obj)
         {
             _waveLabel.text = $"Wave {obj + 1}";

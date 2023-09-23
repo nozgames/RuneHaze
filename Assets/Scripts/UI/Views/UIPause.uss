@@ -1,0 +1,12 @@
+.pause {
+    background-color: rgba(0,0,0,0.5);
+}
+
+.pause #_buttons {
+    margin: auto;
+}
+
+.pause .button-default {
+    margin: auto;
+    margin-bottom: 32px;
+}

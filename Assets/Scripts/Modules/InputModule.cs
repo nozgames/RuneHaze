@@ -12,6 +12,9 @@ namespace RuneHaze
     [CreateAssetMenu(menuName = "RuneHaze/Modules/Input")]
     public class InputModule : Module<InputModule>
     {
+        [Header("UX")]
+        [SerializeField] private InputAction _pause = null;
+        
         [Header("Player")]
         [SerializeField] private InputAction _playerMove = null;
         [SerializeField] private InputAction _playerLook = null;
@@ -22,6 +25,8 @@ namespace RuneHaze
 
         public event System.Action<bool> ControllerChanged;
         public event System.Action PlayerAttack;
+        public event System.Action MenuButton;
+
         
         public bool IsUsingController
         {
@@ -33,7 +38,6 @@ namespace RuneHaze
                 
                 _controller = value;
                 ControllerChanged?.Invoke(_controller);
-                UnityEngine.Debug.Log($"Controller: {_controller}");
             }
         }
         
@@ -73,6 +77,9 @@ namespace RuneHaze
                     PlayerMove = Vector2.zero;
             };
 
+            _pause.Enable();
+            _pause.performed += (ctx) => MenuButton?.Invoke();
+            
             _playerAttack.Enable();
             _playerAttack.performed += (ctx) => PlayerAttack?.Invoke();
             

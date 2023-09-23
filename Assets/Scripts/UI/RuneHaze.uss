@@ -23,3 +23,34 @@
     right: 0;
     bottom: 0;
 }
+
+
+/*
+
+    Buttons
+
+*/
+
+
+.button-default {
+    -unity-font-definition: var(--font-definition-bold);
+    color: #2F2F2F;
+    background-color: #F6ECC1;
+    border-radius: 8px;
+    height: 60px;
+    font-size: 70%;
+    padding: 0 32px;
+}
+
+.button-default:hover {
+    background-color: #8F3041;
+    color: #F6ECC1;
+}
+
+.button-default Label {
+    width: 100%;
+    height: 100%;
+    -unity-text-align: middle-center;
+}
+
+

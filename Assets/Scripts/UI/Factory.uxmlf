@@ -4,3 +4,4 @@
 @import url("/Assets/Scripts/UI/Views/UIStats.uxml");
 @import url("/Assets/Scripts/UI/Views/UIStatCell.uxml");
 @import url("/Assets/Scripts/UI/Views/UIOptions.uxml");
+@import url("/Assets/Scripts/UI/Views/UIPause.uxml");

@@ -14,30 +14,6 @@
     margin-bottom: 96px;
 }
 
-.main__button {
-    -unity-font-definition: var(--font-definition-bold);
-    color: #2F2F2F;
-    background-color: #F6ECC1;
-    border-radius: 8px;
-    height: 60px;
-    font-size: 70%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 32px;
-    padding: 0 16px;
-}
-
-.main__button:hover {
-    background-color: #8F3041;
-    color: #F6ECC1;
-}
-
-.main__button Label {
-    margin: auto 16px;
-    height: 100%;
-    -unity-text-align: middle-left;
-}
-
 .main #_logo {
     --unity-image: url("project://database/Assets/Sprites/RuneHaze.png");
     margin: auto auto;
@@ -53,3 +29,7 @@
     opacity: 0.7;
 }
 
+.main .button-default {
+    margin: 0 auto;
+    margin-bottom: 32px;
+}

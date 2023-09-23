@@ -37,6 +37,18 @@ namespace RuneHaze
         public Player Player { get; private set; }
         
         public VisualElement Root { get; private set; }
+
+        private bool _paused;
+
+        public bool IsPaused
+        {
+            get => _paused;
+            set
+            {
+                _paused = value;
+                Time.timeScale = _paused ? 0.0f : 1.0f;
+            }
+        }
         
         private void Awake()
         {
@@ -114,7 +126,7 @@ namespace RuneHaze
             Stop();
         }
 
-        private void Stop()
+        public void Stop()
         {
             if (ArenaSystem.Instance.Current == null)
                 return;

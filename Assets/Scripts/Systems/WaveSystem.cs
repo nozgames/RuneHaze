@@ -8,7 +8,7 @@ using System.Linq;
 using NoZ;
 using UnityEngine;
 
-namespace RuneHaze
+namespace NoZ.RuneHaze
 {
     [CreateAssetMenu(menuName = "RuneHaze/Modules/WaveSystem")]
     public class WaveSystem : Module<WaveSystem>, IModule

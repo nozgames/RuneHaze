@@ -6,7 +6,7 @@
 
 using UnityEngine.UIElements;
 
-namespace RuneHaze.UI
+namespace NoZ.RuneHaze.UI
 {
     public static class VisualElementExtensions
     {

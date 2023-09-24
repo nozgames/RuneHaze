@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEditor;
 
-namespace RuneHaze
+namespace NoZ.RuneHaze
 {
     public static class EditorUtility
     {

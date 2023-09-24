@@ -4,7 +4,7 @@
 
 */
 
-namespace RuneHaze
+namespace NoZ.RuneHaze
 {    
     public enum AttackShape 
     {

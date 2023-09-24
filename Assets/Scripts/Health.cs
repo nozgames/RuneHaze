@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Serialization;
 
-namespace RuneHaze
+namespace NoZ.RuneHaze
 {
     public class Health : MonoBehaviour
     {

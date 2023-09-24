@@ -7,7 +7,7 @@
 using System;
 using UnityEngine;
 
-namespace RuneHaze
+namespace NoZ.RuneHaze
 {
     public class Entity : MonoBehaviour, IDisposable
     {

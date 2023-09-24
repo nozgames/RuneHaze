@@ -10,7 +10,7 @@ using UnityEditor;
 using UnityEditor.Compilation;
 using UnityEngine;
 
-namespace RuneHaze
+namespace NoZ.RuneHaze
 {
     public static class UIUtility
     {

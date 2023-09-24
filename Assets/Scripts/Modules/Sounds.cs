@@ -7,7 +7,7 @@
 using NoZ;
 using UnityEngine;
 
-namespace RuneHaze
+namespace NoZ.RuneHaze
 {
     public class Sounds : Module<Sounds>, IModule
     {

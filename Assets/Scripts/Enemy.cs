@@ -6,9 +6,9 @@
 
 using UnityEngine;
 
-namespace RuneHaze
+namespace NoZ.RuneHaze
 {
-    public class Enemy : Character
+    public class Enemy : Actor
     {
         private Vector3 _lastLookAt;
         private CharacterStatValue _range;

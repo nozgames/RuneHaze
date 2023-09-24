@@ -6,7 +6,7 @@
 
 using UnityEngine;
 
-namespace RuneHaze
+namespace NoZ.RuneHaze
 {
     /// <summary>
     /// A character modifier factory is a scriptable object responsible for creating
@@ -18,6 +18,6 @@ namespace RuneHaze
     {
         [SerializeField] private float _duration = -1.0f;
         
-        public abstract CharacterModifier Create(Character character);
+        public abstract CharacterModifier Create(Actor actor);
     }
 }

@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RuneHaze
+namespace NoZ.RuneHaze
 {
     [CreateAssetMenu(menuName = "RuneHaze/Character/Attack")]
     public class Attack : CharacterModifierFactory
@@ -23,7 +23,10 @@ namespace RuneHaze
         [SerializeField] private bool _requireTarget = true;
         [SerializeField] private LayerMask _targetMask;
         
+        [Space]
         [SerializeField] private CharacterModifierFactory[] _selfModifiers;
+        
+        [Space]
         [SerializeField] private CharacterModifierFactory[] _targetModifiers;
         
         public bool DoesRequireTarget => _requireTarget;
@@ -46,13 +49,13 @@ namespace RuneHaze
         
         public IEnumerable<CharacterModifierFactory> TargetModifiers => _targetModifiers ?? Array.Empty<CharacterModifierFactory>();
         
-        public override CharacterModifier Create(Character character)
+        public override CharacterModifier Create(Actor actor)
         {
-            return new AttackModifier(character, this);
+            return new AttackModifier(actor, this);
         }
         
-        public bool CheckRange(Character character, Character target) =>
-            Vector3.Distance(character.transform.position, target.transform.position) < character.GetStatValue(StatSystem.Instance.RangeStat).Value;
+        public bool CheckRange(Actor actor, Actor target) =>
+            Vector3.Distance(actor.transform.position, target.transform.position) < actor.GetStatValue(StatSystem.Instance.RangeStat).Value;
         
         public bool CheckCooldown(float timeSinceLastAttack) =>
             timeSinceLastAttack > _cooldown;

@@ -7,7 +7,7 @@
 using UnityEngine.UIElements;
 using UnityEngine.Scripting;
 
-namespace RuneHaze.UI
+namespace NoZ.RuneHaze.UI
 {
     public class UIStats : UIView
     {
@@ -19,19 +19,19 @@ namespace RuneHaze.UI
 
         [Bind] private ScrollView _content;
         
-        public static UIStats Instantiate(Character character)
+        public static UIStats Instantiate(Actor actor)
         {
-            return UIView.Instantiate<UIStats>().Bind(character);
+            return UIView.Instantiate<UIStats>().Bind(actor);
         }
         
-        private UIStats Bind(Character character)
+        private UIStats Bind(Actor actor)
         {
             _content.Clear();
 
             var statIndex = 0;
-            foreach (var stat in character.Stats)
+            foreach (var stat in actor.Stats)
             {
-                var cell = UIStatCell.Instantiate(character, stat);
+                var cell = UIStatCell.Instantiate(actor, stat);
                 cell.AddToClassList(statIndex++ % 2 == 0 ? UssRowEven : UssRowOdd);
                 _content.Add(cell);
             }

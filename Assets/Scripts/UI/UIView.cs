@@ -10,7 +10,7 @@ using UnityEngine;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 
-namespace RuneHaze.UI
+namespace NoZ.RuneHaze.UI
 {
     public class UIView : VisualElement, System.IDisposable
     {

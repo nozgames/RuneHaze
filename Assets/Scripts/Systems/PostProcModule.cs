@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
-namespace RuneHaze
+namespace NoZ.RuneHaze
 {
     [CreateAssetMenu(menuName = "RuneHaze/Modules/PostProc")]
     public class PostProcModule : Module<PostProcModule>, IModule

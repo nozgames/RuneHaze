@@ -6,7 +6,7 @@
 
 using UnityEngine;
 
-namespace RuneHaze
+namespace NoZ.RuneHaze
 {
     [CreateAssetMenu(menuName = "RuneHaze/Character/Stat Modifier")]
     public class CharacterStatModifierFactory : CharacterModifierFactory
@@ -15,9 +15,9 @@ namespace RuneHaze
         [SerializeField] private float _multiply = 0.0f;
         [SerializeField] private float _add = 0.0f;
         
-        public override CharacterModifier Create(Character character)
+        public override CharacterModifier Create(Actor actor)
         {
-            return new CharacterStatModifier(character, _stat, _multiply, _add);
+            return new CharacterStatModifier(actor, _stat, _multiply, _add);
         }
     }
 }

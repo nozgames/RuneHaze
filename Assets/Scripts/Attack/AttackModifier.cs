@@ -6,7 +6,7 @@
 
 using UnityEngine;
 
-namespace RuneHaze
+namespace NoZ.RuneHaze
 {
     /// <summary>
     /// Adds an attack to the character as a character modifier and manages attack cooldown
@@ -18,43 +18,43 @@ namespace RuneHaze
         
         public Attack Attack { get; }
         
-        public AttackModifier(Character character, Attack attack) : base(character)
+        public AttackModifier(Actor actor, Attack attack) : base(actor)
         {
             Attack = attack;
-            _attackSpeed = character.GetStatValue(StatSystem.Instance.AttackSpeed);
-            Character.PostUpdateEvent += OnPostUpdate;
-            Character.UpdateStatsEvent += OnUpdateStats;
+            _attackSpeed = actor.GetStatValue(StatSystem.Instance.AttackSpeed);
+            Actor.PostUpdateEvent += OnPostUpdate;
+            Actor.UpdateStatsEvent += OnUpdateStats;
         }
 
         public override void Dispose()
         {
-            Character.PostUpdateEvent -= OnPostUpdate;
-            Character.UpdateStatsEvent -= OnUpdateStats;
+            Actor.PostUpdateEvent -= OnPostUpdate;
+            Actor.UpdateStatsEvent -= OnUpdateStats;
         }
 
-        private void OnUpdateStats(Character character)
+        private void OnUpdateStats(Actor actor)
         {
-            var range = character.GetStatValue(StatSystem.Instance.RangeStat);
+            var range = actor.GetStatValue(StatSystem.Instance.RangeStat);
             if (range != null)
                 range.Min = Attack.Range;
         }
 
-        private void OnPostUpdate(Character character)
+        private void OnPostUpdate(Actor actor)
         {
             _timeSinceLastAttack += Time.deltaTime * _attackSpeed.Value;
             
-            if (Attack.GlobalCooldown > 0.0f && character.GlobalCooldown > 0.0f)
+            if (Attack.GlobalCooldown > 0.0f && actor.GlobalCooldown > 0.0f)
                 return;
             
-            if (!character.IsAttacking ||
-                Attack.DoesRequireTarget && character.Target == null ||
+            if (!actor.IsAttacking ||
+                Attack.DoesRequireTarget && actor.Target == null ||
                 !Attack.CheckCooldown(_timeSinceLastAttack) ||
-                (Attack.DoesRequireTarget && !Attack.CheckRange(character, character.Target)))
+                (Attack.DoesRequireTarget && !Attack.CheckRange(actor, actor.Target)))
                 return;
             
-            AttackSystem.Instance.DoAttack(character, character.Target, Attack);
+            AttackSystem.Instance.DoAttack(actor, actor.Target, Attack);
             
-            character.GlobalCooldown = Attack.GlobalCooldown;
+            actor.GlobalCooldown = Attack.GlobalCooldown;
             
             _timeSinceLastAttack = 0.0f;
         }

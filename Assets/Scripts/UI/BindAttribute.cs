@@ -6,7 +6,7 @@
 
 using System;
 
-namespace RuneHaze.UI
+namespace NoZ.RuneHaze.UI
 {
     [AttributeUsage(AttributeTargets.Field)]
     public class BindAttribute : Attribute

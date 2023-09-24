@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using NoZ;
 using UnityEngine;
 
-namespace RuneHaze
+namespace NoZ.RuneHaze
 {
     [CreateAssetMenu(menuName = "RuneHaze/Modules/EnemySystem")]
     public class EnemySystem : Module<EnemySystem>, IModule

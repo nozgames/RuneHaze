@@ -6,7 +6,7 @@
 
 using UnityEngine.UIElements;
 
-namespace RuneHaze.UI
+namespace NoZ.RuneHaze.UI
 {
     public class UxmlViewFactory<TView, TTraits> : UxmlFactory<TView, TTraits> where TView : UIView, new() where TTraits : UxmlTraits, new()
     {

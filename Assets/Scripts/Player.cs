@@ -6,9 +6,9 @@
 
 using UnityEngine;
 
-namespace RuneHaze
+namespace NoZ.RuneHaze
 {
-    public class Player : Character
+    public class Player : Actor
     {
         private InputModule _inputModule;
         private Vector3 _lastLookAt;

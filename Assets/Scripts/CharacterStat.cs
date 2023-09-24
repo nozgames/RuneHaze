@@ -6,7 +6,7 @@
 
 using UnityEngine;
 
-namespace RuneHaze
+namespace NoZ.RuneHaze
 {
     [CreateAssetMenu(menuName = "RuneHaze/Character/Stat")]
     public class CharacterStat : ScriptableObject

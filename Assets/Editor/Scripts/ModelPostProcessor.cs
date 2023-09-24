@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace RuneHaze
+namespace NoZ.RuneHaze
 {
     public class ModelPostProcessor : AssetPostprocessor
     {

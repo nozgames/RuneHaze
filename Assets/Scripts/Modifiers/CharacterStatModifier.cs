@@ -4,7 +4,7 @@
 
 */
 
-namespace RuneHaze
+namespace NoZ.RuneHaze
 {
     public class CharacterStatModifier : CharacterModifier
     {
@@ -12,24 +12,24 @@ namespace RuneHaze
         private readonly float _add;
         private readonly CharacterStat _stat;
         
-        public CharacterStatModifier(Character character, CharacterStat stat, float multiply, float add) : base(character)
+        public CharacterStatModifier(Actor actor, CharacterStat stat, float multiply, float add) : base(actor)
         {
             _stat = stat;
             _multiply = multiply;
             _add = add;
-            Character.UpdateStatsEvent += OnUpdateStats;
+            Actor.UpdateStatsEvent += OnUpdateStats;
         }
         
         public override void Dispose()
         {
-            Character.UpdateStatsEvent -= OnUpdateStats;
+            Actor.UpdateStatsEvent -= OnUpdateStats;
 
             base.Dispose();
         }
 
-        private void OnUpdateStats(Character character)
+        private void OnUpdateStats(Actor actor)
         {
-            var value = character.GetStatValue(_stat);
+            var value = actor.GetStatValue(_stat);
             if (value == null)
                 return;
             

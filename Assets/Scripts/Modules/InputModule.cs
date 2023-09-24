@@ -8,7 +8,7 @@ using NoZ;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace RuneHaze
+namespace NoZ.RuneHaze
 {
     [CreateAssetMenu(menuName = "RuneHaze/Modules/Input")]
     public class InputModule : Module<InputModule>, IModule

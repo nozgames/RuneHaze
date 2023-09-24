@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using NoZ;
 
-namespace RuneHaze
+namespace NoZ.RuneHaze
 {
     [CreateAssetMenu(menuName = "RuneHaze/Modules/AttackSystem")]
     public class AttackSystem : Module<AttackSystem>, IModule
@@ -24,7 +24,7 @@ namespace RuneHaze
         {
         }
         
-        public int CalculateDamage(Character attacker, Character target, float baseDamage)
+        public int CalculateDamage(Actor attacker, Actor target, float baseDamage)
         {
             Assert.IsNotNull(StatSystem.Instance);
             Assert.IsNotNull(StatSystem.Instance.DamageStat);
@@ -34,7 +34,7 @@ namespace RuneHaze
             return Mathf.Max((int)damage, 1);
         }
         
-        public void DoAttack(Character self, Character target, Attack attack)
+        public void DoAttack(Actor self, Actor target, Attack attack)
         {
             self.PlayAnimation(attack.Animation);
             
@@ -56,7 +56,7 @@ namespace RuneHaze
             }
         }
 
-        private void DoAttackInternal(Character self, Character target, Attack attack)
+        private void DoAttackInternal(Actor self, Actor target, Attack attack)
         {
             Assert.IsNotNull(attack);
 
@@ -67,14 +67,14 @@ namespace RuneHaze
             target.Health.Damage(self, damage);
         }
 
-        private static IEnumerable<Character> GetTargetsInArc(Character self, Vector3 targetDir, float range, float angle, int mask)
+        private static IEnumerable<Actor> GetTargetsInArc(Actor self, Vector3 targetDir, float range, float angle, int mask)
         {
             var attackerPosition = self.transform.position;
             var count = Physics.OverlapSphereNonAlloc(attackerPosition, range, _colliders, mask);
             var arcCos = Mathf.Cos((90.0f - angle * 0.5f) * Mathf.Deg2Rad);
             for (var i = 0; i < count; i++)
             {
-                var colliderCharacter = _colliders[i].GetComponentInParent<Character>();
+                var colliderCharacter = _colliders[i].GetComponentInParent<Actor>();
                 if (colliderCharacter == null)
                     continue;
 

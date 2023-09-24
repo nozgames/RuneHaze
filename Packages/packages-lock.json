@@ -6,6 +6,12 @@
       "source": "local",
       "dependencies": {}
     },
+    "com.noz.audio": {
+      "version": "file:../../com.noz.audio",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
+    },
     "com.noz.common": {
       "version": "file:../../com.noz.common",
       "depth": 0,

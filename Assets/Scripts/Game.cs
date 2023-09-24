@@ -4,13 +4,12 @@
 
 */
 
-using NoZ;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-using RuneHaze.UI;
+using NoZ.RuneHaze.UI;
 
-namespace RuneHaze
+namespace NoZ.RuneHaze
 {
     public class Game : MonoBehaviour, IModuleLoaderProvider
     {
@@ -90,6 +89,10 @@ namespace RuneHaze
             Stop();
             
             _moduleLoader.UnloadModules();
+
+#if UNITY_EDITOR            
+            Signal.LogLeaks();
+#endif            
         }
 
         public void Play()

@@ -12,7 +12,7 @@ using UnityEditor;
 using UnityEditor.AssetImporters;
 using UnityEngine.UIElements;
 
-namespace RuneHaze.UI
+namespace NoZ.RuneHaze.UI
 {
     [ScriptedImporter(2, "uxmlf", importQueueOffset:2000)]
     public class VisualTreeFactoryImporter : ScriptedImporter

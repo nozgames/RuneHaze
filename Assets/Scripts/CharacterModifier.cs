@@ -6,7 +6,7 @@
 
 using System;
 
-namespace RuneHaze
+namespace NoZ.RuneHaze
 {
     /// <summary>
     /// A character modifier is a modifier that is applied to a character to change the character
@@ -14,16 +14,16 @@ namespace RuneHaze
     /// </summary>
     public abstract class CharacterModifier : IDisposable
     {
-        public Character Character { get; }
+        public Actor Actor { get; }
         
-        protected CharacterModifier(Character character)
+        protected CharacterModifier(Actor actor)
         {
-            Character = character;
+            Actor = actor;
         }
 
         public virtual void Dispose()
         {
-            Character.RemoveModifier(this);
+            Actor.RemoveModifier(this);
         }
     }
 }

@@ -7,7 +7,7 @@
 using UnityEngine.UIElements;
 using UnityEngine.Scripting;
 
-namespace RuneHaze.UI
+namespace NoZ.RuneHaze.UI
 {
     public class UIOptions : UIView
     {

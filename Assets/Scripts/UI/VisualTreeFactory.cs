@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace RuneHaze.UI
+namespace NoZ.RuneHaze.UI
 {
     public class VisualTreeFactory : ScriptableObject
     {

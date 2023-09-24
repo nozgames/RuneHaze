@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.Scripting;
 
-namespace RuneHaze.UI
+namespace NoZ.RuneHaze.UI
 {
     public class UIStatCell : UIView
     {
@@ -22,22 +22,22 @@ namespace RuneHaze.UI
         [Bind] private Label _statName;
         [Bind] private Label _statValue;
 
-        private Character _character;
+        private Actor _actor;
         private CharacterStat _stat;
         
-        public static UIStatCell Instantiate(Character character, CharacterStat stat)
+        public static UIStatCell Instantiate(Actor actor, CharacterStat stat)
         {
-            return UIView.Instantiate<UIStatCell>().Bind(character, stat);
+            return UIView.Instantiate<UIStatCell>().Bind(actor, stat);
         }
         
-        private UIStatCell Bind(Character character, CharacterStat stat)
+        private UIStatCell Bind(Actor actor, CharacterStat stat)
         {
-            _character = character;
+            _actor = actor;
             _stat = stat;
 
-            OnPostUpdateStats(_character);
+            OnPostUpdateStats(_actor);
 
-            _character.PostUpdateStatsEvents += OnPostUpdateStats;
+            _actor.PostUpdateStatsEvents += OnPostUpdateStats;
             
             return this;
         }
@@ -46,12 +46,12 @@ namespace RuneHaze.UI
         {
             base.OnDispose();
             
-            _character.PostUpdateStatsEvents -= OnPostUpdateStats;
+            _actor.PostUpdateStatsEvents -= OnPostUpdateStats;
         }
 
-        private void OnPostUpdateStats(Character character)
+        private void OnPostUpdateStats(Actor actor)
         {
-            var value = character.GetStatValue(_stat).Value;
+            var value = actor.GetStatValue(_stat).Value;
             EnableInClassList(UssNegative, value < 0);
             EnableInClassList(UssPositive, value > 0);
             

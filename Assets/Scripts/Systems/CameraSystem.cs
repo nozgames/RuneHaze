@@ -7,7 +7,7 @@
 using NoZ;
 using UnityEngine;
 
-namespace RuneHaze
+namespace NoZ.RuneHaze
 {
     [CreateAssetMenu(menuName = "RuneHaze/Modules/CameraSystem")]
     public class CameraSystem : Module<CameraSystem>, IModule

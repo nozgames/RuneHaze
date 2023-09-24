@@ -7,7 +7,7 @@
 using UnityEngine;
 using NoZ;
 
-namespace RuneHaze
+namespace NoZ.RuneHaze
 {
     [CreateAssetMenu(menuName = "RuneHaze/Modules/ArenaSystem")]
     public class ArenaSystem : Module<ArenaSystem>, IModule

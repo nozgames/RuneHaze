@@ -61,6 +61,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 9109574015349720269}
   m_SourcePrefab: {fileID: 100100000, guid: 87e2103f0a6134448997919d658914ea, type: 3}
+--- !u!4 &627997717163750919 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -7895318494886785348, guid: 87e2103f0a6134448997919d658914ea,
+    type: 3}
+  m_PrefabInstance: {fileID: 1934622802292160699}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1592093806288930282 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 87e2103f0a6134448997919d658914ea,
@@ -97,6 +103,12 @@ Transform:
 --- !u!4 &6235083708096766005 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -3720432163476186994, guid: 87e2103f0a6134448997919d658914ea,
+    type: 3}
+  m_PrefabInstance: {fileID: 1934622802292160699}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7813222444948886406 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8554320699940350781, guid: 87e2103f0a6134448997919d658914ea,
     type: 3}
   m_PrefabInstance: {fileID: 1934622802292160699}
   m_PrefabAsset: {fileID: 0}
@@ -264,6 +276,37 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 1930b69dac2e04e45b03a86974fd206d,
         type: 2}
+    - target: {fileID: 7814576790850815793, guid: 637580de43e50a4419bc7e059cd69490,
+        type: 3}
+      propertyPath: _slotBody
+      value: 
+      objectReference: {fileID: 7813222444948886406}
+    - target: {fileID: 7814576790850815793, guid: 637580de43e50a4419bc7e059cd69490,
+        type: 3}
+      propertyPath: _slotLeftHand
+      value: 
+      objectReference: {fileID: 627997717163750919}
+    - target: {fileID: 7814576790850815793, guid: 637580de43e50a4419bc7e059cd69490,
+        type: 3}
+      propertyPath: _slotRightHand
+      value: 
+      objectReference: {fileID: 6235083708096766005}
+    - target: {fileID: 7814576790850815793, guid: 637580de43e50a4419bc7e059cd69490,
+        type: 3}
+      propertyPath: _scaleTransform
+      value: 
+      objectReference: {fileID: 2113191311464193872}
+    - target: {fileID: 7814576790850815793, guid: 637580de43e50a4419bc7e059cd69490,
+        type: 3}
+      propertyPath: _actorDefinition
+      value: 
+      objectReference: {fileID: 3050803132011598614, guid: 33817c01b47d8414bb5d50129cc404ed,
+        type: 3}
+    - target: {fileID: 8835864872347014423, guid: 637580de43e50a4419bc7e059cd69490,
+        type: 3}
+      propertyPath: _animator
+      value: 
+      objectReference: {fileID: 9109574015349720269}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 5030115437351313354, guid: 637580de43e50a4419bc7e059cd69490, type: 3}

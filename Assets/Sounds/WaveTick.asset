@@ -9,13 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bc72581bed23664d91c283b8888698a, type: 3}
-  m_Name: GrasslandsWave2
+  m_Script: {fileID: 11500000, guid: 956a35bb9bb356c4fa2b83444903e5e2, type: 3}
+  m_Name: WaveTick
   m_EditorClassIdentifier: 
-  _duration: 25
-  _spawnCountMin: 30
-  _spawnCountMax: 40
-  _enemies:
-  - Name: Orc (1)
-    Enemy: {fileID: 932927038116378316, guid: 82e81f13943744d4bb87ec056311796f, type: 3}
-    Weight: 1
+  clips:
+  - {fileID: 8300000, guid: 8801c84cd7d55974598c55537f1a7017, type: 3}
+  volume: 1
+  randomVolume: 0
+  pitch: 1
+  randomPitch: 0
+  _spatialRange: 1
+  hapticFeedback: 0

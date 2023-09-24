@@ -1,0 +1,13 @@
+{
+    "type" : "Enemy",
+    "prefab" : "Assets/Data/Characters/Enemies/Orc/Orc.prefab",
+    "runAnimation" : "Assets/Data/Characters/HumanoidRun.asset",
+    "idleAnimation" : "Assets/Data/Characters/HumanoidIdle.asset",
+    "deathAnimation" : "Assets/Data/Characters/HumanoidDeath.asset",
+    "abilities" : [
+        {
+            "name" : "Punch2"
+        }
+    ],
+    "baseAttack" : 100
+}

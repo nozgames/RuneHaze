@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+      "*.actor": "json",
+      "*.wave": "json",
+      "*.target": "json",
+      "*.arena": "json",
+      "*.ability": "json",
+    }
+  }

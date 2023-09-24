@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64af53d5607289447bcb96e2439b14ee, type: 3}
+  m_Name: InputManager
+  m_EditorClassIdentifier: 
+  _pause:
+    m_Name: Pause
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 805686f0-2d2c-4e1b-bed1-3cfe0f008c12
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 102ef297-9da3-42fe-aad6-b769881d009a
+      m_Path: <Keyboard>/escape
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Pause
+      m_Flags: 0
+    m_Flags: 0
+  _playerMove:
+    m_Name: Player Move
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 2eff70a8-e095-4d1d-9615-533ef935bfc2
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  _playerLook:
+    m_Name: Player Look
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: ceb59d36-2489-4beb-90a5-e3811727e502
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  _playerMoveKeyboard:
+    m_Name: Player Move Keyboard
+    m_Type: 0
+    m_ExpectedControlType: Vector2
+    m_Id: 6da51316-17db-4300-ac3e-6f17ba48b235
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 2D Vector
+      m_Id: 44561e7d-1568-48fc-aa0d-a07dbb5a3d16
+      m_Path: 2DVector
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player Move Keyboard
+      m_Flags: 4
+    - m_Name: up
+      m_Id: f421f558-275d-4d15-baa7-b74800aa9ecb
+      m_Path: <Keyboard>/w
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player Move Keyboard
+      m_Flags: 8
+    - m_Name: down
+      m_Id: 174695fd-439c-4679-9fed-845639f2939a
+      m_Path: <Keyboard>/s
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player Move Keyboard
+      m_Flags: 8
+    - m_Name: left
+      m_Id: 9335f2df-98fc-49b7-958c-07b9bb85e8f7
+      m_Path: <Keyboard>/a
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player Move Keyboard
+      m_Flags: 8
+    - m_Name: right
+      m_Id: 4f7727b1-71cf-4a7b-b8fe-37e0bb3cb388
+      m_Path: <Keyboard>/d
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player Move Keyboard
+      m_Flags: 8
+    m_Flags: 0
+  _playerAttack:
+    m_Name: Player Attack
+    m_Type: 1
+    m_ExpectedControlType: Button
+    m_Id: 4d5efd65-b04b-49e2-bce7-183f8498b1c9
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 1158110a-c683-4ca4-b83b-e9bd4aab36f2
+      m_Path: <Mouse>/leftButton
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player Attack
+      m_Flags: 0
+    m_Flags: 0

@@ -9,12 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f939f221027276b4da72692935edfe85, type: 3}
-  m_Name: Tick
+  m_Script: {fileID: 11500000, guid: 2080bf67900783041b095e835af5af8b, type: 3}
+  m_Name: HumanoidAttack
   m_EditorClassIdentifier: 
-  clips:
-  - {fileID: 8300000, guid: 8801c84cd7d55974598c55537f1a7017, type: 3}
-  volume: 1
-  pitch: 1
-  channel: {fileID: 0}
-  hapticFeedback: 0
+  _clip: {fileID: 0}
+  _speed: 1
+  _blendTime: 0.1
+  _events: []

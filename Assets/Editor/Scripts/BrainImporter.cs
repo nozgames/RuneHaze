@@ -10,7 +10,9 @@ using UnityEditor;
 using UnityEngine;
 using UnityEditor.AssetImporters;
 
-namespace NoZ.RuneHaze.UI
+using Noz.RuneHaze.EditorUtilities;
+
+namespace NoZ.RuneHaze
 {
     [ScriptedImporter(2, "brain", importQueueOffset:2000)]
     public class BrainImporter : ScriptedImporter
@@ -25,9 +27,7 @@ namespace NoZ.RuneHaze.UI
         {
             var text = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Application.dataPath), ctx.assetPath));
             var json = JObject.Parse(text);
-            
-            var brain = Brain.Import(ctx, json);
-            ctx.SetMainObject(brain);
+            ctx.SetMainObject(ImportUtility.ImportScriptableObject(ctx, typeof(Brain), json));
         }
     }
 }

@@ -33,8 +33,8 @@ namespace NoZ.RuneHaze.UI
 
             Game.Instance.Paused += OnPaused;
             //Game.Instance.Player.Health.Changed.AddListener(OnPlayerHealthChanged);
-            WaveSystem.Instance.WaveTimeChanged += OnWaveTimeChanged;
-            WaveSystem.Instance.WaveStarted += OnWaveStarted;
+            WaveManager.Instance.WaveTimeChanged += OnWaveTimeChanged;
+            WaveManager.Instance.WaveStarted += OnWaveStarted;
             InputManager.Instance.MenuButton += OnMenuButton;
         }
         
@@ -44,8 +44,8 @@ namespace NoZ.RuneHaze.UI
             
             InputManager.Instance.MenuButton -= OnMenuButton;
             
-            WaveSystem.Instance.WaveTimeChanged -= OnWaveTimeChanged;
-            WaveSystem.Instance.WaveStarted -= OnWaveStarted;
+            WaveManager.Instance.WaveTimeChanged -= OnWaveTimeChanged;
+            WaveManager.Instance.WaveStarted -= OnWaveStarted;
             Game.Instance.Paused -= OnPaused;
         }
 
@@ -92,7 +92,7 @@ namespace NoZ.RuneHaze.UI
         {
             _waveTimeRemaining.text = remaining.ToString();
 
-            var percentageRemaining = remaining / (float)WaveSystem.Instance.Current.Duration;
+            var percentageRemaining = remaining / (float)WaveManager.Instance.Current.Duration;
             _waveTimeFill.uv = new Rect(0, 0, 1.0f, percentageRemaining);
             _waveTimeFill.style.height = new StyleLength(new Length(percentageRemaining * 100.0f, LengthUnit.Percent));
             _waveTimeFill.MarkDirtyRepaint();

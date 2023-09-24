@@ -10,6 +10,8 @@ using UnityEditor;
 using UnityEngine;
 using UnityEditor.AssetImporters;
 
+using Noz.RuneHaze.EditorUtilities;
+
 namespace NoZ.RuneHaze.UI
 {
     [ScriptedImporter(2, "target", importQueueOffset:2000)]
@@ -25,7 +27,7 @@ namespace NoZ.RuneHaze.UI
         {
             var text = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Application.dataPath), ctx.assetPath));
             var json = JObject.Parse(text);
-            ctx.SetMainObject(TargetFinder.Import(ctx, json));
+            ctx.SetMainObject(ImportUtility.ImportScriptableObject(ctx, typeof(TargetFinder), json));
         }
     }
 }

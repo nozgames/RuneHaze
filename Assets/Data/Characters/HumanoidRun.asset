@@ -9,13 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bc72581bed23664d91c283b8888698a, type: 3}
-  m_Name: GrasslandsWave1
+  m_Script: {fileID: 11500000, guid: 2080bf67900783041b095e835af5af8b, type: 3}
+  m_Name: HumanoidRun
   m_EditorClassIdentifier: 
-  _duration: 7
-  _spawnCountMin: 20
-  _spawnCountMax: 30
-  _enemies:
-  - Name: Orc (1)
-    Enemy: {fileID: 932927038116378316, guid: 82e81f13943744d4bb87ec056311796f, type: 3}
-    Weight: 1
+  _clip: {fileID: -7551964380084998518, guid: f0455eadd9749d341b3458b134771ee1, type: 3}
+  _speed: 1
+  _blendTime: 0.1
+  _events: []

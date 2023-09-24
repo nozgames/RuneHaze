@@ -12,7 +12,6 @@ using UnityEngine;
 
 namespace NoZ.RuneHaze
 {
-    [CreateAssetMenu (menuName = "RuneHaze/Ability")]
     public class Ability : ScriptableObject
     {
         [SerializeField] private NoZ.Animations.AnimationShader _animation = null;

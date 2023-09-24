@@ -9,8 +9,7 @@ using UnityEngine;
 
 namespace NoZ.RuneHaze
 {
-    [CreateAssetMenu(menuName = "RuneHaze/Modules/EnemySystem")]
-    public class EnemySystem : Module<EnemySystem>, IModule
+    public class EnemyManager : Module<EnemyManager>, IModule
     {
         private List<Actor> _enemies;
         

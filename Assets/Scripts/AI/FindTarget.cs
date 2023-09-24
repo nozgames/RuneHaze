@@ -6,11 +6,6 @@
 
 using UnityEngine;
 
-#if UNITY_EDITOR
-using Newtonsoft.Json.Linq;
-using UnityEditor.AssetImporters;
-#endif
-
 namespace NoZ.RuneHaze
 {
     public class FindTarget : Lobe
@@ -35,15 +30,5 @@ namespace NoZ.RuneHaze
 
             source.SetDestination(new Destination(_targetFinder.Targets[0]));
         }
-        
-#if UNITY_EDITOR
-        protected override void OnImport(AssetImportContext ctx, JObject token)
-        {
-            base.OnImport(ctx, token);
-
-            if (token["targetFinder"] is { } targetFinderToken)
-                _targetFinder = TargetFinder.Import(ctx, targetFinderToken);
-        }
-#endif        
     }
 }

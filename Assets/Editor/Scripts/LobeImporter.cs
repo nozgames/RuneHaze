@@ -6,6 +6,7 @@
 
 using System.IO;
 using Newtonsoft.Json.Linq;
+using Noz.RuneHaze.EditorUtilities;
 using UnityEditor;
 using UnityEngine;
 using UnityEditor.AssetImporters;
@@ -25,7 +26,7 @@ namespace NoZ.RuneHaze.UI
         {
             var text = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Application.dataPath), ctx.assetPath));
             var json = JObject.Parse(text);
-            ctx.SetMainObject(Lobe.Import(ctx, json));
+            ctx.SetMainObject(ImportUtility.ImportScriptableObject(ctx, typeof(Lobe), json));
         }
     }
 }

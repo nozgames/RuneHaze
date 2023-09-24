@@ -1,0 +1,27 @@
+{
+    "cameraSize" : [ 16.5, 10 ],
+    "size" : [ 16, 10 ],
+    "prefab" : "Assets/Data/Arenas/Grasslands/Grasslands.prefab",
+    "waves" : [
+        {
+            "name" : "wave1",
+            "duration" : 7,
+            "enemies" : [
+                {
+                    "enemy" : "Assets/Data/Characters/Enemies/Orc/Orc.actor",
+                    "weight" : 1
+                }
+            ]
+        },
+        {
+            "name" : "wave2",
+            "duration" : 10,
+            "enemies" : [
+                {
+                    "enemy" : "Assets/Data/Characters/Enemies/Orc/Orc.actor",
+                    "weight" : 1
+                }
+            ]
+        }
+    ]
+}

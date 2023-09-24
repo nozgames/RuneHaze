@@ -10,10 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 3449678284699264486}
   - component: {fileID: 6852073702392495218}
-  - component: {fileID: 6237319856483725080}
   - component: {fileID: 2777436666599831056}
   - component: {fileID: 673175614131189497}
   - component: {fileID: -8189853634098974016}
+  - component: {fileID: 7752828683604231941}
+  - component: {fileID: 2498165763663228433}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
@@ -49,32 +50,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 0}
---- !u!114 &6237319856483725080
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3032268773931307367}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97a986e4b61564042b3b53d38ec15d64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _health: {fileID: 2777436666599831056}
-  _speed: 4
-  _radius: 0.3
-  _rotationDampen: 0.05
-  _animationController: {fileID: 6852073702392495218}
-  _animator: {fileID: 0}
-  _renderers: []
-  _stats:
-  - {fileID: 11400000, guid: baf09e72ea368164bba93fa55bf5cd6f, type: 2}
-  - {fileID: 11400000, guid: 64515532d5090c8439990dd47aba9e4b, type: 2}
-  - {fileID: 11400000, guid: 4c001c19d75889343a39fda5a1211c25, type: 2}
-  - {fileID: 11400000, guid: 36922422db6706648a70cb1ba9e2d54d, type: 2}
-  - {fileID: 11400000, guid: a31c1f8b654e6ac4f9e5a1a591a2e450, type: 2}
-  _defaultRunes: []
 --- !u!114 &2777436666599831056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,7 +69,7 @@ MonoBehaviour:
   Death:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6237319856483725080}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: RuneHaze.Character, com.noz.runehaze
         m_MethodName: OnDeath
         m_Mode: 0
@@ -156,3 +131,41 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &7752828683604231941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3032268773931307367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50ba4d36b210e834db31ab403d380b54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: {fileID: 0}
+  _actorDefinition: {fileID: 0}
+  _hitCollider: {fileID: 673175614131189497}
+  _scaleTransform: {fileID: 0}
+  _pitchTransform: {fileID: 0}
+  _offsetTransform: {fileID: 0}
+  _rotationTransform: {fileID: 0}
+  _spawnVFXPrefab: {fileID: 0}
+  _runPitch: 20
+  _height: 0.5
+  _slotRightHand: {fileID: 0}
+  _slotLeftHand: {fileID: 0}
+  _slotBody: {fileID: 0}
+--- !u!114 &2498165763663228433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3032268773931307367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c2a9b9ef62c5794d905e1934a0e02ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 0}

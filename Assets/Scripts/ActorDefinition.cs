@@ -4,16 +4,11 @@
 
 */
 
-using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 using NoZ.Animations;
 using NoZ.Audio;
-
-#if UNITY_EDITOR
-using UnityEditor.AssetImporters;
-#endif
 
 namespace NoZ.RuneHaze
 {
@@ -143,31 +138,10 @@ namespace NoZ.RuneHaze
         {
             Assert.IsNotNull(parent);
             
-            var actor = Instantiate(Prefab, parent == null ? Game.Instance.transform : parent).GetComponent<Actor>();
-            var actorTransform = actor.transform;
-            actorTransform.position = position.ZeroY() + Vector3.up * parent.position.y;
-            actorTransform.rotation = rotation;
-            actor.State = ActorState.Spawn;
-            return actor;
+            return Actor.Instantiate(this, position, rotation, parent);
         }
 
         public void PlayDeathSound(Actor actor) => AudioManager.Instance.PlaySound(_deathSound, actor.gameObject);
         public void PlayHitSound(Actor actor) => AudioManager.Instance.PlaySound(_hitSound, actor.gameObject);
-
-        
-#if UNITY_EDITOR
-        public static ActorDefinition Import(AssetImportContext ctx, JObject json)
-        {
-            var actor = ScriptableObject.CreateInstance<ActorDefinition>();
-            
-            actor._type = json["type"]?.ToObject<ActorType>() ?? ActorType.Enemy;
-            actor._displayName = json["displayName"]?.ToObject<string>() ?? "";
-
-            if (json["brain"] is { } token)
-                actor._brain = Brain.Import(ctx, token);
-            
-            return actor;
-        }
-#endif
     }
 }

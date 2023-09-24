@@ -7,12 +7,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-#if UNITY_EDITOR
-using UnityEditor;
-using UnityEditor.AssetImporters;
-using Newtonsoft.Json.Linq;
-#endif
-
 namespace NoZ.RuneHaze
 {
     public interface IThinkState
@@ -60,56 +54,6 @@ namespace NoZ.RuneHaze
         /// Optionally release a think state that was previously created from this brain
         /// </summary>
         public virtual void ReleaseThinkState(IThinkState state) { }
-        
-#if UNITY_EDITOR
-        protected virtual void OnImport(AssetImportContext ctx, JObject token)
-        {
-            _baseScore = token["baseScore"]?.Value<float>() ?? 1.0f;
-        }
-        
-        public static Lobe Import(AssetImportContext ctx, JToken token)
-        {
-            if (token is JValue)
-            {
-                var path = token.Value<string>();
-                if (string.IsNullOrEmpty(path))
-                    return null;
-                
-                var lobe = AssetDatabase.LoadAssetAtPath<Lobe>(path);
-                if (lobe != null)
-                    ctx.DependsOnSourceAsset(AssetDatabase.GetAssetPath(lobe));
-                
-                return lobe;
-            }
-            else if (token is JObject json)
-            {
-                var typeName = json["type"]?.Value<string>();
-                if (string.IsNullOrEmpty(typeName))
-                {
-                    Debug.LogError("Lobe type is missing");
-                    return null;
-                }
-
-                var name = json["name"]?.Value<string>() ?? typeName;
-                if (string.IsNullOrEmpty(name))
-                {
-                    Debug.LogError("Lobe name is missing");
-                    return null;
-                }
-                
-                var lobe = LobeFactory.CreateInstance(ctx, typeName);
-                if (lobe == null)
-                    return null;
-
-                lobe.name = name;
-                lobe.OnImport(ctx, json);
-                ctx.AddObjectToAsset(lobe.name, lobe);
-                return lobe;
-            }
-
-            return null;
-        }
-#endif        
     }
 
     /// <summary>

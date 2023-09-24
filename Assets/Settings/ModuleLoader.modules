@@ -3,8 +3,6 @@
 @import url("/Assets/Settings/Modules/PostProcModule.asset");
 @import url("/Assets/Settings/Modules/InputManager.asset");
 @import url("/Assets/Settings/Modules/CameraManager.asset");
-@import url("/Assets/Settings/Modules/StatSystem.asset");
-@import url("/Assets/Settings/Modules/WaveSystem.asset");
-@import url("/Assets/Settings/Modules/EnemySystem.asset");
-@import url("/Assets/Settings/Modules/ArenaSystem.asset");
-@import url("/Assets/Settings/Modules/AttackSystem.asset");
+@import url("/Assets/Settings/Modules/WaveManager.asset");
+@import url("/Assets/Settings/Modules/ArenaManager.asset");
+@import url("/Assets/Settings/Modules/EnemyManager.asset");

@@ -22,7 +22,7 @@ namespace NoZ.RuneHaze
         {
             transform.position += transform.forward * (_speed * Time.deltaTime);
 
-            if (ArenaSystem.Instance.IsOutOfBounds(transform.position))
+            if (ArenaManager.Instance.IsOutOfBounds(transform.position))
                 Destroy(gameObject);   
         }
         

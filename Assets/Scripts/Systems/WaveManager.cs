@@ -5,13 +5,11 @@
 */
 
 using System.Linq;
-using NoZ;
 using UnityEngine;
 
 namespace NoZ.RuneHaze
 {
-    [CreateAssetMenu(menuName = "RuneHaze/Modules/WaveSystem")]
-    public class WaveSystem : Module<WaveSystem>, IModule
+    public class WaveManager : Module<WaveManager>, IModule
     {
         [SerializeField] private float _waveStartDelay = 1.0f;
         
@@ -40,7 +38,7 @@ namespace NoZ.RuneHaze
         
         public void StartWave(int waveIndex)
         {
-            var wave = ArenaSystem.Instance.Current.GetWave(waveIndex);
+            var wave = ArenaManager.Instance.Current.GetWave(waveIndex);
             if (wave == null)
                 return;
 
@@ -60,7 +58,7 @@ namespace NoZ.RuneHaze
 
         public bool NextWave()
         {
-            if (_waveIndex + 1 < ArenaSystem.Instance.Current.WaveCount)
+            if (_waveIndex + 1 < ArenaManager.Instance.Current.WaveCount)
             {
                 StartWave(_waveIndex + 1);
                 return true;
@@ -76,6 +74,9 @@ namespace NoZ.RuneHaze
         
         public void Update()
         {
+            if (Current == null)
+                return;
+            
             var elapsedTime = Time.time - _waveStartTime;
             var remainingTime = (int)(Current.Duration - elapsedTime);
             if (remainingTime != _remainingTime)
@@ -85,7 +86,7 @@ namespace NoZ.RuneHaze
 
                 if (remainingTime <= 0)
                 {
-                    foreach (var enemy in EnemySystem.Instance.Enemies.ToArray())
+                    foreach (var enemy in EnemyManager.Instance.Enemies.ToArray())
                         enemy.Dispose();
                     
                     WaveComplete?.Invoke();
@@ -97,10 +98,10 @@ namespace NoZ.RuneHaze
             {
                 _remainingTimeUntilNextSpawn += _waveSpawnInterval;
 
-                var enemy = WaveSystem.Instance.Current.GetRandomEnemy();
-                var position = ArenaSystem.Instance.GetRandomSpawnPosition(enemy);
+                var enemyDefinition = WaveManager.Instance.Current.GetRandomEnemy();
+                var position = ArenaManager.Instance.GetRandomSpawnPosition(enemyDefinition);
                 var playerLook = (Game.Instance.Player.transform.position - position).normalized; 
-                ArenaSystem.Instance.InstantiateEntity(enemy, position, Quaternion.LookRotation(playerLook));
+                ArenaManager.Instance.InstantiateActor(enemyDefinition, position, Quaternion.LookRotation(playerLook));
             }
         }
     }

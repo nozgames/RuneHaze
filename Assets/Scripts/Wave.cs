@@ -6,23 +6,22 @@
 
 using UnityEngine;
 
+#if UNITY_EDITOR
+using Newtonsoft.Json.Linq;
+using Noz.RuneHaze.EditorUtilities;
+using UnityEditor;
+using UnityEditor.AssetImporters;
+#endif
+
 namespace NoZ.RuneHaze
 {
-    [CreateAssetMenu(menuName = "RuneHaze/Wave")]
     public class Wave : ScriptableObject, ISerializationCallbackReceiver
     {
         [System.Serializable]
         private class EnemySpawn
         {
-            [HideInInspector]
-            public string Name;
-            public Actor Enemy;
-            public float Weight;
-            
-            public void OnValidate()
-            {
-                Name = Enemy ? $"{Enemy.name} ({Weight})" : "None";
-            }
+            [SerializeField] public ActorDefinition Enemy;
+            [SerializeField] public float Weight;
         }
         
         [Header("General")]
@@ -41,7 +40,7 @@ namespace NoZ.RuneHaze
 
         public int GetRandomSpawnCount() => Random.Range(_spawnCountMin, _spawnCountMax + 1);
 
-        public Actor GetRandomEnemy()
+        public ActorDefinition GetRandomEnemy()
         {
             var value = Random.Range(0, _totalWeight);
             foreach (var enemy in _enemies)
@@ -55,15 +54,6 @@ namespace NoZ.RuneHaze
             return _enemies[^1].Enemy;
         }
         
-        private void OnValidate()
-        {
-            if (_enemies == null) 
-                return;
-            
-            foreach(var enemy in _enemies)
-                enemy.OnValidate();
-        }
-
         public void OnBeforeSerialize()
         {
         }
@@ -77,5 +67,31 @@ namespace NoZ.RuneHaze
             foreach (var enemy in _enemies)
                 _totalWeight += enemy.Weight;
         }
+        
+#if UNITY_EDITOR
+        public static Wave Import(AssetImportContext ctx, JToken token)
+        {
+            if (token is JValue)
+            {
+                var path = token.Value<string>();
+                if (string.IsNullOrEmpty(path))
+                    return null;
+                
+                var wave = AssetDatabase.LoadAssetAtPath<Wave>(path);
+                ctx.DependsOnSourceAsset(AssetDatabase.GetAssetPath(wave));
+                return wave;
+            }
+            else if (token is JObject json)
+            {
+                var wave = CreateInstance<Wave>();
+                wave.name = "wave";
+                ImportUtility.ImportProperties(ctx, wave, json);
+                ctx.AddObjectToAsset(wave.name, wave);
+                return wave;
+            }
+
+            return null;
+        }
+#endif
     }
 }

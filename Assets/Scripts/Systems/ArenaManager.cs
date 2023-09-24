@@ -5,12 +5,10 @@
 */
 
 using UnityEngine;
-using NoZ;
 
 namespace NoZ.RuneHaze
 {
-    [CreateAssetMenu(menuName = "RuneHaze/Modules/ArenaSystem")]
-    public class ArenaSystem : Module<ArenaSystem>, IModule
+    public class ArenaManager : Module<ArenaManager>, IModule
     {
         public Bounds Bounds { get; private set; }
         
@@ -29,7 +27,7 @@ namespace NoZ.RuneHaze
         public bool IsOutOfBounds(Vector3 position) =>
             !Bounds.Contains(position);
 
-        public Vector3 GetRandomSpawnPosition(Actor enemy)
+        public Vector3 GetRandomSpawnPosition(ActorDefinition enemy)
         {
             var x = Random.Range(-Bounds.min.x * 0.5f + enemy.Radius, Bounds.max.x * 0.5f + enemy.Radius); 
             var z = Random.Range(-Bounds.min.z * 0.5f + enemy.Radius, Bounds.max.z * 0.5f + enemy.Radius);
@@ -69,11 +67,7 @@ namespace NoZ.RuneHaze
             Current = null;
         }
         
-        public Entity InstantiateEntity(Entity prefab, Vector3 position, Quaternion rotation)
-        {
-            var instance = Instantiate(prefab, position, rotation);
-            instance.transform.SetParent(_arenaInstance.transform);
-            return instance;
-        }
+        public Actor InstantiateActor(ActorDefinition actorDefinition, Vector3 position, Quaternion rotation) =>
+            actorDefinition.Instantiate(position, rotation, _arenaInstance.transform);
     }
 }

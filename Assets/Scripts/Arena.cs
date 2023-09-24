@@ -8,7 +8,6 @@ using UnityEngine;
 
 namespace NoZ.RuneHaze
 {
-    [CreateAssetMenu(menuName = "RuneHaze/Arena")]
     public class Arena : ScriptableObject
     {
         [SerializeField] private GameObject _prefab;

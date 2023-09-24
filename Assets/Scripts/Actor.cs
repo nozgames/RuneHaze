@@ -231,9 +231,11 @@ namespace NoZ.RuneHaze
             _node = new LinkedListNode<Actor>(this);
         }
 
-        protected override void Awake()
+        private void Initialize(ActorDefinition actorDefinition)
         {
-            base.Awake();
+            State = ActorState.Spawn;
+
+            _actorDefinition = actorDefinition;
             
             if (_rotationTransform == null)
                 _rotationTransform = transform;
@@ -712,6 +714,20 @@ namespace NoZ.RuneHaze
         {
             _materialProperties.SetColor(nameId, value);
             _materialPropertiesDirty = true;
+        }
+
+
+        public static Actor Instantiate(ActorDefinition actorDefinition, Vector3 position, Quaternion rotation, Transform parent)
+        {
+            var actor = Instantiate(
+                actorDefinition.Prefab,
+                position,
+                rotation,
+                parent).GetComponent<Actor>();
+
+            actor.Initialize(actorDefinition);
+            
+            return actor;
         }
     }
 }

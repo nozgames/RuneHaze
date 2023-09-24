@@ -16,7 +16,7 @@ namespace NoZ.RuneHaze
         [SerializeField] private ModuleLoader _moduleLoader;
         [SerializeField] private VisualTreeFactory _uiFactory;
         [SerializeField] private PanelSettings _panelSettings;
-        [SerializeField] private GameObject _playerTest;
+        [SerializeField] private ActorDefinition _playerTest;
         [SerializeField] private Arena _arena;
         [SerializeField] private Camera _camera;
         [SerializeField] private AudioListener _audioListener;
@@ -62,7 +62,7 @@ namespace NoZ.RuneHaze
 
             CameraManager.Instance.Camera = _camera;
             
-            WaveSystem.Instance.WaveComplete += OnWaveComplete;
+            WaveManager.Instance.WaveComplete += OnWaveComplete;
             
             VisualTreeFactory.Instance = _uiFactory;
 
@@ -78,11 +78,11 @@ namespace NoZ.RuneHaze
 
         private void Update()
         {
-            if (ArenaSystem.Instance.Current == null)
+            if (ArenaManager.Instance.Current == null)
                 return;
             
-            EnemySystem.Instance.Update();
-            WaveSystem.Instance.Update();
+            EnemyManager.Instance.Update();
+            WaveManager.Instance.Update();
         }
 
         private void OnApplicationQuit()
@@ -98,13 +98,13 @@ namespace NoZ.RuneHaze
 
         public void Play()
         {
-            ArenaSystem.Instance.LoadArena(_arena);
+            ArenaManager.Instance.LoadArena(_arena);
 
-            Player = Instantiate(_playerTest).GetComponent<Player>();
+            Player = (Player)ArenaManager.Instance.InstantiateActor(_playerTest, Vector3.zero, Quaternion.identity);
             // Player.Health.Changed.AddListener(OnPlayerHealthChanged);
             // Player.Health.Death.AddListener(OnPlayerDeath);
             
-            WaveSystem.Instance.StartWave(0);
+            WaveManager.Instance.StartWave(0);
 
             _main.SetDisplay(false);
             _play = UIView.Instantiate<UIPlay>();
@@ -125,15 +125,15 @@ namespace NoZ.RuneHaze
 
         public void Stop()
         {
-            if (ArenaSystem.Instance.Current == null)
+            if (ArenaManager.Instance.Current == null)
                 return;
 
-            WaveSystem.Instance.StopWave();
+            WaveManager.Instance.StopWave();
             
             Destroy(Player.gameObject);
             Player = null;
             
-            ArenaSystem.Instance.UnloadArena();
+            ArenaManager.Instance.UnloadArena();
 
             PostProcModule.Instance.SetVignette(PostProcModule.VignetteChannel.Health, 0.0f);
             
@@ -147,7 +147,7 @@ namespace NoZ.RuneHaze
 
         private void OnWaveComplete()
         {
-            if (!WaveSystem.Instance.NextWave())
+            if (!WaveManager.Instance.NextWave())
                 Stop();
         }
         

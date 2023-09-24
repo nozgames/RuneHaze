@@ -4,14 +4,12 @@
 
 */
 
-using NoZ;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace NoZ.RuneHaze
 {
-    [CreateAssetMenu(menuName = "RuneHaze/Modules/Input")]
-    public class InputModule : Module<InputModule>, IModule
+    public class InputManager : Module<InputManager>, IModule
     {
         [Header("UX")]
         [SerializeField] private InputAction _pause = null;

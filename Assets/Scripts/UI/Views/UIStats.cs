@@ -28,6 +28,7 @@ namespace NoZ.RuneHaze.UI
         {
             _content.Clear();
 
+#if false            
             var statIndex = 0;
             foreach (var stat in actor.Stats)
             {
@@ -35,6 +36,7 @@ namespace NoZ.RuneHaze.UI
                 cell.AddToClassList(statIndex++ % 2 == 0 ? UssRowEven : UssRowOdd);
                 _content.Add(cell);
             }
+#endif
 
             return this;
         }

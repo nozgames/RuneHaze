@@ -6,6 +6,7 @@
 
 namespace NoZ.RuneHaze
 {
+#if false    
     public class CharacterStatModifier : CharacterModifier
     {
         private readonly float _multiply;
@@ -37,4 +38,5 @@ namespace NoZ.RuneHaze
             value.Add += _add;
         }
     }
+#endif
 }

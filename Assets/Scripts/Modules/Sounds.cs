@@ -4,8 +4,9 @@
 
 */
 
-using NoZ;
 using UnityEngine;
+
+using NoZ.Audio;
 
 namespace NoZ.RuneHaze
 {

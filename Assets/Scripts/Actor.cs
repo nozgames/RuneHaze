@@ -14,7 +14,7 @@ using NoZ.RuneHaze.UI;
 namespace NoZ.RuneHaze
 {
     [Preserve]
-    public class Actor : MonoBehaviour
+    public class Actor : Entity
     {
         public static readonly int ActorTypeCount = System.Enum.GetNames(typeof(ActorType)).Length;
         public static readonly int ActorAttributeCount = System.Enum.GetNames(typeof(ActorAttribute)).Length;
@@ -159,7 +159,15 @@ namespace NoZ.RuneHaze
         public ActorState State
         {
             get => _state;
-            set => _state = value;
+            set
+            {
+                if (_state == value)
+                    return;
+
+                var oldState = _state;
+                _state = value;
+                OnStateChanged(oldState, _state);
+            }
         }
 
         /// <summary>
@@ -223,8 +231,10 @@ namespace NoZ.RuneHaze
             _node = new LinkedListNode<Actor>(this);
         }
 
-        protected virtual void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+            
             if (_rotationTransform == null)
                 _rotationTransform = transform;
 
@@ -340,7 +350,8 @@ namespace NoZ.RuneHaze
             CanHit = false;
             if(NavAgent != null)
                 NavAgent.enabled = false;
-            GameEvent.Raise(this, new ActorDiedEvent { });
+            
+            Signal.Dispatch(new ActorDiedEvent { Actor = this });
 
             if (_actorDefinition.Brain != null)
                 _actorDefinition.Brain.Think(this, _thinkState);
@@ -351,10 +362,6 @@ namespace NoZ.RuneHaze
 
         private void Despawn()
         {
-            if (IsHost)
-                NetworkObject.Despawn(true);
-            else
-                gameObject.SetActive(false);
         }
 
         /// <summary>
@@ -405,32 +412,25 @@ namespace NoZ.RuneHaze
                 NavAgent.speed = GetAttributeValue(ActorAttribute.Speed);
         }
 
-        public override void OnNetworkSpawn()
+        public void OnNetworkSpawn()
         {
-            base.OnNetworkSpawn();
-
-            _state.OnValueChanged += OnStateChanged;
-
             _lastPosition = transform.position;
 
             if (_spawnVFXPrefab != null)
                 Instantiate(_spawnVFXPrefab, transform.position, transform.rotation);
            
             // On host add the default effects to each actor
-            if(IsHost)
-            {
-                AddEffect(this, GameManager.Instance.DefaultActorEffect);
+            AddEffect(this, ActorManager.Instance.DefaultActorEffect);
 
-                foreach (var effect in _actorDefinition.Effects)
-                    AddEffect(this, effect);
-            }
+            foreach (var effect in _actorDefinition.Effects)
+                AddEffect(this, effect);
 
             UpdateAttributes();
 
             if (_actorDefinition.Brain != null)
                 _thinkState = _actorDefinition.Brain.AllocThinkState(this);
 
-            GameEvent.Raise(this, new ActorSpawnEvent { });
+            Signal.Dispatch(new ActorSpawnEvent { Actor = this });
 
             if(!string.IsNullOrEmpty(Definition.HealthCircleClass))
             {
@@ -441,18 +441,14 @@ namespace NoZ.RuneHaze
             }
         }
 
-        public override void OnNetworkDespawn()
+        public void OnNetworkDespawn()
         {
-            base.OnNetworkDespawn();
-
-            _state.OnValueChanged -= OnStateChanged;
-
             RemoveHealthCircle();
 
             if (_thinkState != null)
                 _actorDefinition.Brain.ReleaseThinkState(_thinkState);
 
-            GameEvent.Raise(this, new ActorDespawnEvent{ });
+            Signal.Dispatch(new ActorDespawnEvent{ });
         }
 
         private void RemoveHealthCircle()
@@ -533,10 +529,10 @@ namespace NoZ.RuneHaze
             _lastAbilityUsedTime = Time.time;
             _lastAbilityUsed = ability;
 
-            ability.OnEvent(this, GameManager.Instance.AbilityBeginEvent, ability.FindTargets(this));
+            ability.OnEvent(this, ActorManager.Instance.AbilityBeginEvent, ability.FindTargets(this));
             PlayOneShotAnimation(ability.Animation);
 
-            ExecuteAbilityClientRpc(ability.NetworkId);
+            PlayOneShotAnimation(ability.Animation);
 
             for (int i = 0, c = _actorDefinition.Abilities.Length; i < c; i++)
             {
@@ -546,16 +542,6 @@ namespace NoZ.RuneHaze
                     break;
                 }
             }
-        }
-
-        [ClientRpc]
-        private void ExecuteAbilityClientRpc (ushort abilityId)
-        {
-            var ability = NetworkScriptableObject.Get<Ability>(abilityId);
-            if (null == ability)
-                return;
-
-            PlayOneShotAnimation(ability.Animation);
         }
         
         public float GetAbilityLastUsedTime (Ability actorAbility)

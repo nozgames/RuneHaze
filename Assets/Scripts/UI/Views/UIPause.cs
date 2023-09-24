@@ -30,7 +30,7 @@ namespace NoZ.RuneHaze.UI
             _playerStats = UIStats.Instantiate(Game.Instance.Player);
             _playerStatsContainer.Add(_playerStats);
             
-            InputModule.Instance.MenuButton += OnResume;
+            InputManager.Instance.MenuButton += OnResume;
         }
 
         protected override void OnDisplayBegin()
@@ -55,7 +55,7 @@ namespace NoZ.RuneHaze.UI
         {
             base.OnDispose();
             
-            InputModule.Instance.MenuButton -= OnResume;
+            InputManager.Instance.MenuButton -= OnResume;
         }
         
         private void OnMainMenu()

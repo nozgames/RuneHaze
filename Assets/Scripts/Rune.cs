@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+#if false
 namespace NoZ.RuneHaze
 {
     [CreateAssetMenu(menuName = "RuneHaze/Character/Rune")]
@@ -19,3 +20,5 @@ namespace NoZ.RuneHaze
         public IEnumerable<CharacterModifierFactory> Modifiers => _modifiers ?? Array.Empty<CharacterModifierFactory>();
     }
 }
+
+#endif

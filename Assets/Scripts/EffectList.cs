@@ -5,6 +5,7 @@
 */
 
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace NoZ.RuneHaze
 {
@@ -29,9 +30,9 @@ namespace NoZ.RuneHaze
             public ChangeEventType Type;
 
             /// <summary>
-            /// Tick the event started
+            /// Time the event started
             /// </summary>
-            public int Tick;
+            public double Time;
 
             /// <summary>
             /// Identifier assigned to the context
@@ -39,14 +40,14 @@ namespace NoZ.RuneHaze
             public uint ContextId;
 
             /// <summary>
-            /// Network Id of the effect 
+            /// Effect 
             /// </summary>
-            public ushort EffectId;
+            public Effect Effect;
 
             /// <summary>
-            /// Network Object Id of the source actor 
+            /// Source actor 
             /// </summary>
-            public ulong SourceId;
+            public Actor Source;
         }
 
         private readonly Actor _actor;
@@ -81,7 +82,7 @@ namespace NoZ.RuneHaze
                 return;
 
             // Add the new effect
-            AddEvent(ChangeEventType.Add, effect, sourceId : source.NetworkObjectId);
+            AddEvent(ChangeEventType.Add, effect, source);
 
             // Remove instant effects immediately
             RemoveEffects(EffectLifetime.Instant);
@@ -92,8 +93,7 @@ namespace NoZ.RuneHaze
         /// </summary>
         public void RemoveEffects(EffectLifetime lifetime)
         {
-            var tick = NetworkManager.Singleton.ServerTime.Tick;
-            var tickRate = 1.0f / NetworkManager.Singleton.ServerTime.TickRate;
+            var tick = Time.timeAsDouble;
 
             LinkedListNode<EffectStack> nextStackNode;
             for (var stackNode = Stacks.First; stackNode != null; stackNode = nextStackNode)
@@ -106,24 +106,22 @@ namespace NoZ.RuneHaze
                 {
                     nextContextNode = contextNode.Next;
                     var context = contextNode.Value;
-                    if (lifetime == context.Lifetime && (lifetime != EffectLifetime.Time || (tick - context.Tick) * tickRate >= context.Duration))
+                    if (lifetime == context.Lifetime && (lifetime != EffectLifetime.Time || (tick - context.Time) >= context.Duration))
                         AddEvent(ChangeEventType.Remove, contextId: context.Id);
                 }
             }
         }
 
-        private void AddEvent(ChangeEventType type, Effect effect=null, ulong sourceId = 0, uint contextId=0)
+        private void AddEvent(ChangeEventType type, Effect effect=null, Actor source=null, uint contextId=0)
         {
             _events.Add(HandleEvent(new ChangeEvent
             {
                 Type = type,
-                Tick = NetworkManager.Singleton.ServerTime.Tick,
-                EffectId = effect == null ? (ushort)0 : effect.NetworkId,
-                SourceId = sourceId,
+                Time = Time.timeAsDouble,
+                Effect = effect,
+                Source = source,
                 ContextId = contextId
             }));
-
-            SetDirty(true);
         }
 
         private ChangeEvent HandleEvent(ChangeEvent evt)
@@ -131,54 +129,52 @@ namespace NoZ.RuneHaze
             switch (evt.Type)
             {
                 case ChangeEventType.Add:
+                {
+                    var effect = evt.Effect;
+                    var source = evt.Source;
+
+                    // Create the effect context
+                    var context = EffectContext.Get(effect, source, _actor, evt.ContextId);
+
+                    // Add the effect context to the end of the stack
+                    var stack = GetStack(effect);
+                    if(null == stack)
+                        stack = AddStack(effect);
+                    stack.Contexts.AddLast(context.Node);
+
+                    // Handle maximum stacks
+                    while(stack.Contexts.Count > effect.MaximumStacks)
+                        stack.Contexts.First.Value.Release();
+
+                    for(var componentNode = context.Components.Last; componentNode != null; componentNode = componentNode.Previous)
                     {
-                        var effect = NetworkScriptableObject<Effect>.Get(evt.EffectId);
-
-                        // Convert the sourceId into an Actor
-                        var source = Actor.FromNetworkId(evt.SourceId);
-
-                        // Create the effect context
-                        var context = EffectContext.Get(effect, source, _actor, evt.ContextId);
-
-                        // Add the effect context to the end of the stack
-                        var stack = GetStack(effect);
-                        if(null == stack)
-                            stack = AddStack(effect);
-                        stack.Contexts.AddLast(context.Node);
-
-                        // Handle maximum stacks
-                        while(stack.Contexts.Count > effect.MaximumStacks)
-                            stack.Contexts.First.Value.Release();
-
-                        for(var componentNode = context.Components.Last; componentNode != null; componentNode = componentNode.Previous)
-                        {
-                            var component = componentNode.Value;
-                            if (component.Tag == null)
-                                component.Enabled = true;
-                            else
-                                UpdateState(component.Tag);
-                        }
-
-                        evt.ContextId = context.Id;
-
-                        return evt;
+                        var component = componentNode.Value;
+                        if (component.Tag == null)
+                            component.Enabled = true;
+                        else
+                            UpdateState(component.Tag);
                     }
+
+                    evt.ContextId = context.Id;
+
+                    return evt;
+                }
 
                 case ChangeEventType.Remove:
-                    {
-                        foreach(var stack in Stacks)
-                            foreach(var context in stack.Contexts)
-                                if(context.Id == evt.ContextId)
-                                {
-                                    context.Release(UpdateState);
+                {
+                    foreach(var stack in Stacks)
+                        foreach(var context in stack.Contexts)
+                            if(context.Id == evt.ContextId)
+                            {
+                                context.Release(UpdateState);
 
-                                    if (stack.Contexts.Count == 0)
-                                        RemoveStack(stack);
+                                if (stack.Contexts.Count == 0)
+                                    RemoveStack(stack);
 
-                                    return evt;
-                                }
-                    }
-                    return evt;
+                                return evt;
+                            }
+                }
+                return evt;
             }
 
             return evt;

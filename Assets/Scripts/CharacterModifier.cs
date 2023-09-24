@@ -6,6 +6,7 @@
 
 using System;
 
+#if false
 namespace NoZ.RuneHaze
 {
     /// <summary>
@@ -27,3 +28,5 @@ namespace NoZ.RuneHaze
         }
     }
 }
+
+#endif

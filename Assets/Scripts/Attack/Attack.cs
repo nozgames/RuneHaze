@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+#if false
 namespace NoZ.RuneHaze
 {
     [CreateAssetMenu(menuName = "RuneHaze/Character/Attack")]
@@ -61,3 +62,4 @@ namespace NoZ.RuneHaze
             timeSinceLastAttack > _cooldown;
     }
 }
+#endif

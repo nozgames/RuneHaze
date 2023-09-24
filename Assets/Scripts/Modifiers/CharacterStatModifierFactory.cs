@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace NoZ.RuneHaze
 {
+#if false    
     [CreateAssetMenu(menuName = "RuneHaze/Character/Stat Modifier")]
     public class CharacterStatModifierFactory : CharacterModifierFactory
     {
@@ -20,4 +21,5 @@ namespace NoZ.RuneHaze
             return new CharacterStatModifier(actor, _stat, _multiply, _add);
         }
     }
+#endif
 }

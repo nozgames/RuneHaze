@@ -5,7 +5,6 @@
 */
 
 using System.Collections.Generic;
-using NoZ;
 using UnityEngine;
 
 namespace NoZ.RuneHaze
@@ -13,9 +12,9 @@ namespace NoZ.RuneHaze
     [CreateAssetMenu(menuName = "RuneHaze/Modules/EnemySystem")]
     public class EnemySystem : Module<EnemySystem>, IModule
     {
-        private List<Enemy> _enemies;
+        private List<Actor> _enemies;
         
-        public IEnumerable<Enemy> Enemies => _enemies;
+        public IEnumerable<Actor> Enemies => _enemies;
         
         public void Load()
         {
@@ -26,12 +25,12 @@ namespace NoZ.RuneHaze
         {
         }
 
-        public void Add(Enemy character)
+        public void Add(Actor character)
         {
             _enemies.Add(character);
         }
 
-        public void Remove(Enemy character)
+        public void Remove(Actor character)
         {
             _enemies.Remove(character);
         }

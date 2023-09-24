@@ -147,7 +147,7 @@ namespace NoZ.RuneHaze
             return actor;
         }
 
-        public void PlayDeathSound(Actor actor) => AudioManager.Instance.Play(_deathSound, actor.gameObject);
-        public void PlayHitSound(Actor actor) => AudioManager.Instance.Play(_hitSound, actor.gameObject);
+        public void PlayDeathSound(Actor actor) => AudioManager.Instance.PlaySound(_deathSound, actor.gameObject);
+        public void PlayHitSound(Actor actor) => AudioManager.Instance.PlaySound(_hitSound, actor.gameObject);
     }
 }

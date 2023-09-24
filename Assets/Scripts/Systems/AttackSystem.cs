@@ -29,43 +29,43 @@ namespace NoZ.RuneHaze
             Assert.IsNotNull(StatSystem.Instance);
             Assert.IsNotNull(StatSystem.Instance.DamageStat);
             Assert.IsNotNull(attacker);
-            
-            var damage = attacker.GetStatValue(StatSystem.Instance.DamageStat).Value * baseDamage;
+
+            var damage = 0; // attacker.GetStatValue(StatSystem.Instance.DamageStat).Value * baseDamage;
             return Mathf.Max((int)damage, 1);
         }
         
-        public void DoAttack(Actor self, Actor target, Attack attack)
-        {
-            self.PlayAnimation(attack.Animation);
-            
-            switch (attack.Shape)
-            {
-                case AttackShape.Self:
-                    DoAttackInternal(self, self, attack);
-                    break;
-                
-                case AttackShape.Target:
-                    if (target != null)
-                        DoAttackInternal(self, target, attack);
-                    break;
-                
-                case AttackShape.Arc:
-                    foreach (var arcTarget in GetTargetsInArc(self, self.transform.forward, attack.Range, attack.Angle, attack.TargetMask))
-                        DoAttackInternal(self, arcTarget, attack);
-                    break;
-            }
-        }
+        // public void DoAttack(Actor self, Actor target, Attack attack)
+        // {
+        //     self.PlayAnimation(attack.Animation);
+        //     
+        //     switch (attack.Shape)
+        //     {
+        //         case AttackShape.Self:
+        //             DoAttackInternal(self, self, attack);
+        //             break;
+        //         
+        //         case AttackShape.Target:
+        //             if (target != null)
+        //                 DoAttackInternal(self, target, attack);
+        //             break;
+        //         
+        //         case AttackShape.Arc:
+        //             foreach (var arcTarget in GetTargetsInArc(self, self.transform.forward, attack.Range, attack.Angle, attack.TargetMask))
+        //                 DoAttackInternal(self, arcTarget, attack);
+        //             break;
+        //     }
+        // }
 
-        private void DoAttackInternal(Actor self, Actor target, Attack attack)
-        {
-            Assert.IsNotNull(attack);
-
-            var damage = Instance.CalculateDamage(self, target, attack.Damage);
-            if (damage <= 0)
-                return;
-            
-            target.Health.Damage(self, damage);
-        }
+        // private void DoAttackInternal(Actor self, Actor target, Attack attack)
+        // {
+        //     Assert.IsNotNull(attack);
+        //
+        //     var damage = Instance.CalculateDamage(self, target, attack.Damage);
+        //     if (damage <= 0)
+        //         return;
+        //     
+        //     target.Health.Damage(self, damage);
+        // }
 
         private static IEnumerable<Actor> GetTargetsInArc(Actor self, Vector3 targetDir, float range, float angle, int mask)
         {

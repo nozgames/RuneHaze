@@ -4,13 +4,11 @@
 
 */
 
-using NoZ;
 using UnityEngine;
 
 namespace NoZ.RuneHaze
 {
-    [CreateAssetMenu(menuName = "RuneHaze/Modules/CameraSystem")]
-    public class CameraSystem : Module<CameraSystem>, IModule
+    public class CameraManager : Module<CameraManager>, IModule
     {
         [SerializeField] private float _pitch = 60.0f;
         [SerializeField] private float _distance = 10.0f;
@@ -19,6 +17,11 @@ namespace NoZ.RuneHaze
         public Camera Camera { get; set; }
 
         public Bounds Bounds { get; set; } = new Bounds(Vector3.zero, Vector3.one * 10);
+        
+        /// <summary>
+        /// Distance of the camera to the target
+        /// </summary>
+        public float TargetDistance { get; private set; }
         
         public void Load()
         {
@@ -40,6 +43,7 @@ namespace NoZ.RuneHaze
             var focusPosition = ConstrainCameraToWorldBounds(Camera, focus.position, Bounds, _zoom);
             cameraTransform.position = focusPosition + rotation * Vector3.back * _distance;
             
+            TargetDistance = Vector3.Distance(focusPosition, cameraTransform.position);
         }
         
         private static Vector2 OrthographicSize(Camera camera, float size)

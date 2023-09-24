@@ -16,7 +16,7 @@ namespace NoZ.RuneHaze
         {
             [HideInInspector]
             public string Name;
-            public Enemy Enemy;
+            public Actor Enemy;
             public float Weight;
             
             public void OnValidate()
@@ -41,7 +41,7 @@ namespace NoZ.RuneHaze
 
         public int GetRandomSpawnCount() => Random.Range(_spawnCountMin, _spawnCountMax + 1);
 
-        public Enemy GetRandomEnemy()
+        public Actor GetRandomEnemy()
         {
             var value = Random.Range(0, _totalWeight);
             foreach (var enemy in _enemies)

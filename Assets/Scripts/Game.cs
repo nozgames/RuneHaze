@@ -19,6 +19,7 @@ namespace NoZ.RuneHaze
         [SerializeField] private GameObject _playerTest;
         [SerializeField] private Arena _arena;
         [SerializeField] private Camera _camera;
+        [SerializeField] private AudioListener _audioListener;
         
         [Header("Vignette")]
         [SerializeField] private Vector2 _healthRange;
@@ -59,7 +60,7 @@ namespace NoZ.RuneHaze
         {
             _moduleLoader.LoadModules();
 
-            CameraSystem.Instance.Camera = _camera;
+            CameraManager.Instance.Camera = _camera;
             
             WaveSystem.Instance.WaveComplete += OnWaveComplete;
             
@@ -100,8 +101,8 @@ namespace NoZ.RuneHaze
             ArenaSystem.Instance.LoadArena(_arena);
 
             Player = Instantiate(_playerTest).GetComponent<Player>();
-            Player.Health.Changed.AddListener(OnPlayerHealthChanged);
-            Player.Health.Death.AddListener(OnPlayerDeath);
+            // Player.Health.Changed.AddListener(OnPlayerHealthChanged);
+            // Player.Health.Death.AddListener(OnPlayerDeath);
             
             WaveSystem.Instance.StartWave(0);
 
@@ -112,9 +113,9 @@ namespace NoZ.RuneHaze
 
         private void OnPlayerHealthChanged(Entity attacker, int amount)
         {
-            PostProcModule.Instance.SetVignette(
-                PostProcModule.VignetteChannel.Health,
-                Player.Health.Percent.Remap(_healthRange, _healthIntensity));
+            // PostProcModule.Instance.SetVignette(
+            //     PostProcModule.VignetteChannel.Health,
+            //     Player.Health.Percent.Remap(_healthRange, _healthIntensity));
         }
 
         private void OnPlayerDeath(Entity arg0)
@@ -148,6 +149,12 @@ namespace NoZ.RuneHaze
         {
             if (!WaveSystem.Instance.NextWave())
                 Stop();
+        }
+        
+        public void ListenAt (Transform transform)
+        {
+            _audioListener.transform.position = transform.position;
+            _audioListener.transform.rotation = transform.rotation;
         }
     }
 }

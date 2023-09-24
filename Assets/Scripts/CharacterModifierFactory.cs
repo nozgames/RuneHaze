@@ -6,6 +6,7 @@
 
 using UnityEngine;
 
+#if false
 namespace NoZ.RuneHaze
 {
     /// <summary>
@@ -21,3 +22,5 @@ namespace NoZ.RuneHaze
         public abstract CharacterModifier Create(Actor actor);
     }
 }
+
+#endif

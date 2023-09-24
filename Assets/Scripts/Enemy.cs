@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace NoZ.RuneHaze
 {
+#if false    
     public class Enemy : Actor
     {
         private Vector3 _lastLookAt;
@@ -63,4 +64,5 @@ namespace NoZ.RuneHaze
             base.OnDeath(source);
         }
     }
+#endif
 }

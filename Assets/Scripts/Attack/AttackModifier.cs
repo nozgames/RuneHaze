@@ -6,6 +6,7 @@
 
 using UnityEngine;
 
+#if false
 namespace NoZ.RuneHaze
 {
     /// <summary>
@@ -60,3 +61,4 @@ namespace NoZ.RuneHaze
         }
     }
 }
+#endif

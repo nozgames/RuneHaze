@@ -37,7 +37,7 @@ namespace NoZ.RuneHaze.UI
 
             OnPostUpdateStats(_actor);
 
-            _actor.PostUpdateStatsEvents += OnPostUpdateStats;
+            //_actor.PostUpdateStatsEvents += OnPostUpdateStats;
             
             return this;
         }
@@ -46,17 +46,17 @@ namespace NoZ.RuneHaze.UI
         {
             base.OnDispose();
             
-            _actor.PostUpdateStatsEvents -= OnPostUpdateStats;
+            //_actor.PostUpdateStatsEvents -= OnPostUpdateStats;
         }
 
         private void OnPostUpdateStats(Actor actor)
         {
-            var value = actor.GetStatValue(_stat).Value;
-            EnableInClassList(UssNegative, value < 0);
-            EnableInClassList(UssPositive, value > 0);
-            
-            _statName.text = _stat.name;
-            _statValue.text = value.ToString();
+            // var value = actor.GetStatValue(_stat).Value;
+            // EnableInClassList(UssNegative, value < 0);
+            // EnableInClassList(UssPositive, value > 0);
+            //
+            // _statName.text = _stat.name;
+            // _statValue.text = value.ToString();
         }
     }
 }

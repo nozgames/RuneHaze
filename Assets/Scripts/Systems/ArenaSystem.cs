@@ -29,7 +29,7 @@ namespace NoZ.RuneHaze
         public bool IsOutOfBounds(Vector3 position) =>
             !Bounds.Contains(position);
 
-        public Vector3 GetRandomSpawnPosition(Enemy enemy)
+        public Vector3 GetRandomSpawnPosition(Actor enemy)
         {
             var x = Random.Range(-Bounds.min.x * 0.5f + enemy.Radius, Bounds.max.x * 0.5f + enemy.Radius); 
             var z = Random.Range(-Bounds.min.z * 0.5f + enemy.Radius, Bounds.max.z * 0.5f + enemy.Radius);
@@ -54,7 +54,7 @@ namespace NoZ.RuneHaze
             Current = arena;
 
             Bounds = new Bounds(Vector3.zero + Vector3.up * 5, new Vector3(arena.Size.x, 10, arena.Size.y));
-            CameraSystem.Instance.Bounds = new Bounds(Vector3.zero + Vector3.up * 5, new Vector3(arena.CameraSize.x, 10, arena.CameraSize.y));;
+            CameraManager.Instance.Bounds = new Bounds(Vector3.zero + Vector3.up * 5, new Vector3(arena.CameraSize.x, 10, arena.CameraSize.y));;
             _arenaInstance = arena.Instantiate();
         }
 

@@ -25,7 +25,7 @@ namespace NoZ.RuneHaze
 
         public Actor Target { get; private set; }
         public Actor Source { get; private set; }
-        public int Tick { get; private set; }
+        public double Time { get; private set; }
         public double Duration { get; set; }
         public EffectLifetime Lifetime { get; set; }
 
@@ -70,7 +70,7 @@ namespace NoZ.RuneHaze
             context.Lifetime = effect.Lifetime;
             context.Duration = effect.Duration;
             context.Id = contextId == 0 ? _nextId++ : contextId;
-            context.Tick = Time.frameCount;
+            context.Time = UnityEngine.Time.frameCount;
 
             // Create a component context for each component in the effect
             foreach (var component in effect.Components)
@@ -96,7 +96,7 @@ namespace NoZ.RuneHaze
             Effect = null;
             Target = null;
             Source = null;
-            Tick = 0;
+            Time = 0;
 
             // Remove the effect context from the list it is currently included in
             if (Node.List != null)

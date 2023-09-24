@@ -66,12 +66,12 @@ namespace NoZ.RuneHaze.UI
         public static void UpdateElements ()
         {
             // Cache the FOV correction for scale
-            var camera = CameraSystem.Instance.Camera;
+            var camera = CameraManager.Instance.Camera;
             var fov = 1.0f / (2.0f * Mathf.Tan(camera.fieldOfView / 2.0f * Mathf.Deg2Rad));
             var pixelsToScale = 1.0f / 10000.0f;
 
             // Calculate the fov corrected scale using the camera distance
-            var scale = 1.0f / ((CameraSystem.Instance.IsometricDistance * fov * camera.pixelHeight) * pixelsToScale);
+            var scale = 1.0f / ((CameraManager.Instance.TargetDistance * fov * camera.pixelHeight) * pixelsToScale);
             var styleScale = new StyleScale(new Scale(new Vector3(scale, scale, 1)));
 
             // Update all world elements

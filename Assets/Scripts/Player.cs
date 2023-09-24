@@ -8,86 +8,136 @@ using UnityEngine;
 
 namespace NoZ.RuneHaze
 {
+    public enum PlayerButton
+    {
+        None,
+        Primary,
+        Secondary
+    }
+
     public class Player : Actor
     {
-        private InputModule _inputModule;
-        private Vector3 _lastLookAt;
+        private static readonly int PlayerButtonCount = System.Enum.GetNames(typeof(PlayerButton)).Length;
+
+        [Header("Player")]
+        [SerializeField] private float _buttonRepeat = 0.25f;
+
+        private PlayerButton _pendingButton;
+        private Destination _pendingDestination;
+        private PlayerButton _button = PlayerButton.Primary;
+        private bool _buttonPressed = false;
+        private double _buttonRepeatTime = 0;
         
-        protected override void Start()
+        // public PlayerController Controller { get; private set; }
+
+        public void OnNetworkSpawn()
         {
-            _inputModule = InputModule.Instance;
-            _inputModule.PlayerAttack += OnAttack;
-            base.Start();
+            base.OnNetworkSpawn();
+
+            name = $"Player";
+
+            // Controller = GameManager.Instance.Players.Where(p => p.OwnerClientId == OwnerClientId).FirstOrDefault();
+
+            NavAgent.updateRotation = false;
+
+            // InputManager.Instance.OnPlayerButtonDown += OnButtonDown;
+            // InputManager.Instance.OnPlayerButtonUp += OnButtonUp;
+
+            Signal.Dispatch(new PlayerSpawned { Player = this });
         }
 
-        public override void Dispose()
+        public void OnNetworkDespawn()
         {
-            base.Dispose();
+            base.OnNetworkDespawn();
 
-            _inputModule.PlayerAttack -= OnAttack;
+            Signal.Dispatch(new PlayerDeSpawned { Player = this });
+
+            // InputManager.Instance.OnPlayerButtonDown -= OnButtonDown;
+            // InputManager.Instance.OnPlayerButtonUp -= OnButtonUp;
         }
 
-        private void OnAttack()
+        private void OnButtonDown (PlayerButton button)
         {
-            IsAttacking = true;
+            var look = InputManager.Instance.PlayerLook;
+            var destination = new Destination(look);
+
+            // if (Physics.Raycast(InputManager.Instance.PlayerLookRay, out var hit, 100.0f, -1))
+            // {
+            //     var actor = hit.collider.GetComponentInParent<Actor>();
+            //     if (actor != null)
+            //         destination = new Destination(actor);
+            // }
+
+            if(destination.Target == null)
+                button = PlayerButton.None;
+
+            OnButtonDown(button, destination);
+        }
+
+        private void OnButtonUp (PlayerButton button)
+        {
+            _buttonPressed = false;
+        }
+
+        private void OnButtonDown (PlayerButton button, Destination destination)
+        {
+            if (IsBusy)
+            {
+                _pendingButton = _button;
+                _pendingDestination = destination;
+            }
+            else
+            {
+                _buttonRepeatTime = Time.timeAsDouble + _buttonRepeat;
+                _buttonPressed = true;
+                _button = button;
+                SetDestination(destination);
+            }
+        }
+        
+        protected override void OnAbilityEnd()
+        {
+            base.OnAbilityEnd();
+
+            if (_pendingDestination.IsValid)
+            {
+                OnButtonDown(_pendingButton, _pendingDestination);
+                _pendingDestination = Destination.None;
+                _pendingButton = PlayerButton.None;
+            }
+
+            if (!_buttonPressed)
+            {
+                _button = PlayerButton.None;
+                SetDestination(Destination.None);
+            }
         }
 
         protected override void Update()
         {
-            _lastLookAt = LookAt;
-
-            // No actions during global cooldown
-            MovementDirection = GlobalCooldown > 0.0f ?
-                Vector3.zero :
-                _inputModule.PlayerMove.ToXZ();
-            
-            // Look towards the movement direction or the last look at direction
-            LookAt = MovementDirection;
-            if (LookAt.sqrMagnitude < 0.01f)
-                LookAt = _lastLookAt;
-            
-            Target = GetClosestEnemy();
-
             base.Update();
+
+            // If move button is held down then update the destination every repeat
+            if (_buttonPressed && Destination.IsValid && !Destination.HasTarget && Time.timeAsDouble >= _buttonRepeatTime)
+                OnButtonDown(PlayerButton.None, new Destination(InputManager.Instance.PlayerLook));
+            else if (!IsBusy && _buttonPressed && Time.timeAsDouble >= _buttonRepeatTime)
+                OnButtonDown(_button, Destination);
+
+            Game.Instance.ListenAt(transform);
+
+            CameraManager.Instance.Focus(transform);
         }
 
-        protected void LateUpdate()
-        {
-            CameraSystem.Instance.Focus(transform);
+        /// <summary>
+        /// Returns true if the given player button was pressed
+        /// </summary>
+        public bool WasButtonPressed (PlayerButton button) => !IsBusy && _button == button;
 
-            IsAttacking = false;
-        }
-
-        private Enemy GetClosestEnemy()
+        protected override void OnHealthChanged()
         {
-            var position = transform.position;
-            // var enemyCount = Physics.OverlapCapsuleNonAlloc(
-            //     position,
-            //     position + Vector3.up * 2.0f,
-            //     100.0f,
-            //     _colliders,
-            //     _targetMask);
-            
-            var closestEnemy = default(Enemy);
-            var closestDistanceSqr = float.MaxValue;
-            foreach (var enemy in EnemySystem.Instance.Enemies)
-            {
-                //var enemy = _colliders[enemyIndex].GetComponent<Enemy>();
-                // if (null == enemy)
-                //     continue;
-                
-                var delta = enemy.transform.position - position;
-                var dot = Vector3.Dot(delta.normalized, LookAt);
-                var distanceSqr = delta.sqrMagnitude * -dot;
-                if (distanceSqr < closestDistanceSqr)
-                {
-                    closestDistanceSqr = distanceSqr;
-                    closestEnemy = enemy;
-                }
-            }
-            
-            return closestEnemy;
+            base.OnHealthChanged();
+
+            Health = Mathf.Max(Health, 1.0f);
         }
     }
 }
-

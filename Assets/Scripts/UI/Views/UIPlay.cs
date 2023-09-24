@@ -4,11 +4,12 @@
 
 */
 
-using NoZ;
-using NoZ.Tweening;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.Scripting;
+
+using NoZ.Tweening;
+using NoZ.Audio;
 
 namespace NoZ.RuneHaze.UI
 {
@@ -31,17 +32,17 @@ namespace NoZ.RuneHaze.UI
             base.Bind();
 
             Game.Instance.Paused += OnPaused;
-            Game.Instance.Player.Health.Changed.AddListener(OnPlayerHealthChanged);
+            //Game.Instance.Player.Health.Changed.AddListener(OnPlayerHealthChanged);
             WaveSystem.Instance.WaveTimeChanged += OnWaveTimeChanged;
             WaveSystem.Instance.WaveStarted += OnWaveStarted;
-            InputModule.Instance.MenuButton += OnMenuButton;
+            InputManager.Instance.MenuButton += OnMenuButton;
         }
         
         protected override void OnDispose()
         {
             base.OnDispose();
             
-            InputModule.Instance.MenuButton -= OnMenuButton;
+            InputManager.Instance.MenuButton -= OnMenuButton;
             
             WaveSystem.Instance.WaveTimeChanged -= OnWaveTimeChanged;
             WaveSystem.Instance.WaveStarted -= OnWaveStarted;
@@ -55,22 +56,22 @@ namespace NoZ.RuneHaze.UI
         
         private void OnPlayerHealthChanged(Entity attacker, int amount)
         {
-            var player = Game.Instance.Player;
-            _playerHealthLabel.text = $"{player.Health.Current} / {player.Health.Max}";
-
-            var healthPercent = player.Health.Current / (float)player.Health.Max * 100.0f;
-            _playerHealthBarFill.style.width = new StyleLength(
-                new Length(healthPercent, LengthUnit.Percent));
-            _playerHealthBarChange.style.left = new StyleLength(
-                new Length(healthPercent, LengthUnit.Percent));
-
-            var changeAmount = Mathf.Max(-amount, 0.0f);
-            _playerHealthBarChange.style.width = new StyleLength(
-                new Length(changeAmount / player.Health.Max * 100.0f, LengthUnit.Percent));
-            Tween.Stop(_playerHealthBarChange.style);
-            _playerHealthBarChange.style.TweenOpacity(1.0f, 0.0f).EaseInExponential().Duration(0.4f).Play();
-            
-            _playerHealthBar.style.TweenScale(1.2f, 1.0f).Duration(0.2f).EaseOutCubic().Play();
+            // var player = Game.Instance.Player;
+            // _playerHealthLabel.text = $"{player.Health.Current} / {player.Health.Max}";
+            //
+            // var healthPercent = player.Health.Current / (float)player.Health.Max * 100.0f;
+            // _playerHealthBarFill.style.width = new StyleLength(
+            //     new Length(healthPercent, LengthUnit.Percent));
+            // _playerHealthBarChange.style.left = new StyleLength(
+            //     new Length(healthPercent, LengthUnit.Percent));
+            //
+            // var changeAmount = Mathf.Max(-amount, 0.0f);
+            // _playerHealthBarChange.style.width = new StyleLength(
+            //     new Length(changeAmount / player.Health.Max * 100.0f, LengthUnit.Percent));
+            // Tween.Stop(_playerHealthBarChange.style);
+            // _playerHealthBarChange.style.TweenOpacity(1.0f, 0.0f).EaseInExponential().Duration(0.4f).Play();
+            //
+            // _playerHealthBar.style.TweenScale(1.2f, 1.0f).Duration(0.2f).EaseOutCubic().Play();
         }
 
         private void OnMenuButton()
@@ -100,7 +101,7 @@ namespace NoZ.RuneHaze.UI
             {
                 if (remaining == 0)
                 {
-                    AudioManager.Instance.Play(Sounds.WaveComplete);
+                    AudioManager.Instance.PlaySound(Sounds.WaveComplete);
                     _waveTime.style.TweenScale(1.3f, 1.0f).Duration(0.75f).EaseOutCubic().Play();
                     _waveTime.style.TweenSequence()
                         .Element(_waveTime.style.TweenRotate(
@@ -127,7 +128,7 @@ namespace NoZ.RuneHaze.UI
                 }
                 else
                 {
-                    AudioManager.Instance.Play(
+                    AudioManager.Instance.PlaySound(
                         Sounds.Tick,
                         volume: Mathf.Lerp(0.3f, 1.0f, 1.0f - remaining / 5.0f),
                         pitch: 1.0f);

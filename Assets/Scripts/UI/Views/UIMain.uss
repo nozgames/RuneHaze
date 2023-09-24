@@ -33,3 +33,7 @@
     margin: 0 auto;
     margin-bottom: 32px;
 }
+
+.main #_optionsButton {
+    display: none;
+}

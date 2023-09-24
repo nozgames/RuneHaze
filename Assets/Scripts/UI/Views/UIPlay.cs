@@ -19,6 +19,7 @@ namespace RuneHaze.UI
 
         [Bind] private Label _waveLabel;
         [Bind] private Label _waveTimeRemaining;
+        [Bind] private VisualElement _playerHealthBar;
         [Bind] private Label _playerHealthLabel;
         [Bind] private VisualElement _playerHealthBarFill;
         [Bind] private VisualElement _playerHealthBarChange;
@@ -68,6 +69,8 @@ namespace RuneHaze.UI
                 new Length(changeAmount / player.Health.Max * 100.0f, LengthUnit.Percent));
             Tween.Stop(_playerHealthBarChange.style);
             _playerHealthBarChange.style.TweenOpacity(1.0f, 0.0f).EaseInExponential().Duration(0.4f).Play();
+            
+            _playerHealthBar.style.TweenScale(1.2f, 1.0f).Duration(0.2f).EaseOutCubic().Play();
         }
 
         private void OnMenuButton()

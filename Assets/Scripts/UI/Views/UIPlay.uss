@@ -20,7 +20,7 @@
 
 .play #_playerStats {
     position: absolute;
-    top: 16px;
+    bottom: 16px;
     left: 16px;
     width: 400px;
 }
@@ -31,28 +31,24 @@
 
 .play #_playerHealthBar {
     height: 44px;
-    border-color: black;
-    border-width: 4px;
-    border-radius: 8px;
-    background-color: #5e5e5e;
+    border-color: var(--color-fishbase-eel);
+    border-width: 6px;
+    background-color: var(--color-fishbase-catfish);
+    padding: 1px 2px;
+    transform-origin: center left;
 }
 
 .play #_playerHealthBarFill {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
     width: 100%;
-    background-color: #dc0000;
-    border-right-width: 2px;
-    border-right-color: red;
+    height: 100%;
+    background-color: var(--color-accents-primary);
 }
 
 .play #_playerHealthBarChange {
     position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
+    top: 1px;
+    bottom: 1px;
+    left: 2px;
     width: 100%;
     background-color: white;
     opacity: 0;
@@ -61,8 +57,13 @@
 .play #_playerHealthLabel {
     color: white;
     font-size: 30px;
-    margin: auto;
     flex-grow: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    -unity-text-align: middle-center;
 }
 
 .play #_waveTime {

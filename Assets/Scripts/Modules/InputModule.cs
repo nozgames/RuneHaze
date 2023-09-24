@@ -16,12 +16,12 @@ namespace RuneHaze
         [Header("UX")]
         [SerializeField] private InputAction _pause = null;
         
-        [Header("Player")]
+        [Header("Player1")]
         [SerializeField] private InputAction _playerMove = null;
         [SerializeField] private InputAction _playerLook = null;
         [SerializeField] private InputAction _playerMoveKeyboard = null;
         [SerializeField] private InputAction _playerAttack = null;
-
+        
         private bool _controller;
 
         public event System.Action<bool> ControllerChanged;

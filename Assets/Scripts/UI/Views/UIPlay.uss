@@ -1,4 +1,5 @@
 .play #_waveStats {
+    -unity-font-definition: var(--font-definition-bold);
     position: absolute;
     top: 16px;
     left: 0;
@@ -8,19 +9,18 @@
 .play #_waveLabel {
     color: white;
     height: 44px;
-    margin: 0 auto;
-    font-size: 32px;
-}
-
-.play #_waveTimeRemaining {
-    color: white;
-    height: 44px;
+    font-size: 22px;
+    -unity-font-definition: var(--font-definition-regular);
+    background-color: var(--color-fishbase-eel);
+    border-radius: 12px;
+    padding: 4px 20px;
+    -unity-text-align: middle-center;
     margin: 0 auto;
 }
 
 .play #_playerStats {
     position: absolute;
-    top: 16px;
+    bottom: 16px;
     left: 16px;
     width: 400px;
 }
@@ -31,28 +31,24 @@
 
 .play #_playerHealthBar {
     height: 44px;
-    border-color: black;
-    border-width: 4px;
-    border-radius: 8px;
-    background-color: #5e5e5e;
+    border-color: var(--color-fishbase-eel);
+    border-width: 6px;
+    background-color: var(--color-fishbase-catfish);
+    padding: 1px 2px;
+    transform-origin: center left;
 }
 
 .play #_playerHealthBarFill {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
     width: 100%;
-    background-color: #dc0000;
-    border-right-width: 2px;
-    border-right-color: red;
+    height: 100%;
+    background-color: var(--color-accents-primary);
 }
 
 .play #_playerHealthBarChange {
     position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
+    top: 1px;
+    bottom: 1px;
+    left: 2px;
     width: 100%;
     background-color: white;
     opacity: 0;
@@ -61,15 +57,45 @@
 .play #_playerHealthLabel {
     color: white;
     font-size: 30px;
-    margin: auto;
     flex-grow: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    -unity-text-align: middle-center;
 }
 
+.play #_waveTime {
+    margin-top: -12px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 128px;
+    height: 128px;
+    transform-origin: center;
+    background-image: url("project://database/Assets/Sprites/Diamond.png");
+    -unity-background-image-tint-color: var(--color-fishbase-eel);
+    padding: 10px;
+}
 
-.play #_playerStatsContainer {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    bottom: 16px;
-    width: 400px;
+.play #_waveTimeFillMask {
+    background-image: url("project://database/Assets/Sprites/Diamond.png");
+    transform-origin: center;
+    width: 100%;
+    height: 100%;
+    -unity-background-image-tint-color: var(--color-fishbase-catfish);
+}
+
+.play #_waveTimeFill {
+    --unity-image: url("project://database/Assets/Sprites/Diamond.png");
+    --unity-image-tint-color: var(--color-accents-primary);
+    width: 100%;
+    height: 100%;
+    margin-top: auto;
+}
+
+.play #_waveTimeRemaining {
+    color: var(--color-fishbase-whitefish);
+    font-size: 38px;
+    -unity-text-align: middle-center;
 }

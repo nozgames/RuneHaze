@@ -7,8 +7,21 @@
 >
 
   <rh:UIMain class="main overlay">
-    <Image name="_playButton"/>
-    
+    <VisualElement name="_top">
+      <Image name="_logo" />
+    </VisualElement>
+    <VisualElement name="_buttons">
+      <VisualElement class="button-default" name="_playButton">
+        <Label text="Play"/>
+      </VisualElement>
+      <VisualElement class="button-default" name="_optionsButton">
+        <Label text="Options"/>
+      </VisualElement>
+      <VisualElement class="button-default" name="_quitButton">
+        <Label text="Quit"/>
+      </VisualElement>
+    </VisualElement>
+    <Label name="_version" text="version 0.0.1"/>
   </rh:UIMain>
 
 </UXML>

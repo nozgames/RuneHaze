@@ -1,0 +1,35 @@
+.pause {
+}
+
+.pause #_buttons {
+    margin: auto;
+}
+
+.pause .button-default {
+    margin: auto;
+    margin-bottom: 32px;
+}
+
+.pause #_playerStatsContainer {
+    position: absolute;
+    top: 32px;
+    right: 32px;
+    width: 400px;
+    border-radius: 24px;
+    background-color: var(--color-fishbase-eel);
+    padding-bottom: 24px;
+}
+
+.pause #_playerStatsContainer #_header {
+    font-size: 30px;
+    -unity-font-definition: var(--font-definition-bold);
+    color: var(--color-fishbase-whitefish);
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+    height: 64px;
+    -unity-text-align: middle-center;
+}
+
+.pause #_playerStatsContainer #_header Label {
+    height: 100%;
+}

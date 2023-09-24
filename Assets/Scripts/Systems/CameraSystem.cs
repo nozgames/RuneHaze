@@ -4,12 +4,13 @@
 
 */
 
+using NoZ;
 using UnityEngine;
 
 namespace RuneHaze
 {
     [CreateAssetMenu(menuName = "RuneHaze/Modules/CameraSystem")]
-    public class CameraSystem : Module<CameraSystem>
+    public class CameraSystem : Module<CameraSystem>, IModule
     {
         [SerializeField] private float _pitch = 60.0f;
         [SerializeField] private float _distance = 10.0f;
@@ -18,6 +19,14 @@ namespace RuneHaze
         public Camera Camera { get; set; }
 
         public Bounds Bounds { get; set; } = new Bounds(Vector3.zero, Vector3.one * 10);
+        
+        public void Load()
+        {
+        }
+
+        public void Unload()
+        {
+        }
         
         public void Focus(Transform focus)
         {

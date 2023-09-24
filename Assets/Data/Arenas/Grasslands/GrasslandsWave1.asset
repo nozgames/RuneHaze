@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bc72581bed23664d91c283b8888698a, type: 3}
   m_Name: GrasslandsWave1
   m_EditorClassIdentifier: 
-  _duration: 20
+  _duration: 7
   _spawnCountMin: 20
   _spawnCountMax: 30
   _enemies:

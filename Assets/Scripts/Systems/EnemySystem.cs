@@ -5,20 +5,25 @@
 */
 
 using System.Collections.Generic;
+using NoZ;
 using UnityEngine;
 
 namespace RuneHaze
 {
     [CreateAssetMenu(menuName = "RuneHaze/Modules/EnemySystem")]
-    public class EnemySystem : Module<EnemySystem>
+    public class EnemySystem : Module<EnemySystem>, IModule
     {
         private List<Enemy> _enemies;
         
         public IEnumerable<Enemy> Enemies => _enemies;
         
-        public override void Load()
+        public void Load()
         {
             _enemies = new();
+        }
+
+        public void Unload()
+        {
         }
 
         public void Add(Enemy character)

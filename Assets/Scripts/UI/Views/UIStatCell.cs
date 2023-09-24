@@ -12,6 +12,9 @@ namespace RuneHaze.UI
 {
     public class UIStatCell : UIView
     {
+        private const string UssNegative = "negative";
+        private const string UssPositive = "positive";
+        
         [Preserve]
         public new class UxmlFactory : UxmlViewFactory<UIStatCell, UxmlTraits> { }
 
@@ -48,8 +51,12 @@ namespace RuneHaze.UI
 
         private void OnPostUpdateStats(Character character)
         {
+            var value = character.GetStatValue(_stat).Value;
+            EnableInClassList(UssNegative, value < 0);
+            EnableInClassList(UssPositive, value > 0);
+            
             _statName.text = _stat.name;
-            _statValue.text = character.GetStatValue(_stat).Value.ToString();
+            _statValue.text = value.ToString();
         }
     }
 }

@@ -5,12 +5,13 @@
 */
 
 using System.Linq;
+using NoZ;
 using UnityEngine;
 
 namespace RuneHaze
 {
     [CreateAssetMenu(menuName = "RuneHaze/Modules/WaveSystem")]
-    public class WaveSystem : Module<WaveSystem>
+    public class WaveSystem : Module<WaveSystem>, IModule
     {
         [SerializeField] private float _waveStartDelay = 1.0f;
         
@@ -28,6 +29,14 @@ namespace RuneHaze
         private float _remainingTimeUntilNextSpawn;
         private int _waveSpawnCount;
         private int _waveIndex;
+        
+        public void Load()
+        {
+        }
+
+        public void Unload()
+        {
+        }
         
         public void StartWave(int waveIndex)
         {

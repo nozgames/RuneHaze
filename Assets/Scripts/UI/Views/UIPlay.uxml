@@ -17,10 +17,15 @@
     
     <VisualElement name="_waveStats">
       <Label name="_waveLabel" text="Wave 1"/>
-      <Label name="_waveTimeRemaining" text="100"/>
+      <VisualElement name="_waveTime">
+        <VisualElement name="_waveTimeFillMask">
+          <VisualElement name="_waveTimeFillMask2" class="overlay">
+          <Image name="_waveTimeFill"/>
+          <Label name="_waveTimeRemaining" text="100" class="overlay"/>
+        </VisualElement>
+        </VisualElement>
+      </VisualElement>
     </VisualElement>
-    
-    <VisualElement name="_playerStatsContainer"/>
     
   </rh:UIPlay>
 

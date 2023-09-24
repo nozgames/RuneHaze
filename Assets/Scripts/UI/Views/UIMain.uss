@@ -1,10 +1,39 @@
 .main {
-    background-color: black;
+    background-image: url("project://database/Assets/Sprites/Background.png"); 
+    color: white;
 }
 
-.main #_playButton {
-    margin: auto;
-    --unity-image: url("project://database/Assets/Sprites/Icons/IconPlay.png");
-    width: 128px;
-    height: 128px;
+.main #_top {
+    flex-grow: 1;
+    width: 100%;
+}
+
+.main #_buttons {
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 96px;
+}
+
+.main #_logo {
+    --unity-image: url("project://database/Assets/Sprites/RuneHaze.png");
+    margin: auto auto;
+    width: 1400px;
+}
+
+.main #_version {
+    position: absolute;
+    bottom: 32px;
+    right: 32px;
+    font-size: 50%;
+    color: black; 
+    opacity: 0.7;
+}
+
+.main .button-default {
+    margin: 0 auto;
+    margin-bottom: 32px;
+}
+
+.main #_optionsButton {
+    display: none;
 }

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d6e7d1f1557e0946be12a7dd9b0f62d, type: 3}
+  m_Name: PostProcModule
+  m_EditorClassIdentifier: 
+  _postProcessProfile: {fileID: 11400000, guid: a6560a915ef98420e9faacc1c7438823,
+    type: 2}
+  _vignetteHeath:
+    Intensity: 0.25
+    Color: {r: 0.94509804, g: 0.40392157, b: 0.4117647, a: 1}
+  _vignetteMenu:
+    Intensity: 0.25
+    Color: {r: 0.16470589, g: 0.17254902, b: 0.17254902, a: 0}

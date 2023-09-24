@@ -4,18 +4,17 @@
 
 */
 
+using NoZ;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 using RuneHaze.UI;
-using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
 
 namespace RuneHaze
 {
-    public class Game : MonoBehaviour
+    public class Game : MonoBehaviour, IModuleLoaderProvider
     {
-        [SerializeField] private Module[] _modules;
+        [SerializeField] private ModuleLoader _moduleLoader;
         [SerializeField] private VisualTreeFactory _uiFactory;
         [SerializeField] private PanelSettings _panelSettings;
         [SerializeField] private GameObject _playerTest;
@@ -23,8 +22,6 @@ namespace RuneHaze
         [SerializeField] private Camera _camera;
         
         [Header("Vignette")]
-        [SerializeField] private VolumeProfile _postProcessProfile;
-        [SerializeField] private Color _healthColor;
         [SerializeField] private Vector2 _healthRange;
         [SerializeField] private Vector2 _healthIntensity;
         
@@ -32,26 +29,36 @@ namespace RuneHaze
 
         private UIMain _main;
         private UIPlay _play;
-        private Vignette _vignette;
+
+        public event System.Action<bool> Paused; 
         
         public Player Player { get; private set; }
         
         public VisualElement Root { get; private set; }
+
+        public ModuleLoader ModuleLoader => _moduleLoader;
+        
+        private bool _paused;
+
+        public bool IsPaused
+        {
+            get => _paused;
+            set
+            {
+                _paused = value;
+                Time.timeScale = _paused ? 0.0f : 1.0f;
+                Paused?.Invoke(_paused);
+            }
+        }
         
         private void Awake()
         {
             Instance = this;
-
-            if(!_postProcessProfile.TryGet(out _vignette))
-                throw new System.NullReferenceException(nameof(_vignette));
         }
 
         private void Start()
         {
-            _vignette.intensity.Override(0);        
-            
-            foreach (var module in _modules)
-                module.LoadInstance();
+            _moduleLoader.LoadModules();
 
             CameraSystem.Instance.Camera = _camera;
             
@@ -82,8 +89,7 @@ namespace RuneHaze
         {
             Stop();
             
-            for (var i = _modules.Length - 1; i >= 0; i--)
-                _modules[i].UnloadInstance();
+            _moduleLoader.UnloadModules();
         }
 
         public void Play()
@@ -93,8 +99,6 @@ namespace RuneHaze
             Player = Instantiate(_playerTest).GetComponent<Player>();
             Player.Health.Changed.AddListener(OnPlayerHealthChanged);
             Player.Health.Death.AddListener(OnPlayerDeath);
-
-            _vignette.intensity.Override(0);
             
             WaveSystem.Instance.StartWave(0);
 
@@ -105,8 +109,9 @@ namespace RuneHaze
 
         private void OnPlayerHealthChanged(Entity attacker, int amount)
         {
-            var intensity = Player.Health.Percent.Remap(_healthRange, _healthIntensity);
-            _vignette.intensity.Override(intensity);
+            PostProcModule.Instance.SetVignette(
+                PostProcModule.VignetteChannel.Health,
+                Player.Health.Percent.Remap(_healthRange, _healthIntensity));
         }
 
         private void OnPlayerDeath(Entity arg0)
@@ -114,7 +119,7 @@ namespace RuneHaze
             Stop();
         }
 
-        private void Stop()
+        public void Stop()
         {
             if (ArenaSystem.Instance.Current == null)
                 return;
@@ -126,8 +131,12 @@ namespace RuneHaze
             
             ArenaSystem.Instance.UnloadArena();
 
+            PostProcModule.Instance.SetVignette(PostProcModule.VignetteChannel.Health, 0.0f);
+            
             _play.Dispose();
             _play = null;
+
+            IsPaused = false;
             
             _main.SetDisplay(true);
         }

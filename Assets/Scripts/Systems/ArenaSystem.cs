@@ -5,12 +5,12 @@
 */
 
 using UnityEngine;
-using UnityEngine.Serialization;
+using NoZ;
 
 namespace RuneHaze
 {
     [CreateAssetMenu(menuName = "RuneHaze/Modules/ArenaSystem")]
-    public class ArenaSystem : Module<ArenaSystem>
+    public class ArenaSystem : Module<ArenaSystem>, IModule
     {
         public Bounds Bounds { get; private set; }
         
@@ -18,6 +18,14 @@ namespace RuneHaze
         
         public Arena Current { get; private set; }
 
+        public void Load()
+        {
+        }
+
+        public void Unload()
+        {
+        }
+        
         public bool IsOutOfBounds(Vector3 position) =>
             !Bounds.Contains(position);
 

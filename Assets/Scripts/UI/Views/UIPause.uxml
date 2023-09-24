@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="UnityEngine.UIElements"
+    xmlns:rh="RuneHaze.UI"
+    xsi:noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd"
+>
+
+  <rh:UIPause class="pause overlay">
+    <VisualElement name="_buttons">
+      <VisualElement name="_resumeButton" class="button-default">
+        <Label text="Resume"/>
+      </VisualElement>
+      <VisualElement name="_mainMenuButton" class="button-default">
+        <Label text="Main Menu"/>
+      </VisualElement>
+    </VisualElement>
+
+    <VisualElement name="_playerStatsContainer">
+      <VisualElement name="_header">
+        <Label name="_title" text="Stats"/>  
+      </VisualElement>
+    </VisualElement>
+    
+  </rh:UIPause>
+
+</UXML>

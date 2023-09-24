@@ -1,0 +1,10 @@
+@import url("/Assets/Settings/Modules/AudioManager.asset");
+@import url("/Assets/Settings/Modules/Sounds.asset");
+@import url("/Assets/Settings/Modules/PostProcModule.asset");
+@import url("/Assets/Settings/Modules/InputModule.asset");
+@import url("/Assets/Settings/Modules/CameraSystem.asset");
+@import url("/Assets/Settings/Modules/StatSystem.asset");
+@import url("/Assets/Settings/Modules/WaveSystem.asset");
+@import url("/Assets/Settings/Modules/EnemySystem.asset");
+@import url("/Assets/Settings/Modules/ArenaSystem.asset");
+@import url("/Assets/Settings/Modules/AttackSystem.asset");

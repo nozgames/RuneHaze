@@ -7,6 +7,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+using UnityEditor.AssetImporters;
+using Newtonsoft.Json.Linq;
+#endif
+
 namespace NoZ.RuneHaze
 {
     public interface IThinkState
@@ -33,12 +39,12 @@ namespace NoZ.RuneHaze
         /// Calculate a score for this lobe, if the lobe is later chosen any state that was 
         /// calculated during this call can be reused
         /// </summary>
-        public abstract float CalculateScore(Actor actor, IThinkState state);
+        public abstract float CalculateScore(Actor actor, IThinkState abstractState);
 
         /// <summary>
         /// Think for a single frame.
         /// </summary>
-        public abstract void Think(Actor actor, IThinkState state);
+        public abstract void Think(Actor actor, IThinkState abstractState);
 
         /// <summary>
         /// Called after CalculateScore was called but this lobe was not chosen to be active
@@ -54,6 +60,56 @@ namespace NoZ.RuneHaze
         /// Optionally release a think state that was previously created from this brain
         /// </summary>
         public virtual void ReleaseThinkState(IThinkState state) { }
+        
+#if UNITY_EDITOR
+        protected virtual void OnImport(AssetImportContext ctx, JObject token)
+        {
+            _baseScore = token["baseScore"]?.Value<float>() ?? 1.0f;
+        }
+        
+        public static Lobe Import(AssetImportContext ctx, JToken token)
+        {
+            if (token is JValue)
+            {
+                var path = token.Value<string>();
+                if (string.IsNullOrEmpty(path))
+                    return null;
+                
+                var lobe = AssetDatabase.LoadAssetAtPath<Lobe>(path);
+                if (lobe != null)
+                    ctx.DependsOnSourceAsset(AssetDatabase.GetAssetPath(lobe));
+                
+                return lobe;
+            }
+            else if (token is JObject json)
+            {
+                var typeName = json["type"]?.Value<string>();
+                if (string.IsNullOrEmpty(typeName))
+                {
+                    Debug.LogError("Lobe type is missing");
+                    return null;
+                }
+
+                var name = json["name"]?.Value<string>() ?? typeName;
+                if (string.IsNullOrEmpty(name))
+                {
+                    Debug.LogError("Lobe name is missing");
+                    return null;
+                }
+                
+                var lobe = LobeFactory.CreateInstance(ctx, typeName);
+                if (lobe == null)
+                    return null;
+
+                lobe.name = name;
+                lobe.OnImport(ctx, json);
+                ctx.AddObjectToAsset(lobe.name, lobe);
+                return lobe;
+            }
+
+            return null;
+        }
+#endif        
     }
 
     /// <summary>
@@ -61,7 +117,7 @@ namespace NoZ.RuneHaze
     /// </summary>
     public abstract class Lobe<TThinkState> : Lobe where TThinkState : class, IThinkState, new()
     {
-        private List<TThinkState> _pool = new List<TThinkState>();
+        private readonly List<TThinkState> _pool = new();
 
         /// <summary>
         /// Create an optional think state to be passed to think
@@ -72,7 +128,7 @@ namespace NoZ.RuneHaze
 
             if (_pool.Count > 0)
             {
-                state = _pool[_pool.Count - 1];
+                state = _pool[^1];
                 _pool.RemoveAt(_pool.Count - 1);
             }
             else

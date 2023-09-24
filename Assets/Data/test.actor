@@ -1,0 +1,9 @@
+{
+    "brain" : {
+        "lobes" : [
+            {
+                "type" : "ExecuteAbility"
+            }
+        ]
+    }
+}

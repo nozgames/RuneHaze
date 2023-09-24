@@ -1,8 +1,9 @@
 {
     "name": "com.noz.RuneHaze.Editor",
-    "rootNamespace": "RuneHaze",
+    "rootNamespace": "Noz.RuneHaze.EditorUtilities",
     "references": [
-        "GUID:a9d70c59b635bb64fb0f42dcf7ffd1fc"
+        "GUID:a9d70c59b635bb64fb0f42dcf7ffd1fc",
+        "GUID:4c0b0c7598b5260449a8b86e02cdce48"
     ],
     "includePlatforms": [
         "Editor"

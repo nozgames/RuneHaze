@@ -5,14 +5,20 @@
 */
 
 using System.Collections.Generic;
+using System.Linq;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
+
+#if UNITY_EDITOR
+using UnityEditor;
+using UnityEditor.AssetImporters;
+#endif
 
 namespace NoZ.RuneHaze
 {
     /// <summary>
     /// Defines an abstract Brain to control an actor
     /// </summary>
-    [CreateAssetMenu(menuName = "RuneHaze/Brain")]
     public class Brain : ScriptableObject
     {
         private class ThinkState : IThinkState
@@ -99,5 +105,39 @@ namespace NoZ.RuneHaze
                 // TODO: BeginThink / EndThink ?
                 _lobes[bestLobe].Think(actor, thinkState.LobeThinkStates[bestLobe]);
         }
+
+#if UNITY_EDITOR
+        public static Brain Import(AssetImportContext ctx, JToken token)
+        {
+            if (token is JValue)
+            {
+                var path = token.Value<string>();
+                if (string.IsNullOrEmpty(path))
+                    return null;
+                
+                var brain = AssetDatabase.LoadAssetAtPath<Brain>(path);
+                ctx.DependsOnSourceAsset(AssetDatabase.GetAssetPath(brain));
+                return brain;
+            }
+            else if (token is JObject json)
+            {
+                var brain = CreateInstance<Brain>();
+                brain.name = "brain";
+                
+                if (json["lobes"] is JArray lobesArray)
+                {
+                    brain._lobes = lobesArray
+                        .Select(lobeToken => Lobe.Import(ctx, lobeToken))
+                        .Where(lobe => lobe != null)
+                        .ToArray();
+                }
+                
+                ctx.AddObjectToAsset(brain.name, brain);
+                return brain;
+            }
+
+            return null;
+        }
+#endif
     }
 }

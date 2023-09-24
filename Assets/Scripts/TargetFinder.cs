@@ -5,12 +5,21 @@
 */
 
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+
+#if UNITY_EDITOR
+using UnityEditor;
+using UnityEditor.AssetImporters;
+using Newtonsoft.Json.Linq;
+#endif
 
 namespace NoZ.RuneHaze
 {
     public abstract class TargetFinder : ScriptableObject
     {
+        protected static readonly Collider[] s_colliders = new Collider[128];
+        
         private class SelfTargetFinder : TargetFinder
         {
             protected override void AddTargets(Actor source) => Add(source);
@@ -147,5 +156,76 @@ namespace NoZ.RuneHaze
                     return GetSelfTargetFinder(source);
             }
         }
+        
+#if UNITY_EDITOR
+        protected virtual void OnImport(AssetImportContext ctx, JObject token)
+        {
+        }
+        
+        private static readonly Dictionary<string, System.Type> s_targetFinderTypes = new(); 
+        
+        static TargetFinder()
+        {
+            var lobeTypes = System.AppDomain.CurrentDomain
+                .GetAssemblies()
+                .SelectMany(a => a.GetTypes())
+                .Where(t => typeof(TargetFinder).IsAssignableFrom(t))
+                .ToArray();
+
+            foreach (var type in lobeTypes)
+                s_targetFinderTypes[type.Name] = type;
+        }
+
+        private static TargetFinder CreateInstance(AssetImportContext ctx, string typeName)
+        {
+            if (!s_targetFinderTypes.TryGetValue(typeName, out var type))
+                return null;
+
+            return (TargetFinder)ScriptableObject.CreateInstance(type);
+        }      
+        
+        public static TargetFinder Import(AssetImportContext ctx, JToken token)
+        {
+            if (token is JValue)
+            {
+                var path = token.Value<string>();
+                if (string.IsNullOrEmpty(path))
+                    return null;
+                
+                var targetFinder = AssetDatabase.LoadAssetAtPath<TargetFinder>(path);
+                if (targetFinder != null)
+                    ctx.DependsOnSourceAsset(AssetDatabase.GetAssetPath(targetFinder));
+                
+                return targetFinder;
+            }
+            else if (token is JObject json)
+            {
+                var typeName = json["type"]?.Value<string>();
+                if (string.IsNullOrEmpty(typeName))
+                {
+                    Debug.LogError("Target type is missing");
+                    return null;
+                }
+
+                var name = json["name"]?.Value<string>() ?? typeName;
+                if (string.IsNullOrEmpty(name))
+                {
+                    Debug.LogError("Lobe name is missing");
+                    return null;
+                }
+                
+                var targetFinder = CreateInstance(ctx, typeName);
+                if (targetFinder == null)
+                    return null;
+
+                targetFinder.name = name;
+                targetFinder.OnImport(ctx, json);
+                ctx.AddObjectToAsset(targetFinder.name, targetFinder);
+                return targetFinder;
+            }
+
+            return null;
+        }
+#endif             
     }
 }

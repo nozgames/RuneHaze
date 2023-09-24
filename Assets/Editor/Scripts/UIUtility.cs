@@ -50,7 +50,7 @@ namespace NoZ.RuneHaze
             return relative + "UIElementsSchema/UIElements.xsd";
         }
 
-        private class DoCreateUIScript : EditorUtility.DoCreateScriptAsset
+        private class DoCreateUI : EditorUtilities.EditorUtility.DoCreateAsset
         {
             protected override string Preprocess(string pathName, string value)
             {
@@ -66,7 +66,7 @@ namespace NoZ.RuneHaze
             }
         }
 
-        private class DoCreateUIView : DoCreateUIScript
+        private class DoCreateUIView : DoCreateUI
         {
             public override void Action(int instanceId, string pathName, string resourceFile)
             {
@@ -87,20 +87,20 @@ namespace NoZ.RuneHaze
 
                 var ussPath = Path.ChangeExtension(pathName, ".uss");
                 var uxmlPath = Path.ChangeExtension(pathName, ".uxml");
-                EditorUtility.CreateFileFromTemplate("Assets/Editor/Templates/UIView.uxml.template", uxmlPath, variables);
-                EditorUtility.CreateFileFromTemplate("Assets/Editor/Templates/UIView.uss.template", ussPath, variables);
+                EditorUtilities.EditorUtility.CreateFileFromTemplate("Assets/Editor/Templates/UIView.uxml.template", uxmlPath, variables);
+                EditorUtilities.EditorUtility.CreateFileFromTemplate("Assets/Editor/Templates/UIView.uss.template", ussPath, variables);
 
                 AssetDatabase.ImportAsset(uxmlPath);
                 AssetDatabase.ImportAsset(ussPath);
 
                 // Add uxml to closest factory
-                EditorUtility.AddTextToAssetInParent(pathName, typeof(UI.VisualTreeFactory), $"@import url(\"/{uxmlPath}\");");
+                EditorUtilities.EditorUtility.AddTextToAssetInParent(pathName, typeof(UI.VisualTreeFactory), $"@import url(\"/{uxmlPath}\");");
 
                 AssetDatabase.Refresh();
             }
         }
 
-        private class DoCreateFactory : DoCreateUIScript
+        private class DoCreateFactory : DoCreateUI
         {
             public override void Action(int instanceId, string pathName, string resourceFile)
             {
@@ -108,7 +108,7 @@ namespace NoZ.RuneHaze
 
                 AssetDatabase.ImportAsset(pathName);
 
-                EditorUtility.AddTextToAssetInParent(Path.GetDirectoryName(Path.GetDirectoryName(pathName)), typeof(UI.VisualTreeFactory), $"@import url(\"/{pathName}\");");
+                EditorUtilities.EditorUtility.AddTextToAssetInParent(Path.GetDirectoryName(Path.GetDirectoryName(pathName)), typeof(UI.VisualTreeFactory), $"@import url(\"/{pathName}\");");
                 AssetDatabase.Refresh();
             }
         }
@@ -116,19 +116,19 @@ namespace NoZ.RuneHaze
         [MenuItem(CreateUIViewMenuItem, priority = int.MinValue)]
         private static void CreateUIView()
         {
-            EditorUtility.CreateScriptFromTemplate<DoCreateUIView>(Path.Combine(TemplatePath, "UIView.cs.template"), "UINewView.cs");
+            EditorUtilities.EditorUtility.CreateAssetFromTemplate<DoCreateUIView>(Path.Combine(TemplatePath, "UIView.cs.template"), "UINewView.cs");
         }
 
         [MenuItem(CreateUIControlMenuItem, priority = int.MinValue + 1)]
         private static void CreateUIControl()
         {
-            EditorUtility.CreateScriptFromTemplate<DoCreateUIScript>(Path.Combine(TemplatePath, "UIControl.cs.template"), "UINewControl.cs");
+            EditorUtilities.EditorUtility.CreateAssetFromTemplate<DoCreateUI>(Path.Combine(TemplatePath, "UIControl.cs.template"), "UINewControl.cs");
         }
 
         [MenuItem(CreateViewFactoryMenuItem, priority = int.MinValue + 2)]
-        private static void CreateViewVactory()
+        private static void CreateViewFactory()
         {
-            EditorUtility.CreateScriptFromTemplate<DoCreateFactory>(Path.Combine(TemplatePath, "VisualTreeFactory.uxmlf.template"), "NewFactory.uxmlf");
+            EditorUtilities.EditorUtility.CreateAssetFromTemplate<DoCreateFactory>(Path.Combine(TemplatePath, "VisualTreeFactory.uxmlf.template"), "NewFactory.uxmlf");
         }
     }
 }

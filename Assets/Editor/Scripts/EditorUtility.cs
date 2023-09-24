@@ -9,7 +9,9 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEditor;
+using UnityEngine.Scripting;
 
+#if false
 namespace NoZ.RuneHaze
 {
     public static class EditorUtility
@@ -70,7 +72,7 @@ namespace NoZ.RuneHaze
             return CreateScriptAssetWithContent(pathName, preprocessed);
         }
 
-        public class DoCreateScriptAsset : UnityEditor.ProjectWindowCallback.EndNameEditAction
+        public class DoCreateAsset : UnityEditor.ProjectWindowCallback.EndNameEditAction
         {
             public override void Action(int instanceId, string pathName, string resourceFile)
             {
@@ -84,7 +86,7 @@ namespace NoZ.RuneHaze
             }
         }
 
-        public static void CreateScriptFromTemplate<TAction> (string templatePath, string defaultNewFileName) where TAction : DoCreateScriptAsset
+        public static void CreateScriptFromTemplate<TAction> (string templatePath, string defaultNewFileName) where TAction : DoCreateAsset
         {
             if (templatePath == null)
                 throw new System.ArgumentNullException("templatePath");
@@ -107,6 +109,29 @@ namespace NoZ.RuneHaze
                 resourceFile: templatePath);
         }
 
+        public static void CreateFileFromTemplate<TAction> (string templatePath, string defaultNewFileName) where TAction : DoCreateAsset
+        {
+            if (templatePath == null)
+                throw new System.ArgumentNullException("templatePath");
+
+            if (!File.Exists(templatePath))
+                throw new FileNotFoundException("The template file \"" + templatePath + "\" could not be found.", templatePath);
+
+            if (string.IsNullOrEmpty(defaultNewFileName))
+                defaultNewFileName = Path.GetFileName(templatePath);
+
+            ProjectWindowUtil.StartNameEditingIfProjectWindowExists(
+                icon: Path.GetExtension(templatePath) switch
+                {
+                    ".cs" => EditorGUIUtility.IconContent("cs Script Icon").image as UnityEngine.Texture2D,
+                    _ => EditorGUIUtility.IconContent("ScriptableObject Icon").image as UnityEngine.Texture2D,
+                },
+                instanceID: 0,
+                endAction: UnityEngine.ScriptableObject.CreateInstance<TAction>(),
+                pathName: defaultNewFileName,
+                resourceFile: templatePath);
+        }
+        
         /// <summary>
         /// Create a file from a template
         /// </summary>
@@ -198,5 +223,45 @@ namespace NoZ.RuneHaze
                 relativeNamespace = relativeNamespace.Substring(0,lastPeriod);
             }
         }
+        
+        [Preserve]
+        public class DoCreateScriptAsset : UnityEditor.ProjectWindowCallback.EndNameEditAction
+        {
+            public override void Action(int instanceId, string pathName, string resourceFile)
+            {
+                UnityEngine.Object o = CreateScriptAssetFromTemplate(pathName, resourceFile, Preprocess);
+                ProjectWindowUtil.ShowCreatedAsset(o);
+            }
+
+            protected virtual string Preprocess (string pathName, string value)
+            {
+                return value;
+            }
+        }
+        
+        public static void CreateAssetFromTemplate<TAction> (string templatePath, string defaultNewFileName) where TAction : DoCreateScriptAsset
+        {
+            if (templatePath == null)
+                throw new System.ArgumentNullException("templatePath");
+
+            if (!File.Exists(templatePath))
+                throw new FileNotFoundException("The template file \"" + templatePath + "\" could not be found.", templatePath);
+
+            if (string.IsNullOrEmpty(defaultNewFileName))
+                defaultNewFileName = Path.GetFileName(templatePath);
+
+            ProjectWindowUtil.StartNameEditingIfProjectWindowExists(
+                icon: Path.GetExtension(templatePath) switch
+                {
+                    ".cs" => EditorGUIUtility.IconContent("cs Script Icon").image as UnityEngine.Texture2D,
+                    _ => EditorGUIUtility.IconContent("ScriptableObject Icon").image as UnityEngine.Texture2D,
+                },
+                instanceID: 0,
+                endAction: UnityEngine.ScriptableObject.CreateInstance<TAction>(),
+                pathName: defaultNewFileName,
+                resourceFile: templatePath);
+        }
     }
 }
+
+#endif

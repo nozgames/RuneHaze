@@ -23,16 +23,26 @@ namespace NoZ.RuneHaze
         [SerializeField] private float _buttonRepeat = 0.25f;
 
         private PlayerButton _pendingButton;
-        private Destination _pendingDestination;
-        private PlayerButton _button = PlayerButton.Primary;
+        private PlayerButton _button = PlayerButton.None;
         private bool _buttonPressed = false;
         private double _buttonRepeatTime = 0;
-        
-        // public PlayerController Controller { get; private set; }
 
-        public void OnNetworkSpawn()
+        public override Vector3 FacingDirection =>
+            InputManager.Instance.IsUsingController 
+                ? base.FacingDirection 
+                : (ScreenToWorld(InputManager.Instance.PlayerLook) - transform.position).ZeroY().normalized;
+
+        private Vector3 ScreenToWorld(Vector2 position)
         {
-            base.OnNetworkSpawn();
+            var ray = CameraManager.Instance.Camera.ScreenPointToRay(position);
+            new Plane(Vector3.up, Vector3.zero).Raycast(ray, out var distance);
+            var worldPosition = ray.GetPoint(distance);
+            return worldPosition;
+        }
+        
+        protected override void OnInstantiate()
+        {
+            base.OnInstantiate();
 
             name = $"Player";
 
@@ -40,71 +50,51 @@ namespace NoZ.RuneHaze
 
             NavAgent.updateRotation = false;
 
-            // InputManager.Instance.OnPlayerButtonDown += OnButtonDown;
-            // InputManager.Instance.OnPlayerButtonUp += OnButtonUp;
+            InputManager.Instance.OnPlayerButtonDown += OnButtonDown;
+            InputManager.Instance.OnPlayerButtonUp += OnButtonUp;
 
             Signal.Dispatch(new PlayerSpawned { Player = this });
         }
 
-        public void OnNetworkDespawn()
-        {
-            base.OnNetworkDespawn();
-
-            Signal.Dispatch(new PlayerDeSpawned { Player = this });
-
-            // InputManager.Instance.OnPlayerButtonDown -= OnButtonDown;
-            // InputManager.Instance.OnPlayerButtonUp -= OnButtonUp;
-        }
+        // protected override void OnDisable()
+        // {
+        //     base.OnDisable();
+        //
+        //     OnNetworkDespawn();
+        // }
+        //
+        // public void OnNetworkDespawn()
+        // {
+        //     base.OnNetworkDespawn();
+        //
+        //     Signal.Dispatch(new PlayerDeSpawned { Player = this });
+        //
+        //     InputManager.Instance.OnPlayerButtonDown -= OnButtonDown;
+        //     InputManager.Instance.OnPlayerButtonUp -= OnButtonUp;
+        // }
 
         private void OnButtonDown (PlayerButton button)
-        {
-            var look = InputManager.Instance.PlayerLook;
-            var destination = new Destination(look);
-
-            // if (Physics.Raycast(InputManager.Instance.PlayerLookRay, out var hit, 100.0f, -1))
-            // {
-            //     var actor = hit.collider.GetComponentInParent<Actor>();
-            //     if (actor != null)
-            //         destination = new Destination(actor);
-            // }
-
-            if(destination.Target == null)
-                button = PlayerButton.None;
-
-            OnButtonDown(button, destination);
-        }
-
-        private void OnButtonUp (PlayerButton button)
-        {
-            _buttonPressed = false;
-        }
-
-        private void OnButtonDown (PlayerButton button, Destination destination)
         {
             if (IsBusy)
             {
                 _pendingButton = _button;
-                _pendingDestination = destination;
             }
             else
             {
                 _buttonRepeatTime = Time.timeAsDouble + _buttonRepeat;
                 _buttonPressed = true;
                 _button = button;
-                SetDestination(destination);
             }
+        }
+
+        private void OnButtonUp (PlayerButton button)
+        {
+            _buttonPressed = false;
         }
         
         protected override void OnAbilityEnd()
         {
             base.OnAbilityEnd();
-
-            if (_pendingDestination.IsValid)
-            {
-                OnButtonDown(_pendingButton, _pendingDestination);
-                _pendingDestination = Destination.None;
-                _pendingButton = PlayerButton.None;
-            }
 
             if (!_buttonPressed)
             {
@@ -117,12 +107,10 @@ namespace NoZ.RuneHaze
         {
             base.Update();
 
-            // If move button is held down then update the destination every repeat
-            if (_buttonPressed && Destination.IsValid && !Destination.HasTarget && Time.timeAsDouble >= _buttonRepeatTime)
-                OnButtonDown(PlayerButton.None, new Destination(InputManager.Instance.PlayerLook));
-            else if (!IsBusy && _buttonPressed && Time.timeAsDouble >= _buttonRepeatTime)
-                OnButtonDown(_button, Destination);
-
+            State = ActorState.Active;
+            
+            SetDestination(new Destination(transform.position + InputManager.Instance.PlayerMove));
+            
             Game.Instance.ListenAt(transform);
 
             CameraManager.Instance.Focus(transform);

@@ -26,6 +26,9 @@ namespace NoZ.RuneHaze
         public event System.Action PlayerAttack;
         public event System.Action MenuButton;
 
+        public event System.Action<PlayerButton> OnPlayerButtonUp;
+        public event System.Action<PlayerButton> OnPlayerButtonDown;
+        
         public void Load()
         {
             _playerMove.Enable();
@@ -36,31 +39,38 @@ namespace NoZ.RuneHaze
                 //     return;
                 
                 IsUsingController = true;
-                PlayerMove = value;
+                PlayerMove = new Vector3(value.x, 0, value.y);
             };
             _playerMove.canceled += (ctx) =>
             {
                 if (IsUsingController)
-                    PlayerMove = Vector2.zero;
+                    PlayerMove = Vector3.zero;
             };
 
             _playerMoveKeyboard.Enable();
             _playerMoveKeyboard.performed += (ctx) =>
             {
                 IsUsingController = false;
-                PlayerMove = ctx.ReadValue<Vector2>();
+                
+                var value = ctx.ReadValue<Vector2>();
+                PlayerMove = new Vector3(value.x, 0, value.y);
             };
             _playerMoveKeyboard.canceled += (ctx) =>
             {
                 if (!IsUsingController)
-                    PlayerMove = Vector2.zero;
+                    PlayerMove = Vector3.zero;
             };
 
             _pause.Enable();
             _pause.performed += (ctx) => MenuButton?.Invoke();
             
             _playerAttack.Enable();
-            _playerAttack.performed += (ctx) => PlayerAttack?.Invoke();
+            _playerAttack.performed += (ctx) =>
+            {
+                OnPlayerButtonDown?.Invoke(PlayerButton.Primary);
+                OnPlayerButtonUp?.Invoke(PlayerButton.Primary);
+                PlayerAttack?.Invoke();
+            };
             
             _playerLook.Enable();
             _playerLook.performed += (ctx) => PlayerLook = ctx.ReadValue<Vector2>();
@@ -84,7 +94,7 @@ namespace NoZ.RuneHaze
             }
         }
         
-        public Vector2 PlayerMove { get; private set; }
+        public Vector3 PlayerMove { get; private set; }
         
         public Vector2 PlayerLook { get; private set; }
         

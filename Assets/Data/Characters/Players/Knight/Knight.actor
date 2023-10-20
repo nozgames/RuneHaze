@@ -1,13 +1,82 @@
 {
     "type" : "Player",
     "prefab" : "Assets/Data/Characters/Players/Knight/Knight.prefab",
-    "runAnimation" : "Assets/Data/Characters/HumanoidRun.asset",
-    "idleAnimation" : "Assets/Data/Characters/HumanoidIdle.asset",
+    "runAnimation" : {
+        "name" : "KnightRun",
+        "clip" : "Assets/Data/Characters/Players/Knight/Knight.fbx:KnightRun"
+    },
+    "idleAnimation" : {
+        "name" : "KnightIdle",
+        "clip" : "Assets/Data/Characters/Players/Knight/Knight.fbx:KnightIdle"
+    },
+
+    "baseSpeed" : "3.5",
+
     "deathAnimation" : "Assets/Data/Characters/HumanoidDeath.asset",
+    "brain" : {
+        "lobes" : [
+            {
+                "type" : "ExecuteAbility"
+            }
+        ]
+    },
     "abilities" : [
         {
-            "name" : "Punch2"
+            "name" : "Punch2",
+            "globalCooldown" : 0.1,
+            "animation" : {
+                "name" : "KnightAttack1",
+                "clip" : "Assets/Data/Characters/Players/Knight/Knight.fbx:KnightAttack1",
+                "events" : [
+                    {
+                        "time" : 0,
+                        "raise" : "Assets/Data/Characters/Attack.asset"
+                    }
+                ]
+            },
+            "conditions" : [
+                {
+                    "type" : "GlobalCooldown"
+                },
+                {
+                    "type" : "ButtonPressCondition",
+                    "button" : "Primary"
+                }
+            ],
+            "events" : [
+                {
+                    "event" : "Assets/Data/Characters/Attack.asset",
+                    "name" : "Attack1_Attack",
+                    "effects" : [
+                        {
+                            "type" : "Effect",
+                            "target" : "Self",
+                            "components" : [ 
+                                {
+                                    "type" : "PlayVFX",
+                                    "vfx" : "Assets/Data/VFX/SwordSlash01.vfx",
+                                    "rotate" : [ 45, 90, -90 ],
+                                    "scale" : 1.8,                                    
+                                    "attach" : false
+                                },
+                                {
+                                    "type" : "PlaySound",
+                                    "sound" : {
+                                        "randomPitch" : 0.2,
+                                        "clips" : [
+                                            "Assets/Data/Sounds/Blade Swing A.wav"
+                                        ]                                        
+                                    }
+                                    
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
         }
     ],
     "baseAttack" : 100
 }
+
+

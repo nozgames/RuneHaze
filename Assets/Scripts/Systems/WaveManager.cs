@@ -101,7 +101,7 @@ namespace NoZ.RuneHaze
                 var enemyDefinition = WaveManager.Instance.Current.GetRandomEnemy();
                 var position = ArenaManager.Instance.GetRandomSpawnPosition(enemyDefinition);
                 var playerLook = (Game.Instance.Player.transform.position - position).normalized; 
-                ArenaManager.Instance.InstantiateActor(enemyDefinition, position, Quaternion.LookRotation(playerLook));
+                //ArenaManager.Instance.InstantiateActor(enemyDefinition, position, Quaternion.LookRotation(playerLook));
             }
         }
     }

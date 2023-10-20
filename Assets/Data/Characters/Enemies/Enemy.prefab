@@ -143,7 +143,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50ba4d36b210e834db31ab403d380b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: {fileID: 0}
   _actorDefinition: {fileID: 0}
   _hitCollider: {fileID: 673175614131189497}
   _scaleTransform: {fileID: 0}

@@ -85,6 +85,11 @@ namespace NoZ.RuneHaze
             WaveManager.Instance.Update();
         }
 
+        private void LateUpdate()
+        {
+            VFXManager.Instance.LateUpdate();
+        }
+
         private void OnApplicationQuit()
         {
             Stop();

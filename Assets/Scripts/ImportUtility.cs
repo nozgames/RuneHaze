@@ -10,10 +10,12 @@ using System;
 using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json.Linq;
+using NoZ.Audio;
 using UnityEditor;
 using UnityEditor.AssetImporters;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.VFX;
 
 namespace Noz.RuneHaze.EditorUtilities
 {
@@ -49,6 +51,18 @@ namespace Noz.RuneHaze.EditorUtilities
 
                 return new Vector2(jsonArray[0].ToObject<float>(), jsonArray[1].ToObject<float>());
             }
+
+            if (fieldType == typeof(Vector3))
+            {
+                if (json is JArray { Count: 3 } jsonArray3)
+                    return new Vector3(jsonArray3[0].ToObject<float>(), jsonArray3[1].ToObject<float>(), jsonArray3[2].ToObject<float>());
+
+                if (json is JValue jsonValue)
+                    return Vector3.one * jsonValue.ToObject<float>();
+                
+                Debug.LogError($"{obj.GetType().Name}.{fieldName}: invalid Vector3");
+                return null;
+            }
             
             // Arrays
             if (fieldType.IsArray)
@@ -69,20 +83,47 @@ namespace Noz.RuneHaze.EditorUtilities
                 return array;
             }
             
+            if (fieldType == typeof(AudioShader) && json.Type == JTokenType.String)
+            {
+                var clip = AssetDatabase.LoadAssetAtPath<AudioClip>(json.ToObject<string>());
+                if (clip != null)
+                {
+                    var shader = AudioShader.Create(clip);
+                    ctx.AddObjectToAsset(shader.name, shader);
+                    return shader;
+                }
+            }
+
+            
+            if (fieldType == typeof(AnimationClip) || 
+                fieldType == typeof(VisualEffectAsset) || 
+                fieldType == typeof(AudioClip))
+                return LoadAssetAtPath(fieldType, json.ToObject<string>());
+            
             if (typeof(ScriptableObject).IsAssignableFrom(fieldType))
                 return ImportScriptableObject(ctx, fieldType, json);
-
+            
             if (fieldType == typeof(GameObject))
                 return ImportPrefab(ctx, json);
-            
-            if (fieldType.IsClass)
+
+            var isStruct = fieldType.IsValueType && !fieldType.IsPrimitive && !fieldType.IsEnum;
+            if ((fieldType.IsClass || isStruct) && fieldType != typeof(string))
             {
                 var classObject = Activator.CreateInstance(fieldType);
                 ImportProperties(ctx, classObject, json as JObject);
                 return classObject;
             }
-            
-            return json.ToObject(fieldType);
+
+            try
+            {
+                return json.ToObject(fieldType);
+            }
+            catch (System.Exception e)
+            {
+                UnityEngine.Debug.LogError($"{fieldType.Name}: {json.ToString()}");
+                
+                throw;
+            }
         }
         
         private static void SetValue(AssetImportContext ctx, FieldInfo field, object obj, JToken token)
@@ -116,7 +157,7 @@ namespace Noz.RuneHaze.EditorUtilities
             {
                 var fields = type
                     .GetFields(BindingFlags.Instance|BindingFlags.NonPublic|BindingFlags.Public)
-                    .Where(f => f.GetCustomAttribute<SerializeField>() != null)
+                    .Where(f => f.IsPublic || f.GetCustomAttribute<SerializeField>() != null)
                     .ToArray();
 
                 foreach (var field in fields)
@@ -169,6 +210,22 @@ namespace Noz.RuneHaze.EditorUtilities
             Debug.LogError($"{type.Name} failed to import");
                 
             return null;
+        }
+
+        private static UnityEngine.Object LoadAssetAtPath(Type type, string path)
+        {
+            var parts = path.Split(":");
+            if (parts.Length == 1)
+                return AssetDatabase.LoadAssetAtPath(path, type);
+            
+            var assets = AssetDatabase.LoadAllAssetsAtPath(parts[0]);
+            if (assets == null || assets.Length == 0)
+            {
+                Debug.LogWarning($"{path}: not found");
+                return null;
+            }
+
+            return assets.FirstOrDefault(a => a.name == parts[1] && type.IsInstanceOfType(a));
         }
     }
 }

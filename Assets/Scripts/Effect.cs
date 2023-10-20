@@ -4,7 +4,6 @@
 
 */
 
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace NoZ.RuneHaze
@@ -13,7 +12,6 @@ namespace NoZ.RuneHaze
     /// Represents a single effect that can be applied to an actor.  Each effect can have multiple components 
     /// that define what the effect actually does
     /// </summary>
-    [CreateAssetMenu(menuName = "RuneHaze/Effect")]
     public class Effect : ScriptableObject, ISerializationCallbackReceiver
     {
         [Header("General")]

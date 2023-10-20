@@ -28,8 +28,8 @@ Transform:
   m_GameObject: {fileID: 533534151936026664}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.125, z: -5.5}
-  m_LocalScale: {x: 16, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0.18000007, z: -14.5}
+  m_LocalScale: {x: 16, y: 1.5840533, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3530840669487809474}
@@ -133,8 +133,8 @@ Transform:
   m_GameObject: {fileID: 1784527589138955826}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.5, y: -0.125, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 12}
+  m_LocalPosition: {x: 8.5, y: 0.18000019, z: -4.4999976}
+  m_LocalScale: {x: 1, y: 1.5840533, z: 21}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3530840669487809474}
@@ -238,8 +238,8 @@ Transform:
   m_GameObject: {fileID: 2086954564045269650}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.125, z: 5.5}
-  m_LocalScale: {x: 16, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0.18000007, z: 5.5}
+  m_LocalScale: {x: 16, y: 1.5840533, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3530840669487809474}
@@ -343,8 +343,8 @@ Transform:
   m_GameObject: {fileID: 3841959284376605577}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.125, z: 0}
-  m_LocalScale: {x: 16, y: 0.25, z: 10}
+  m_LocalPosition: {x: 0, y: -0.12499973, z: -4.4999976}
+  m_LocalScale: {x: 16, y: 0.25, z: 19}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3530840669487809474}
@@ -448,8 +448,8 @@ Transform:
   m_GameObject: {fileID: 4018506831205653329}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.5, y: -0.125, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 12}
+  m_LocalPosition: {x: -8.5, y: 0.18000019, z: -4.4999976}
+  m_LocalScale: {x: 1, y: 1.5840533, z: 21}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3530840669487809474}
@@ -534,6 +534,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3530840669487809474}
+  - component: {fileID: 673358521004348426}
   m_Layer: 0
   m_Name: Grasslands
   m_TagString: Untagged
@@ -561,3 +562,34 @@ Transform:
   - {fileID: 103384784827575709}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &673358521004348426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4442001965440068010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_CollectObjects: 2
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 1
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 58c5e9594fda6e64b97868f18b691afe, type: 2}
+  m_BuildHeightMesh: 1

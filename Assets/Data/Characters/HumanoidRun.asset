@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: HumanoidRun
   m_EditorClassIdentifier: 
   _clip: {fileID: -7551964380084998518, guid: f0455eadd9749d341b3458b134771ee1, type: 3}
-  _speed: 1
+  _speed: 10
   _blendTime: 0.1
   _events: []

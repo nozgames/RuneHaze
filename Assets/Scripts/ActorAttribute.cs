@@ -17,8 +17,7 @@ namespace NoZ.RuneHaze
         Attack,
         AttackSpeed,
         Defense,
-        Harvest,
-        Build
+        Harvest
     }
 
     /// <summary>

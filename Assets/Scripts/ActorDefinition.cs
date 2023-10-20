@@ -43,7 +43,6 @@ namespace NoZ.RuneHaze
         [SerializeField] private float _baseAttackSpeed = 1.0f;
         [SerializeField] private float _baseDefense = 50.0f;
         [SerializeField] private float _baseHarvest = 1.0f;
-        [SerializeField] private float _baseBuild = 1.0f;
 
         [Space]
         [SerializeField] private Ability[] _abilities = null;
@@ -115,7 +114,6 @@ namespace NoZ.RuneHaze
             ActorAttribute.AttackSpeed => _baseAttackSpeed,
             ActorAttribute.Defense => _baseDefense,
             ActorAttribute.Harvest => _baseHarvest,
-            ActorAttribute.Build => _baseBuild,
             _ => throw new System.NotImplementedException()
         };
 

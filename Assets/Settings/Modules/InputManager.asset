@@ -32,20 +32,36 @@ MonoBehaviour:
   _playerMove:
     m_Name: Player Move
     m_Type: 0
-    m_ExpectedControlType: 
+    m_ExpectedControlType: Vector2
     m_Id: 2eff70a8-e095-4d1d-9615-533ef935bfc2
     m_Processors: 
     m_Interactions: 
-    m_SingletonActionBindings: []
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 772d4145-21a4-48f1-846b-37b05661a362
+      m_Path: <Gamepad>/leftStick
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player Move
+      m_Flags: 0
     m_Flags: 0
   _playerLook:
     m_Name: Player Look
     m_Type: 0
-    m_ExpectedControlType: 
+    m_ExpectedControlType: Vector2
     m_Id: ceb59d36-2489-4beb-90a5-e3811727e502
     m_Processors: 
     m_Interactions: 
-    m_SingletonActionBindings: []
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 6d037992-3d37-4413-b6a5-bcbf0d0b1799
+      m_Path: <Mouse>/{Point}
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player Look
+      m_Flags: 0
     m_Flags: 0
   _playerMoveKeyboard:
     m_Name: Player Move Keyboard
@@ -107,6 +123,14 @@ MonoBehaviour:
     - m_Name: 
       m_Id: 1158110a-c683-4ca4-b83b-e9bd4aab36f2
       m_Path: <Mouse>/leftButton
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player Attack
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 2e09bee8-6e15-4cfc-819f-d9aa4f3aff09
+      m_Path: <XInputController>/buttonSouth
       m_Interactions: 
       m_Processors: 
       m_Groups: 

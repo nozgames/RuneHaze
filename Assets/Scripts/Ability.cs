@@ -14,8 +14,9 @@ namespace NoZ.RuneHaze
 {
     public class Ability : ScriptableObject
     {
-        [SerializeField] private NoZ.Animations.AnimationShader _animation = null;
+        [SerializeField] private Animations.AnimationShader _animation = null;
         [SerializeField] private float _moveSpeed = 0.0f;
+        [SerializeField] private float _globalCooldown = 0.0f;
 
         [SerializeField] private TargetType _target = TargetType.Custom;
         [SerializeField] private TargetFinder _targetFinder = null;
@@ -35,6 +36,8 @@ namespace NoZ.RuneHaze
 
         public Animations.AnimationShader Animation => _animation;
 
+        public float GlobalCooldown => _globalCooldown;
+        
         public TargetFinder FindTargets(Actor source) => 
             TargetFinder.FindTargets(source, _target, _targetFinder, null);
 
@@ -70,8 +73,8 @@ namespace NoZ.RuneHaze
         {
             var score = 1.0f;
 
-            if (source.Target == null)
-                return 0.0f;
+            // if (source.Target == null)
+            //     return 0.0f;
 
             if (_conditions == null)
                 return 1.0f;

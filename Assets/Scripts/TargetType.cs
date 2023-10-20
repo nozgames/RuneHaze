@@ -12,7 +12,7 @@ namespace NoZ.RuneHaze
         /// The effect is applied to the source 
         /// </summary>
         Self,
-
+        
         /// <summary>
         /// The effect is applied to a custom set of targets defined by a target finder
         /// </summary>

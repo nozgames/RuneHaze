@@ -5,7 +5,7 @@
     "waves" : [
         {
             "name" : "wave1",
-            "duration" : 7,
+            "duration" : 700,
             "enemies" : [
                 {
                     "enemy" : "Assets/Data/Characters/Enemies/Orc/Orc.actor",
@@ -15,7 +15,7 @@
         },
         {
             "name" : "wave2",
-            "duration" : 10,
+            "duration" : 100,
             "enemies" : [
                 {
                     "enemy" : "Assets/Data/Characters/Enemies/Orc/Orc.actor",

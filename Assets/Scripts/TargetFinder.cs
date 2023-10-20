@@ -145,7 +145,8 @@ namespace NoZ.RuneHaze
                     }
 
                     if (_emptyTarget != null)
-                        _emptyTarget = new EmptyTargetFinder();
+                        _emptyTarget = ScriptableObject.CreateInstance<EmptyTargetFinder>();
+                    
                     return _emptyTarget;
 
                 default:

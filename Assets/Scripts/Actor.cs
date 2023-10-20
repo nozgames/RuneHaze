@@ -53,6 +53,7 @@ namespace NoZ.RuneHaze
         private MaterialPropertyBlock _materialProperties;
         private bool _materialPropertiesDirty;
         private float _visualPitch;
+        private float _globalCooldown;
 
         private ActorAttributeValue[] _attributeTable;
         private IThinkState _thinkState;
@@ -171,6 +172,11 @@ namespace NoZ.RuneHaze
         }
 
         /// <summary>
+        /// Returns the remaining amount of time in the global cooldown
+        /// </summary>
+        public float GlobalCooldownRemaining => _globalCooldown;
+        
+        /// <summary>
         /// True if the actor is in a busy state, preventing movement or controls
         /// </summary>
         public bool IsBusy
@@ -217,6 +223,11 @@ namespace NoZ.RuneHaze
 
         public float HealthRatio => Health / GetAttributeValue(ActorAttribute.HealthMax);
 
+        /// <summary>
+        /// Direction the character is currently facing
+        /// </summary>
+        public virtual Vector3 FacingDirection => _rotationTransform.forward;
+        
         /// <summary>
         /// Returns true if the actor has taken any damage
         /// </summary>
@@ -414,7 +425,7 @@ namespace NoZ.RuneHaze
                 NavAgent.speed = GetAttributeValue(ActorAttribute.Speed);
         }
 
-        public void OnNetworkSpawn()
+        protected virtual void OnInstantiate()
         {
             _lastPosition = transform.position;
 
@@ -422,7 +433,8 @@ namespace NoZ.RuneHaze
                 Instantiate(_spawnVFXPrefab, transform.position, transform.rotation);
            
             // On host add the default effects to each actor
-            AddEffect(this, ActorManager.Instance.DefaultActorEffect);
+            if (ActorManager.Instance.DefaultActorEffect != null)
+                AddEffect(this, ActorManager.Instance.DefaultActorEffect);
 
             foreach (var effect in _actorDefinition.Effects)
                 AddEffect(this, effect);
@@ -463,6 +475,8 @@ namespace NoZ.RuneHaze
             _healthCircle = null;
         }
 
+        public void LookDirection(Vector3 dir) => LookAt(transform.position + dir);
+        
         public void LookAt(Actor actor) => LookAt(actor.transform.position);
 
         public void LookAt (Vector3 target)
@@ -492,8 +506,11 @@ namespace NoZ.RuneHaze
 
         private void UpdateDestination()
         {
-            if (!_destination.IsValid)
+            if (!_destination.IsValid || GlobalCooldownRemaining > 0.0f || IsBusy)
+            {
+                NavAgent.enabled = false;
                 return;
+            }
 
             // TODO: choose best surround position
             NavAgent.stoppingDistance = _destination.StopDistance;
@@ -527,9 +544,12 @@ namespace NoZ.RuneHaze
 
             if(Target != null)
                 LookAt(Target);
+            else
+                LookDirection(FacingDirection);
 
             _lastAbilityUsedTime = Time.time;
             _lastAbilityUsed = ability;
+            _globalCooldown = Mathf.Max(ability.GlobalCooldown, _globalCooldown);
 
             ability.OnEvent(this, ActorManager.Instance.AbilityBeginEvent, ability.FindTargets(this));
             PlayOneShotAnimation(ability.Animation);
@@ -564,7 +584,9 @@ namespace NoZ.RuneHaze
         {
             if (Game.Instance == null)
                 return;
-
+            
+            _globalCooldown = Mathf.Max(_globalCooldown - Time.deltaTime, 0);
+            
             // Look for effects ending due to time
             _effects.RemoveEffects(EffectLifetime.Time);
 
@@ -586,9 +608,7 @@ namespace NoZ.RuneHaze
             if(NavAgent != null)
             {
                 UpdateDestination();
-
-                Debug.DrawLine(transform.position + Vector3.up * 0.5f, _destination.Position + Vector3.up * 0.5f, Color.red);
-
+                
                 var velocity = NavAgent.desiredVelocity.ZeroY();
                 if (!IsBusy && _destination.IsValid && velocity.sqrMagnitude > 0.01f)
                     _rotationTransform.rotation = Quaternion.LookRotation(velocity.normalized, Vector3.up);
@@ -715,8 +735,7 @@ namespace NoZ.RuneHaze
             _materialProperties.SetColor(nameId, value);
             _materialPropertiesDirty = true;
         }
-
-
+        
         public static Actor Instantiate(ActorDefinition actorDefinition, Vector3 position, Quaternion rotation, Transform parent)
         {
             var actor = Instantiate(
@@ -726,6 +745,7 @@ namespace NoZ.RuneHaze
                 parent).GetComponent<Actor>();
 
             actor.Initialize(actorDefinition);
+            actor.OnInstantiate();
             
             return actor;
         }

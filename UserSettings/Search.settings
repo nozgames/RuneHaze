@@ -14,6 +14,16 @@ scopes = {
 	"last_search.3BE40471" = ""
 	"OpenInspectorPreview.3BE40471" = "0"
 	"currentGroup.3BE40471" = "all"
+	"picker_window_position_offset.74AD8FDB" = "744.0001;668;320;550"
+	"picker_search_text.74AD8FDB" = "slash"
+	"last_search.74AD8FDB" = "slash"
+	"OpenInspectorPreview.74AD8FDB" = "0"
+	"currentGroup.74AD8FDB" = "all"
+	"picker_window_position_offset.3172962C" = "354;633.3334;320;550"
+	"picker_search_text.3172962C" = ""
+	"last_search.3172962C" = ""
+	"OpenInspectorPreview.3172962C" = "0"
+	"currentGroup.3172962C" = "all"
 }
 providers = {
 	packages = {
@@ -65,6 +75,7 @@ providers = {
 objectSelectors = {
 }
 recentSearches = [
+	"spr"
 ]
 searchItemFavorites = [
 ]

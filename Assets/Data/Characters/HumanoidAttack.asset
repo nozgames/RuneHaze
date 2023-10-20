@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2080bf67900783041b095e835af5af8b, type: 3}
   m_Name: HumanoidAttack
   m_EditorClassIdentifier: 
-  _clip: {fileID: 0}
-  _speed: 1
-  _blendTime: 0.1
-  _events: []
+  _clip: {fileID: 4723146814002874508, guid: 9c96cee45d5ad744fbd247723cd223fb, type: 3}
+  _speed: 20
+  _blendTime: 0.05
+  _events:
+  - time: 0
+    raise: {fileID: 11400000, guid: a75e84c95a5443e4f80a075489151115, type: 2}

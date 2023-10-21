@@ -7,7 +7,7 @@
     },
     "idleAnimation" : {
         "name" : "KnightIdle",
-        "clip" : "Assets/Data/Characters/Players/Knight/Knight.fbx:KnightIdle"
+        "clip" : "Assets/Data/Characters/Players/Knight/KnightIdle.fbx:Scene"
     },
 
     "baseSpeed" : "3.5",

@@ -67,7 +67,7 @@ namespace NoZ.RuneHaze
 
         public ActorDefinition Definition => _actorDefinition;
         public float Speed => _speed;
-        public bool IsMoving => NavAgent != null && NavAgent.desiredVelocity.sqrMagnitude > 0.1f;
+        public bool IsMoving => NavAgent != null && NavAgent.hasPath && NavAgent.desiredVelocity.sqrMagnitude > 0.1f;
         public bool IsDead => _health <= 0.0f;
         public Destination Destination => _destination;
 
@@ -553,9 +553,7 @@ namespace NoZ.RuneHaze
 
             ability.OnEvent(this, ActorManager.Instance.AbilityBeginEvent, ability.FindTargets(this));
             PlayOneShotAnimation(ability.Animation);
-
-            PlayOneShotAnimation(ability.Animation);
-
+            
             for (int i = 0, c = _actorDefinition.Abilities.Length; i < c; i++)
             {
                 if (_actorDefinition.Abilities[i] == ability)

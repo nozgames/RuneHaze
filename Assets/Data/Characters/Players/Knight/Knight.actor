@@ -3,7 +3,8 @@
     "prefab" : "Assets/Data/Characters/Players/Knight/Knight.prefab",
     "runAnimation" : {
         "name" : "KnightRun",
-        "clip" : "Assets/Data/Characters/Players/Knight/Knight.fbx:KnightRun"
+        "clip" : "Assets/Data/Characters/Players/Knight/KnightRun.fbx:KnightRun",
+        "speed": 2
     },
     "idleAnimation" : {
         "name" : "KnightIdle",
@@ -26,7 +27,9 @@
             "globalCooldown" : 0.1,
             "animation" : {
                 "name" : "KnightAttack1",
-                "clip" : "Assets/Data/Characters/Players/Knight/Knight.fbx:KnightAttack1",
+                "clip" : "Assets/Data/Characters/Players/Knight/KnightSwordAttack01.fbx:KnightSwordAttack01",
+                "blendTime" : 0.001,
+                "speed" : 10,
                 "events" : [
                     {
                         "time" : 0,

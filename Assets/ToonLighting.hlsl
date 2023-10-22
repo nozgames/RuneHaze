@@ -1,6 +1,8 @@
 #ifndef CUSTOM_LIGHTING_INCLUDED
 #define CUSTOM_LIGHTING_INCLUDED
 
+#define _MAIN_LIGHT_SHADOWS
+
 void MainLight_float(float3 WorldPos, out float3 Direction, out float3 Color, out float ShadowAtten)
 {
 #if defined(SHADERGRAPH_PREVIEW)

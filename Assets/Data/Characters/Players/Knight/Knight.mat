@@ -66,7 +66,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainText:
-        m_Texture: {fileID: 2800000, guid: decb6f9406f54774ea89bc0c3b7ce5ae, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -85,12 +85,28 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_6a7f03e261ef4e1cb3b0d24b3322c485_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 015fc189132a0b44db210850a0b885f0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_8edaf2ea9fe643e091125346bd9e10dc_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 015fc189132a0b44db210850a0b885f0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_ee79f89f4da741ce975e1a8376db07b7_Texture_1_Texture2D:
         m_Texture: {fileID: 2800000, guid: c819d93463d397447ab7bfb66484f472, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_fcec1f69d1cc42fab97a8f87f8b92898_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 015fc189132a0b44db210850a0b885f0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSize_6fb67cd9390947bfa61e58ce83add877_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 015fc189132a0b44db210850a0b885f0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -111,6 +127,7 @@ Material:
     - _AlphaToMask: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
+    - _BlendOp: 0
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
@@ -127,12 +144,17 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _GlowStrength: 0
+    - _LightMax: 1
+    - _LightMin: 0.088
+    - _LightStrength: 0.876
+    - _Lighting: 1
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _SampleGI: 0
     - _Shiney: 0
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
@@ -146,5 +168,7 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _LightMax: {r: 0.8566598, g: 1, b: 0.8459119, a: 0}
+    - _LightMin: {r: 0.2917705, g: 0.3301887, b: 0.29417163, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
